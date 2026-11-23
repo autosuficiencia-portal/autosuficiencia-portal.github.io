@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1e3a5f" />
+  <title>Consola de Administración — Autosuficiencia / Admin Console — Self-Reliance</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            brandNavy: '#1e3a5f',
+            brandNavyDark: '#132844',
+            brandSage: '#2e6f5e',
+            brandSageDark: '#215245',
+            brandAmber: '#b45309',
+            brandSand: '#f8fafc',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+    .panel-fade {
+      animation: fadeSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-[#2e6f5e]/20 selection:text-[#1e3a5f] pb-20">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" aria-live="polite" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-[calc(100%-2rem)]"></div>
+
+  <!-- ===================================================================== -->
+  <!-- TOP NAVIGATION BAR                                                    -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center justify-between min-h-[4rem] py-2.5 gap-3">
+        <!-- Brand Header -->
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1e3a5f] to-[#2e6f5e] flex items-center justify-center text-white shadow-md shrink-0">
+            <svg class="w-5 h-5 text-amber-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </div>
+          <div class="truncate">
+            <span id="hdr-title" class="font-bold text-[#1e3a5f] text-sm sm:text-base lg:text-lg leading-tight block truncate">
+              Consola de Administración — Autosuficiencia
+            </span>
+            <span id="hdr-subtitle" class="text-xs text-[#2e6f5e] font-semibold block truncate">
+              Gestión técnica y publicación sin código
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Controls: Back to Portal + Bilingual Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <a
+            href="index.html"
+            class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#1e3a5f] border border-slate-200 font-bold text-xs transition-all inline-flex items-center gap-1.5"
+          >
+            <span id="hdr-back-btn">← Volver al Portal (index.html)</span>
+          </a>
+
+          <div role="group" aria-label="Language switcher" class="inline-flex items-center p-1 rounded-full bg-slate-100 border border-slate-300 shadow-inner">
+            <button
+              type="button"
+              id="btn-lang-es"
+              onclick="setLanguage('es')"
+              aria-pressed="true"
+              class="px-2.5 sm:px-3 py-1 rounded-full text-xs font-bold transition-all bg-[#1e3a5f] text-white shadow-sm"
+            >
+              Español
+            </button>
+            <button
+              type="button"
+              id="btn-lang-en"
+              onclick="setLanguage('en')"
+              aria-pressed="false"
+              class="px-2.5 sm:px-3 py-1 rounded-full text-xs font-bold transition-all text-slate-600 hover:text-[#1e3a5f]"
+            >
+              English
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN CONTAINER                                                        -->
+  <!-- ===================================================================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 space-y-8">
+
+    <!-- =================================================================== -->
+    <!-- ADMIN PIN LOCK SCREEN                                               -->
+    <!-- =================================================================== -->
+    <section id="admin-locked-view" class="max-w-lg mx-auto bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-slate-200 text-center space-y-6 my-8 panel-fade">
+      <div class="w-16 h-16 mx-auto rounded-2xl bg-[#1e3a5f]/10 text-[#1e3a5f] flex items-center justify-center">
+        <svg class="w-8 h-8 text-[#b45309]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+
+      <div class="space-y-2">
+        <span id="lock-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-[#b45309]">
+          Acceso Exclusivo Administradores
+        </span>
+        <h1 id="lock-title" class="text-2xl font-bold text-[#1e3a5f]">
+          Consola de Administración
+        </h1>
+        <p id="lock-desc" class="text-sm text-slate-600 leading-relaxed">
+          Ingresa el PIN de Administrador (distinto al PIN de Líderes) para gestionar grupos, configurar enlaces, sincronizar Google Sheets y generar archivos actualizados para GitHub Pages.
+        </p>
+      </div>
+
+      <form onsubmit="unlockAdminConsole(event)" class="space-y-4">
+        <div>
+          <label for="admin-pin-input" class="sr-only">Admin PIN</label>
+          <input
+            type="password"
+            id="admin-pin-input"
+            maxlength="24"
+            placeholder="•••••••••"
+            required
+            class="w-full text-center tracking-[0.35em] font-extrabold text-xl py-3.5 px-4 rounded-2xl border-2 border-slate-300 focus:border-[#1e3a5f] focus:outline-none bg-slate-50 focus:bg-white"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full py-3.5 px-6 rounded-2xl bg-[#1e3a5f] hover:bg-[#132844] text-white font-bold text-sm shadow-md transition-all"
+        >
+          <span id="lock-submit-btn">Desbloquear Consola Admin</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- UNLOCKED ADMIN CONSOLE                                              -->
+    <!-- =================================================================== -->
+    <div id="admin-unlocked-view" class="hidden space-y-8 panel-fade">
+
+      <!-- Unlocked Hero Banner -->
+      <div class="bg-gradient-to-r from-[#1e3a5f] to-[#2e6f5e] text-white rounded-3xl p-6 sm:p-8 shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-3xl">
+          <span id="adm-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/15 text-amber-200">
+            Sesión de Administrador Activa • Sin código
+          </span>
+          <h1 id="adm-heading" class="text-2xl sm:text-3xl font-bold">
+            Configuración Central del Portal de Autosuficiencia
+          </h1>
+          <p id="adm-desc" class="text-sm sm:text-base text-slate-100">
+            Administra los próximos grupos y talleres, sincroniza datos en vivo con Google Sheets, actualiza los PIN de seguridad y exporta los archivos listos para GitHub Pages.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3 shrink-0">
+          <button
+            type="button"
+            onclick="syncFromGoogleSheets()"
+            class="px-4 py-3 rounded-xl bg-[#2e6f5e] hover:bg-[#215245] border border-white/25 text-white font-bold text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2"
+          >
+            <span>🔄</span>
+            <span id="adm-sync-btn">Sincronizar desde Google Sheets</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="lockAdminConsole()"
+            class="px-4 py-3 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold text-xs sm:text-sm transition-all inline-flex items-center gap-1.5"
+          >
+            <span>🔒</span>
+            <span id="adm-lock-btn">Bloquear Consola Admin</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- PART 1: VISUAL MANAGER FOR UPCOMING GROUPS & WORKSHOPS            -->
+      <!-- ================================================================= -->
+      <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/90 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div>
+            <span id="p1-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-[#2e6f5e]/10 text-[#2e6f5e] mb-1.5">
+              Parte 1 • Oferta de Cursos
+            </span>
+            <h2 id="p1-heading" class="text-xl sm:text-2xl font-bold text-[#1e3a5f]">
+              Gestor Visual de Próximos Grupos y Talleres
+            </h2>
+          </div>
+          <span id="p1-groups-count" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-[#1e3a5f]">
+            3 activo(s) de 4 grupo(s)
+          </span>
+        </div>
+
+        <!-- Add / Edit Group Form -->
+        <form id="group-editor-form" onsubmit="saveGroupFromForm(event)" class="rounded-2xl bg-slate-50 border border-slate-200 p-5 space-y-4">
+          <input type="hidden" id="grp-edit-id" value="" />
+          <div class="flex items-center justify-between">
+            <h3 id="grp-form-mode-title" class="font-bold text-sm sm:text-base text-[#1e3a5f]">
+              + Agregar nuevo grupo o taller
+            </h3>
+            <button type="button" id="grp-cancel-edit-btn" onclick="cancelGroupEdit()" class="hidden text-xs font-bold text-[#b45309] hover:underline">
+              Cancelar edición
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            <div>
+              <label for="grp-course-select" id="lbl-grp-course" class="block text-xs font-bold text-slate-700 mb-1">Curso oficial (autocompleta títulos)</label>
+              <select id="grp-course-select" onchange="autoFillCourseTitles()" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs font-medium focus:outline-none focus:border-[#2e6f5e]"></select>
+            </div>
+
+            <div>
+              <label for="grp-format-select" id="lbl-grp-format" class="block text-xs font-bold text-slate-700 mb-1">Modalidad</label>
+              <select id="grp-format-select" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs font-medium focus:outline-none focus:border-[#2e6f5e]">
+                <option value="in-person">Presencial / In-Person</option>
+                <option value="virtual">Virtual (Videollamada / Video Call)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="grp-facilitator-input" id="lbl-grp-facilitator" class="block text-xs font-bold text-slate-700 mb-1">Facilitador(es)</label>
+              <input type="text" id="grp-facilitator-input" required placeholder="Ej. Hno. Carlos Mendoza" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            <div>
+              <label for="grp-title-es" id="lbl-grp-title-es" class="block text-xs font-bold text-slate-700 mb-1">Título del grupo (Español)</label>
+              <input type="text" id="grp-title-es" required placeholder="Las finanzas personales" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]" />
+            </div>
+            <div>
+              <label for="grp-title-en" id="lbl-grp-title-en" class="block text-xs font-bold text-slate-700 mb-1">Group Title (English)</label>
+              <input type="text" id="grp-title-en" required placeholder="Personal Finances" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            <div>
+              <label for="grp-schedule-es" id="lbl-grp-schedule-es" class="block text-xs font-bold text-slate-700 mb-1">Día y horario (Español)</label>
+              <input type="text" id="grp-schedule-es" required placeholder="Martes 7:00 PM (12 semanas)" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]" />
+            </div>
+            <div>
+              <label for="grp-schedule-en" id="lbl-grp-schedule-en" class="block text-xs font-bold text-slate-700 mb-1">Day &amp; Schedule (English)</label>
+              <input type="text" id="grp-schedule-en" required placeholder="Tuesdays 7:00 PM (12 weeks)" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+            <div>
+              <label for="grp-location-es" id="lbl-grp-location-es" class="block text-xs font-bold text-slate-700 mb-1">Lugar o enlace (Español)</label>
+              <input type="text" id="grp-location-es" required placeholder="Salón de la Sociedad de Socorro" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]" />
+            </div>
+            <div>
+              <label for="grp-location-en" id="lbl-grp-location-en" class="block text-xs font-bold text-slate-700 mb-1">Location or link (English)</label>
+              <input type="text" id="grp-location-en" required placeholder="Relief Society Room" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]" />
+            </div>
+            <div>
+              <label for="grp-signup-url" id="lbl-grp-signup" class="block text-xs font-bold text-slate-700 mb-1">Enlace de inscripción (Opcional)</label>
+              <input type="url" id="grp-signup-url" placeholder="https://forms.gle/..." class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]" />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+            <label class="inline-flex items-center gap-2 text-xs font-bold text-[#1e3a5f] cursor-pointer select-none">
+              <input type="checkbox" id="grp-active-check" checked class="rounded text-[#2e6f5e]" />
+              <span id="lbl-grp-active">Visible en la portada (Activo)</span>
+            </label>
+
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#2e6f5e] hover:bg-[#215245] text-white font-bold text-xs shadow-sm transition-all">
+              <span id="grp-save-btn">Guardar Grupo / Taller</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Configured Groups List -->
+        <div id="admin-groups-list" class="space-y-2.5"></div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- PART 2: GENERAL PORTAL SETTINGS & SECURITY PINS                   -->
+      <!-- ================================================================= -->
+      <section class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/90 space-y-6">
+        <div class="border-b border-slate-100 pb-4">
+          <span id="p2-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-[#b45309] mb-1.5">
+            Parte 2 • Parámetros y Seguridad
+          </span>
+          <h2 id="p2-heading" class="text-xl sm:text-2xl font-bold text-[#1e3a5f]">
+            Configuración General del Portal y PINs de Seguridad
+          </h2>
+        </div>
+
+        <form id="general-settings-form" onsubmit="saveGeneralSettings(event)" class="space-y-5">
+          <!-- Unit Names -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="cfg-unit-es" id="lbl-cfg-unit-es" class="block text-xs font-bold text-slate-700 mb-1">Nombre de la unidad (Español)</label>
+              <input type="text" id="cfg-unit-es" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs focus:outline-none focus:border-[#1e3a5f]" />
+            </div>
+            <div>
+              <label for="cfg-unit-en" id="lbl-cfg-unit-en" class="block text-xs font-bold text-slate-700 mb-1">Unit Name (English)</label>
+              <input type="text" id="cfg-unit-en" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs focus:outline-none focus:border-[#1e3a5f]" />
+            </div>
+          </div>
+
+          <!-- Dual Security PINs -->
+          <div class="rounded-2xl bg-amber-50/70 border border-amber-200 p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="cfg-leader-pin" id="lbl-cfg-leader-pin" class="block text-xs font-bold text-[#1e3a5f] mb-1">PIN de Líderes y Especialistas (usado en index.html)</label>
+              <input type="text" id="cfg-leader-pin" required maxlength="16" class="w-full px-3.5 py-2.5 rounded-xl border border-amber-300 bg-white text-xs font-bold focus:outline-none focus:border-[#b45309]" />
+            </div>
+            <div>
+              <label for="cfg-admin-pin" id="lbl-cfg-admin-pin" class="block text-xs font-bold text-[#b45309] mb-1">PIN de Consola Admin (usado en admin.html)</label>
+              <input type="text" id="cfg-admin-pin" required maxlength="24" class="w-full px-3.5 py-2.5 rounded-xl border border-amber-300 bg-white text-xs font-bold focus:outline-none focus:border-[#b45309]" />
+            </div>
+          </div>
+
+          <!-- URLs & Specialist Contact -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="cfg-portal-url" id="lbl-cfg-portal" class="block text-xs font-bold text-slate-700 mb-1">URL Pública del Portal (GitHub Pages)</label>
+              <input type="url" id="cfg-portal-url" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs focus:outline-none focus:border-[#1e3a5f]" />
+            </div>
+            <div>
+              <label for="cfg-form-url" id="lbl-cfg-form" class="block text-xs font-bold text-slate-700 mb-1">Enlace Encuesta Google Forms</label>
+              <input type="url" id="cfg-form-url" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs focus:outline-none focus:border-[#1e3a5f]" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="cfg-wa-url" id="lbl-cfg-wa" class="block text-xs font-bold text-slate-700 mb-1">Enlace Canal de WhatsApp</label>
+              <input type="url" id="cfg-wa-url" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs focus:outline-none focus:border-[#1e3a5f]" />
+            </div>
+            <div>
+              <label for="cfg-specialist" id="lbl-cfg-spec" class="block text-xs font-bold text-slate-700 mb-1">Contacto del Especialista (Opcional)</label>
+              <input type="text" id="cfg-specialist" placeholder="Ej. Hno. Daniel — WhatsApp / Correo" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs focus:outline-none focus:border-[#1e3a5f]" />
+            </div>
+          </div>
+
+          <!-- Local Support Notes -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="cfg-local-es" id="lbl-cfg-local-es" class="block text-xs font-bold text-slate-700 mb-1">Aviso de apoyo local (Español)</label>
+              <textarea id="cfg-local-es" rows="2" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs focus:outline-none focus:border-[#1e3a5f]"></textarea>
+            </div>
+            <div>
+              <label for="cfg-local-en" id="lbl-cfg-local-en" class="block text-xs font-bold text-slate-700 mb-1">Local Support Note (English)</label>
+              <textarea id="cfg-local-en" rows="2" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs focus:outline-none focus:border-[#1e3a5f]"></textarea>
+            </div>
+          </div>
+
+          <!-- Live Google Sheets CSV URL -->
+          <div class="rounded-2xl bg-[#2e6f5e]/5 border border-[#2e6f5e]/20 p-4 space-y-2">
+            <label for="cfg-groups-sheet" id="lbl-cfg-sheet" class="block text-xs font-bold text-[#1e3a5f]">
+              Enlace CSV publicado de Google Sheets (Sincronización en vivo de grupos)
+            </label>
+            <input type="url" id="cfg-groups-sheet" placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]" />
+            <p id="cfg-sheet-help" class="text-[11px] text-slate-600">
+              Columnas esperadas en la pestaña publicada: <code>courseId, titleEs, titleEn, scheduleEs, scheduleEn, format, locationEs, locationEn, facilitator, signupUrl, active</code>
+            </p>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+            <button type="button" onclick="resetConfigToDefaults()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-all">
+              <span id="cfg-reset-btn">Restaurar valores iniciales</span>
+            </button>
+
+            <button type="submit" class="px-6 py-3 rounded-xl bg-[#1e3a5f] hover:bg-[#132844] text-white font-bold text-xs sm:text-sm shadow-sm transition-all">
+              <span id="cfg-save-general-btn">Guardar Configuración General</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- PART 3: PUBLISH CHANGES TO GITHUB PAGES (ZERO-CODE EXPORT)        -->
+      <!-- ================================================================= -->
+      <section class="bg-gradient-to-br from-[#1e3a5f] to-[#142a46] text-white rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+        <div class="space-y-2 max-w-3xl">
+          <span id="p3-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-[#b45309] text-white">
+            Parte 3 • Publicación Sin Código en GitHub Pages
+          </span>
+          <h2 id="p3-heading" class="text-xl sm:text-2xl font-bold">
+            Exportar Archivos Actualizados para GitHub Pages
+          </h2>
+          <p id="p3-desc" class="text-sm text-slate-200 leading-relaxed">
+            Como GitHub Pages es alojamiento estático, sigue estos tres pasos cada vez que quieras guardar permanentemente tus cambios en el código público sin editar HTML manualmente:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <!-- Step A: Inject into existing index.html -->
+          <div class="rounded-2xl bg-white text-slate-800 p-5 flex flex-col justify-between gap-4 shadow-md">
+            <div class="space-y-2">
+              <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#1e3a5f]/10 text-[#1e3a5f]">
+                Paso A • Portal Principal
+              </span>
+              <h3 id="step-a-title" class="font-bold text-base text-[#1e3a5f]">
+                Inyectar configuración en index.html
+              </h3>
+              <p id="step-a-desc" class="text-xs text-slate-600 leading-relaxed">
+                Selecciona tu archivo <strong>index.html</strong> actual; esta consola actualizará automáticamente su bloque <code>DEFAULT_CONFIG</code> y descargará el nuevo <strong>index.html</strong> listo para subir.
+              </p>
+            </div>
+            <div>
+              <label for="index-file-injector" class="sr-only">Select index.html</label>
+              <input
+                type="file"
+                id="index-file-injector"
+                accept=".html,text/html"
+                onchange="handleInjectIndexHtml(event)"
+                class="block w-full text-xs text-slate-600 file:w-full file:mb-1 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#2e6f5e] file:text-white hover:file:bg-[#215245] cursor-pointer"
+              />
+            </div>
+          </div>
+
+          <!-- Step B: Download updated admin.html -->
+          <div class="rounded-2xl bg-white text-slate-800 p-5 flex flex-col justify-between gap-4 shadow-md">
+            <div class="space-y-2">
+              <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-amber-100 text-[#b45309]">
+                Paso B • Consola Admin
+              </span>
+              <h3 id="step-b-title" class="font-bold text-base text-[#1e3a5f]">
+                Descargar admin.html Actualizado
+              </h3>
+              <p id="step-b-desc" class="text-xs text-slate-600 leading-relaxed">
+                Descarga una copia limpia de este mismo archivo <strong>admin.html</strong> con tu nuevo PIN de administrador y valores predeterminados ya guardados.
+              </p>
+            </div>
+            <button
+              type="button"
+              onclick="downloadUpdatedAdminHtml()"
+              class="w-full py-2.5 px-4 rounded-xl bg-[#b45309] hover:bg-amber-700 text-white font-bold text-xs shadow-sm transition-all inline-flex items-center justify-center gap-2"
+            >
+              <span>⬇</span>
+              <span id="step-b-btn">Descargar admin.html Actualizado</span>
+            </button>
+          </div>
+
+          <!-- Step C: Upload to GitHub Repository -->
+          <div class="rounded-2xl bg-white text-slate-800 p-5 flex flex-col justify-between gap-4 shadow-md">
+            <div class="space-y-2">
+              <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#2e6f5e]/15 text-[#2e6f5e]">
+                Paso C • Publicar en la Web
+              </span>
+              <h3 id="step-c-title" class="font-bold text-base text-[#1e3a5f]">
+                Subir archivos a GitHub Pages
+              </h3>
+              <p id="step-c-desc" class="text-xs text-slate-600 leading-relaxed">
+                Abre tu repositorio en GitHub, haz clic en <strong>Add file → Upload files</strong>, arrastra los archivos descargados y pulsa <strong>Commit changes</strong>.
+              </p>
+            </div>
+            <a
+              href="https://github.com/autosuficiencia-portal/autosuficiencia-portal.github.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full py-2.5 px-4 rounded-xl bg-[#1e3a5f] hover:bg-[#132844] text-white font-bold text-xs shadow-sm transition-all inline-flex items-center justify-center gap-2"
+            >
+              <span id="step-c-btn">Abrir Repositorio en GitHub</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT: ADMIN STATE, SHEETS SYNC & ZERO-CODE FILE EXPORTERS       -->
+  <!-- ===================================================================== -->
+  <script id="admin-app-script">
+/* === ADMIN_PIN_START === */
+const DEFAULT_ADMIN_PIN = "2026ADMIN";
+/* === ADMIN_PIN_END === */
+
+/* === CONFIG_START === */
+const DEFAULT_CONFIG = {
+  "portalUrl": "https://autosuficiencia-portal.github.io/",
+  "googleFormUrl": "https://forms.gle/Vg8NKX7GGccs2pC46",
+  "whatsappChannelUrl": "https://whatsapp.com/channel/0029VbAn87EHltYBQm7Xpl0Z",
+  "leaderPin": "2026",
+  "unitNameEs": "Riverwalk / Cold Spring Ranch",
+  "unitNameEn": "Riverwalk / Cold Spring Ranch",
+  "specialistContact": "",
+  "groupsSheetCsvUrl": "https://docs.google.com/spreadsheets/d/e/2PACX-1vRbo1Hiat8ebO7dtYb-8NtKUSRFrvkV_YzhWth7Y_OsCtoQekmqQkA3XTKzBCC7K8j1K1LzUS5DIjeL/pub?gid=0&single=true&output=csv",
+  "localSupportEs": "Consulta con el Especialista de Autosuficiencia o el Consejo de Barrio para horarios locales de Servicios de Empleo y Recuperación de Adicciones.",
+  "localSupportEn": "Contact your Self-Reliance Specialist or Ward Council for local Employment Services and Addiction Recovery meeting schedules.",
+  "upcomingGroups": [
+    {
+      "id": "sheet-grp-1",
+      "courseId": "finanzas",
+      "titleEs": "Las finanzas personales",
+      "titleEn": "Personal Finances",
+      "scheduleEs": "Martes 7:00 PM (Inicia 10 Ene)",
+      "scheduleEn": "Tuesday 4:00 PM (Starts Jan 10)",
+      "format": "in-person",
+      "locationEs": "Salón de la Sociedad de Socorro",
+      "locationEn": "Relief Society Room",
+      "facilitator": "Hno. Carlos Mendoza",
+      "signupUrl": "https://forms.gle/Vg8NKX7GGccs2pC46",
+      "active": true
+    },
+    {
+      "id": "sheet-grp-2",
+      "courseId": "resiliencia",
+      "titleEs": "Hallar fortaleza en el Señor: Resiliencia emocional",
+      "titleEn": "Finding Strength in the Lord: Emotional Resilience",
+      "scheduleEs": "Miércoles 7:30 PM",
+      "scheduleEn": "Wednesdays 7:30 PM",
+      "format": "virtual",
+      "locationEs": "Enlace enviado al inscribirse",
+      "locationEn": "Link sent upon signup",
+      "facilitator": "Hna. Laura Gómez",
+      "signupUrl": "https://forms.gle/Vg8NKX7GGccs2pC46",
+      "active": true
+    },
+    {
+      "id": "sheet-grp-3",
+      "courseId": "empleo",
+      "titleEs": "Buscar un mejor empleo",
+      "titleEn": "Find a Better Job",
+      "scheduleEs": "Jueves 7:00 PM",
+      "scheduleEn": "Thursdays 7:00 PM",
+      "format": "virtual",
+      "locationEs": "Sala virtual de Autosuficiencia",
+      "locationEn": "Self-Reliance Virtual Room",
+      "facilitator": "Especialista de Autosuficiencia",
+      "signupUrl": "https://forms.gle/Vg8NKX7GGccs2pC46",
+      "active": true
+    },
+    {
+      "id": "sheet-grp-4",
+      "courseId": "englishconnect",
+      "titleEs": "EnglishConnect 1 y 2",
+      "titleEn": "EnglishConnect 1 & 2",
+      "scheduleEs": "Martes y Jueves 6:30 PM",
+      "scheduleEn": "Tuesdays & Thursdays 6:30 PM",
+      "format": "in-person",
+      "locationEs": "Centro de reuniones local",
+      "locationEn": "Local Meetinghouse",
+      "facilitator": "Misioneros de servicio",
+      "signupUrl": "https://www.englishconnect.org/",
+      "active": false
+    }
+  ]
+};
+/* === CONFIG_END === */
+
+    // =========================================================================
+    // OFFICIAL 7 COURSES CATALOG (FOR AUTO-FILL DROPDOWN)
+    // =========================================================================
+    const OFFICIAL_COURSES = [
+      { id: 'resiliencia', titleEs: 'Hallar fortaleza en el Señor: Resiliencia emocional', titleEn: 'Finding Strength in the Lord: Emotional Resilience' },
+      { id: 'finanzas', titleEs: 'Las finanzas personales', titleEn: 'Personal Finances' },
+      { id: 'empleo', titleEs: 'Buscar un mejor empleo', titleEn: 'Find a Better Job' },
+      { id: 'educacion', titleEs: 'Educación para un mejor empleo', titleEn: 'Education for Better Work' },
+      { id: 'englishconnect', titleEs: 'EnglishConnect', titleEn: 'EnglishConnect' },
+      { id: 'negocio', titleEs: 'Cómo iniciar y hacer crecer mi negocio', titleEn: 'Starting and Growing My Business' },
+      { id: 'habilidades', titleEs: 'Habilidades para la vida', titleEn: 'Life Skills' }
+    ];
+
+    // =========================================================================
+    // BILINGUAL UI DICTIONARY (ES / EN)
+    // =========================================================================
+    const UI = {
+      es: {
+        htmlLang: 'es',
+        hdrTitle: 'Consola de Administración — Autosuficiencia',
+        hdrSubtitle: 'Gestión técnica y publicación sin código',
+        hdrBackBtn: '← Volver al Portal (index.html)',
+        lockBadge: 'Acceso Exclusivo Administradores',
+        lockTitle: 'Consola de Administración',
+        lockDesc: 'Ingresa el PIN de Administrador (distinto al PIN de Líderes) para gestionar grupos, configurar enlaces, sincronizar Google Sheets y generar archivos actualizados para GitHub Pages.',
+        lockSubmit: 'Desbloquear Consola Admin',
+        lockError: 'PIN de Administrador incorrecto.',
+        lockSuccess: 'Consola de Administración desbloqueada.',
+        admPill: 'Sesión de Administrador Activa • Sin código',
+        admHeading: 'Configuración Central del Portal de Autosuficiencia',
+        admDesc: 'Administra los próximos grupos y talleres, sincroniza datos en vivo con Google Sheets, actualiza los PIN de seguridad y exporta los archivos listos para GitHub Pages.',
+        admSyncBtn: 'Sincronizar desde Google Sheets',
+        admLockBtn: 'Bloquear Consola Admin',
+        syncSuccess: (n) => `Se sincronizaron ${n} grupo(s) desde Google Sheets.`,
+        syncError: 'No se pudo leer el enlace CSV de Google Sheets. Verifica que esté publicado en la web.',
+        p1Badge: 'Parte 1 • Oferta de Cursos',
+        p1Heading: 'Gestor Visual de Próximos Grupos y Talleres',
+        groupsCount: (active, total) => `${active} activo(s) de ${total} grupo(s)`,
+        addModeTitle: '+ Agregar nuevo grupo o taller',
+        editModeTitle: '✎ Editando grupo o taller',
+        cancelEdit: 'Cancelar edición',
+        lblCourse: 'Curso oficial (autocompleta títulos)',
+        lblFormat: 'Modalidad',
+        lblFacilitator: 'Facilitador(es)',
+        lblTitleEs: 'Título del grupo (Español)',
+        lblTitleEn: 'Group Title (English)',
+        lblSchedEs: 'Día y horario (Español)',
+        lblSchedEn: 'Day & Schedule (English)',
+        lblLocEs: 'Lugar o enlace (Español)',
+        lblLocEn: 'Location or link (English)',
+        lblSignup: 'Enlace de inscripción (Opcional)',
+        lblActive: 'Visible en la portada (Activo)',
+        saveGroupBtn: 'Guardar Grupo / Taller',
+        groupSavedToast: 'Grupo guardado correctamente.',
+        groupDeletedToast: 'Grupo eliminado.',
+        statusActive: 'Activo',
+        statusPaused: 'Pausado',
+        btnEdit: 'Editar',
+        btnToggle: 'Activar/Pausar',
+        btnDelete: 'Eliminar',
+        p2Badge: 'Parte 2 • Parámetros y Seguridad',
+        p2Heading: 'Configuración General del Portal y PINs de Seguridad',
+        lblUnitEs: 'Nombre de la unidad (Español)',
+        lblUnitEn: 'Unit Name (English)',
+        lblLeaderPin: 'PIN de Líderes y Especialistas (usado en index.html)',
+        lblAdminPin: 'PIN de Consola Admin (usado en admin.html)',
+        lblPortal: 'URL Pública del Portal (GitHub Pages)',
+        lblForm: 'Enlace Encuesta Google Forms',
+        lblWa: 'Enlace Canal de WhatsApp',
+        lblSpec: 'Contacto del Especialista (Opcional)',
+        lblLocalEs: 'Aviso de apoyo local (Español)',
+        lblLocalEn: 'Local Support Note (English)',
+        lblSheet: 'Enlace CSV publicado de Google Sheets (Sincronización en vivo de grupos)',
+        resetBtn: 'Restaurar valores iniciales',
+        resetToast: 'Valores iniciales restaurados.',
+        saveGeneralBtn: 'Guardar Configuración General',
+        generalSavedToast: 'Configuración general y PINs guardados.',
+        p3Badge: 'Parte 3 • Publicación Sin Código en GitHub Pages',
+        p3Heading: 'Exportar Archivos Actualizados para GitHub Pages',
+        p3Desc: 'Como GitHub Pages es alojamiento estático, sigue estos tres pasos cada vez que quieras guardar permanentemente tus cambios en el código público sin editar HTML manualmente:',
+        stepATitle: 'Inyectar configuración en index.html',
+        stepADescHtml: 'Selecciona tu archivo <strong>index.html</strong> actual; esta consola actualizará automáticamente su bloque <code>DEFAULT_CONFIG</code> y descargará el nuevo <strong>index.html</strong> listo para subir.',
+        injectSuccess: '¡Nuevo index.html generado y descargado con tu configuración!',
+        injectError: 'El archivo seleccionado no contiene las marcas CONFIG_START / CONFIG_END de index.html.',
+        stepBTitle: 'Descargar admin.html Actualizado',
+        stepBDescHtml: 'Descarga una copia limpia de este mismo archivo <strong>admin.html</strong> con tu nuevo PIN de administrador y valores predeterminados ya guardados.',
+        stepBBtn: 'Descargar admin.html Actualizado',
+        adminDownloadedToast: 'Archivo admin.html descargado con tus cambios.',
+        stepCTitle: 'Subir archivos a GitHub Pages',
+        stepCDescHtml: 'Abre tu repositorio en GitHub, haz clic en <strong>Add file → Upload files</strong>, arrastra los archivos descargados y pulsa <strong>Commit changes</strong>.',
+        stepCBtn: 'Abrir Repositorio en GitHub'
+      },
+      en: {
+        htmlLang: 'en',
+        hdrTitle: 'Admin Console — Self-Reliance',
+        hdrSubtitle: 'Technical administration & zero-code publishing',
+        hdrBackBtn: '← Back to Portal (index.html)',
+        lockBadge: 'Administrators Only',
+        lockTitle: 'Administration Console',
+        lockDesc: 'Enter the Admin PIN (separate from the Leaders PIN) to manage groups, configure links, sync Google Sheets, and export updated files for GitHub Pages.',
+        lockSubmit: 'Unlock Admin Console',
+        lockError: 'Incorrect Admin PIN.',
+        lockSuccess: 'Admin Console unlocked.',
+        admPill: 'Admin Session Active • Zero-Code Management',
+        admHeading: 'Central Configuration for Self-Reliance Portal',
+        admDesc: 'Manage upcoming groups and workshops, sync live data from Google Sheets, update security PINs, and export ready-to-upload files for GitHub Pages.',
+        admSyncBtn: 'Sync from Google Sheets',
+        admLockBtn: 'Lock Admin Console',
+        syncSuccess: (n) => `Synced ${n} group(s) from Google Sheets.`,
+        syncError: 'Could not fetch Google Sheets CSV URL. Ensure it is published to the web.',
+        p1Badge: 'Part 1 • Course Offerings',
+        p1Heading: 'Visual Manager for Upcoming Groups & Workshops',
+        groupsCount: (active, total) => `${active} active of ${total} group(s)`,
+        addModeTitle: '+ Add new group or workshop',
+        editModeTitle: '✎ Editing group or workshop',
+        cancelEdit: 'Cancel edit',
+        lblCourse: 'Official course (auto-fills titles)',
+        lblFormat: 'Format',
+        lblFacilitator: 'Facilitator(s)',
+        lblTitleEs: 'Group Title (Spanish)',
+        lblTitleEn: 'Group Title (English)',
+        lblSchedEs: 'Day & Schedule (Spanish)',
+        lblSchedEn: 'Day & Schedule (English)',
+        lblLocEs: 'Location or link (Spanish)',
+        lblLocEn: 'Location or link (English)',
+        lblSignup: 'Sign-up link (Optional)',
+        lblActive: 'Visible on Home tab (Active)',
+        saveGroupBtn: 'Save Group / Workshop',
+        groupSavedToast: 'Group saved successfully.',
+        groupDeletedToast: 'Group deleted.',
+        statusActive: 'Active',
+        statusPaused: 'Paused',
+        btnEdit: 'Edit',
+        btnToggle: 'Toggle Active',
+        btnDelete: 'Delete',
+        p2Badge: 'Part 2 • Parameters & Security',
+        p2Heading: 'General Portal Settings & Security PINs',
+        lblUnitEs: 'Unit Name (Spanish)',
+        lblUnitEn: 'Unit Name (English)',
+        lblLeaderPin: 'Leaders & Specialists PIN (used on index.html)',
+        lblAdminPin: 'Admin Console PIN (used on admin.html)',
+        lblPortal: 'Public Portal URL (GitHub Pages)',
+        lblForm: 'Google Forms Survey URL',
+        lblWa: 'WhatsApp Channel URL',
+        lblSpec: 'Specialist Contact (Optional)',
+        lblLocalEs: 'Local Support Note (Spanish)',
+        lblLocalEn: 'Local Support Note (English)',
+        lblSheet: 'Published Google Sheets CSV URL (Live group sync)',
+        resetBtn: 'Reset to defaults',
+        resetToast: 'Reset to default configuration.',
+        saveGeneralBtn: 'Save General Settings',
+        generalSavedToast: 'General settings and PINs saved.',
+        p3Badge: 'Part 3 • Zero-Code GitHub Pages Publishing',
+        p3Heading: 'Export Updated Files for GitHub Pages',
+        p3Desc: 'Because GitHub Pages hosts static files, follow these three steps whenever you want to permanently save your updates without manually editing HTML:',
+        stepATitle: 'Inject config into index.html',
+        stepADescHtml: 'Select your current <strong>index.html</strong> file; this console will automatically update its <code>DEFAULT_CONFIG</code> block and download the new <strong>index.html</strong> ready to upload.',
+        injectSuccess: 'New index.html generated and downloaded with your settings!',
+        injectError: 'Selected file does not contain the CONFIG_START / CONFIG_END markers from index.html.',
+        stepBTitle: 'Download Updated admin.html',
+        stepBDescHtml: 'Download a clean copy of this <strong>admin.html</strong> file with your updated Admin PIN and default settings baked in.',
+        stepBBtn: 'Download Updated admin.html',
+        adminDownloadedToast: 'Updated admin.html downloaded with your changes.',
+        stepCTitle: 'Upload files to GitHub Pages',
+        stepCDescHtml: 'Open your GitHub repository, click <strong>Add file → Upload files</strong>, drag the downloaded files in, and click <strong>Commit changes</strong>.',
+        stepCBtn: 'Open GitHub Repository'
+      }
+    };
+
+    // =========================================================================
+    // STATE & STORAGE KEYS
+    // =========================================================================
+    const STORAGE_KEY_CONFIG = 'sr_portal_admin_config_v1';
+    const STORAGE_KEY_ADMIN_PIN = 'sr_portal_admin_pin_v1';
+    const STORAGE_KEY_LANG = 'sr_portal_lang_v1';
+    const SESSION_KEY_ADMIN_UNLOCKED = 'sr_admin_console_unlocked_v1';
+
+    let activeConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+    let activeAdminPin = DEFAULT_ADMIN_PIN;
+    let currentLang = 'es';
+
+    // =========================================================================
+    // INITIALIZATION
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const savedCfg = localStorage.getItem(STORAGE_KEY_CONFIG);
+        if (savedCfg) {
+          const parsed = JSON.parse(savedCfg);
+          if (parsed && typeof parsed === 'object') {
+            activeConfig = Object.assign({}, activeConfig, parsed);
+          }
+        }
+
+        const savedAdminPin = localStorage.getItem(STORAGE_KEY_ADMIN_PIN);
+        if (savedAdminPin && savedAdminPin.trim() !== '') {
+          activeAdminPin = savedAdminPin.trim();
+        }
+
+        const savedLang = localStorage.getItem(STORAGE_KEY_LANG);
+        if (savedLang === 'en' || savedLang === 'es') {
+          currentLang = savedLang;
+        }
+      } catch (e) {}
+
+      renderAdminUi();
+      syncAdminLockState();
+    });
+
+    function setLanguage(lang) {
+      if (lang !== 'es' && lang !== 'en') return;
+      currentLang = lang;
+      try {
+        localStorage.setItem(STORAGE_KEY_LANG, lang);
+      } catch (e) {}
+      renderAdminUi();
+    }
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+
+    function setVal(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.value = val ?? '';
+    }
+
+    // =========================================================================
+    // PIN LOCK / UNLOCK LOGIC
+    // =========================================================================
+    function syncAdminLockState() {
+      let unlocked = false;
+      try {
+        unlocked = sessionStorage.getItem(SESSION_KEY_ADMIN_UNLOCKED) === 'true';
+      } catch (e) {}
+
+      const lockedEl = document.getElementById('admin-locked-view');
+      const unlockedEl = document.getElementById('admin-unlocked-view');
+      if (unlocked) {
+        lockedEl.classList.add('hidden');
+        unlockedEl.classList.remove('hidden');
+      } else {
+        lockedEl.classList.remove('hidden');
+        unlockedEl.classList.add('hidden');
+      }
+    }
+
+    function unlockAdminConsole(event) {
+      event.preventDefault();
+      const input = document.getElementById('admin-pin-input');
+      const entered = (input.value || '').trim();
+      if (entered === String(activeAdminPin)) {
+        try {
+          sessionStorage.setItem(SESSION_KEY_ADMIN_UNLOCKED, 'true');
+        } catch (e) {}
+        input.value = '';
+        syncAdminLockState();
+        showToast(UI[currentLang].lockSuccess, 'success');
+      } else {
+        showToast(UI[currentLang].lockError, 'warning');
+      }
+    }
+
+    function lockAdminConsole() {
+      try {
+        sessionStorage.removeItem(SESSION_KEY_ADMIN_UNLOCKED);
+      } catch (e) {}
+      syncAdminLockState();
+    }
+
+    // =========================================================================
+    // RENDER FULL ADMIN UI
+    // =========================================================================
+    function renderAdminUi() {
+      const u = UI[currentLang];
+      document.documentElement.lang = u.htmlLang;
+
+      const esBtn = document.getElementById('btn-lang-es');
+      const enBtn = document.getElementById('btn-lang-en');
+      if (currentLang === 'es') {
+        esBtn.className = 'px-2.5 sm:px-3 py-1 rounded-full text-xs font-bold transition-all bg-[#1e3a5f] text-white shadow-sm';
+        esBtn.setAttribute('aria-pressed', 'true');
+        enBtn.className = 'px-2.5 sm:px-3 py-1 rounded-full text-xs font-bold transition-all text-slate-600 hover:text-[#1e3a5f]';
+        enBtn.setAttribute('aria-pressed', 'false');
+      } else {
+        enBtn.className = 'px-2.5 sm:px-3 py-1 rounded-full text-xs font-bold transition-all bg-[#1e3a5f] text-white shadow-sm';
+        enBtn.setAttribute('aria-pressed', 'true');
+        esBtn.className = 'px-2.5 sm:px-3 py-1 rounded-full text-xs font-bold transition-all text-slate-600 hover:text-[#1e3a5f]';
+        esBtn.setAttribute('aria-pressed', 'false');
+      }
+
+      // Header & Lock Screen
+      setText('hdr-title', u.hdrTitle);
+      setText('hdr-subtitle', u.hdrSubtitle);
+      setText('hdr-back-btn', u.hdrBackBtn);
+      setText('lock-badge', u.lockBadge);
+      setText('lock-title', u.lockTitle);
+      setText('lock-desc', u.lockDesc);
+      setText('lock-submit-btn', u.lockSubmit);
+
+      // Unlocked Banner
+      setText('adm-pill', u.admPill);
+      setText('adm-heading', u.admHeading);
+      setText('adm-desc', u.admDesc);
+      setText('adm-sync-btn', u.admSyncBtn);
+      setText('adm-lock-btn', u.admLockBtn);
+
+      // Part 1 Labels
+      setText('p1-badge', u.p1Badge);
+      setText('p1-heading', u.p1Heading);
+      setText('grp-cancel-edit-btn', u.cancelEdit);
+      setText('lbl-grp-course', u.lblCourse);
+      setText('lbl-grp-format', u.lblFormat);
+      setText('lbl-grp-facilitator', u.lblFacilitator);
+      setText('lbl-grp-title-es', u.lblTitleEs);
+      setText('lbl-grp-title-en', u.lblTitleEn);
+      setText('lbl-grp-schedule-es', u.lblSchedEs);
+      setText('lbl-grp-schedule-en', u.lblSchedEn);
+      setText('lbl-grp-location-es', u.lblLocEs);
+      setText('lbl-grp-location-en', u.lblLocEn);
+      setText('lbl-grp-signup', u.lblSignup);
+      setText('lbl-grp-active', u.lblActive);
+      setText('grp-save-btn', u.saveGroupBtn);
+
+      // Populate Course Dropdown
+      const select = document.getElementById('grp-course-select');
+      const prevCourse = select.value;
+      select.innerHTML = OFFICIAL_COURSES.map(c =>
+        `<option value="${c.id}">${c.titleEs} / ${c.titleEn}</option>`
+      ).join('');
+      if (prevCourse) select.value = prevCourse;
+
+      // Part 2 Labels & Values
+      setText('p2-badge', u.p2Badge);
+      setText('p2-heading', u.p2Heading);
+      setText('lbl-cfg-unit-es', u.lblUnitEs);
+      setText('lbl-cfg-unit-en', u.lblUnitEn);
+      setText('lbl-cfg-leader-pin', u.lblLeaderPin);
+      setText('lbl-cfg-admin-pin', u.lblAdminPin);
+      setText('lbl-cfg-portal', u.lblPortal);
+      setText('lbl-cfg-form', u.lblForm);
+      setText('lbl-cfg-wa', u.lblWa);
+      setText('lbl-cfg-spec', u.lblSpec);
+      setText('lbl-cfg-local-es', u.lblLocalEs);
+      setText('lbl-cfg-local-en', u.lblLocalEn);
+      setText('lbl-cfg-sheet', u.lblSheet);
+      setText('cfg-reset-btn', u.resetBtn);
+      setText('cfg-save-general-btn', u.saveGeneralBtn);
+
+      setVal('cfg-unit-es', activeConfig.unitNameEs);
+      setVal('cfg-unit-en', activeConfig.unitNameEn);
+      setVal('cfg-leader-pin', activeConfig.leaderPin);
+      setVal('cfg-admin-pin', activeAdminPin);
+      setVal('cfg-portal-url', activeConfig.portalUrl);
+      setVal('cfg-form-url', activeConfig.googleFormUrl);
+      setVal('cfg-wa-url', activeConfig.whatsappChannelUrl);
+      setVal('cfg-specialist', activeConfig.specialistContact || '');
+      setVal('cfg-local-es', activeConfig.localSupportEs);
+      setVal('cfg-local-en', activeConfig.localSupportEn);
+      setVal('cfg-groups-sheet', activeConfig.groupsSheetCsvUrl || '');
+
+      // Part 3 Labels
+      setText('p3-badge', u.p3Badge);
+      setText('p3-heading', u.p3Heading);
+      setText('p3-desc', u.p3Desc);
+      setText('step-a-title', u.stepATitle);
+      document.getElementById('step-a-desc').innerHTML = u.stepADescHtml;
+      setText('step-b-title', u.stepBTitle);
+      document.getElementById('step-b-desc').innerHTML = u.stepBDescHtml;
+      setText('step-b-btn', u.stepBBtn);
+      setText('step-c-title', u.stepCTitle);
+      document.getElementById('step-c-desc').innerHTML = u.stepCDescHtml;
+      setText('step-c-btn', u.stepCBtn);
+
+      renderAdminGroupsList();
+    }
+
+    // =========================================================================
+    // PART 1: GROUPS CRUD & GOOGLE SHEETS SYNC
+    // =========================================================================
+    function autoFillCourseTitles() {
+      const id = document.getElementById('grp-course-select').value;
+      const found = OFFICIAL_COURSES.find(c => c.id === id);
+      if (found) {
+        setVal('grp-title-es', found.titleEs);
+        setVal('grp-title-en', found.titleEn);
+      }
+    }
+
+    function renderAdminGroupsList() {
+      const u = UI[currentLang];
+      const groups = activeConfig.upcomingGroups || [];
+      const activeCount = groups.filter(g => g.active !== false).length;
+      setText('p1-groups-count', u.groupsCount(activeCount, groups.length));
+
+      const editId = document.getElementById('grp-edit-id').value;
+      setText('grp-form-mode-title', editId ? u.editModeTitle : u.addModeTitle);
+
+      const listEl = document.getElementById('admin-groups-list');
+      listEl.innerHTML = groups.map(g => {
+        const title = currentLang === 'es' ? (g.titleEs || g.titleEn) : (g.titleEn || g.titleEs);
+        const sched = currentLang === 'es' ? (g.scheduleEs || g.scheduleEn) : (g.scheduleEn || g.scheduleEs);
+        const loc = currentLang === 'es' ? (g.locationEs || g.locationEn) : (g.locationEn || g.locationEs);
+        const isActive = g.active !== false;
+        const badgeCls = isActive ? 'bg-[#2e6f5e]/10 text-[#2e6f5e]' : 'bg-slate-200 text-slate-600';
+        const badgeTxt = isActive ? u.statusActive : u.statusPaused;
+
+        return `
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${badgeCls}">${badgeTxt}</span>
+                <span class="font-bold text-sm text-[#1e3a5f]">${title}</span>
+              </div>
+              <p class="text-xs text-slate-600">${sched} • 📍 ${loc} • 👤 ${g.facilitator || '—'}</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 shrink-0">
+              <button type="button" onclick="editGroupItem('${g.id}')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#1e3a5f] font-bold text-xs">
+                ${u.btnEdit}
+              </button>
+              <button type="button" onclick="toggleGroupActive('${g.id}')" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-[#b45309] font-bold text-xs">
+                ${u.btnToggle}
+              </button>
+              <button type="button" onclick="deleteGroupItem('${g.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 font-bold text-xs">
+                ${u.btnDelete}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function saveGroupFromForm(event) {
+      event.preventDefault();
+      const editId = document.getElementById('grp-edit-id').value;
+      const obj = {
+        id: editId || `grp-${Date.now()}`,
+        courseId: document.getElementById('grp-course-select').value,
+        titleEs: document.getElementById('grp-title-es').value.trim(),
+        titleEn: document.getElementById('grp-title-en').value.trim(),
+        scheduleEs: document.getElementById('grp-schedule-es').value.trim(),
+        scheduleEn: document.getElementById('grp-schedule-en').value.trim(),
+        format: document.getElementById('grp-format-select').value,
+        locationEs: document.getElementById('grp-location-es').value.trim(),
+        locationEn: document.getElementById('grp-location-en').value.trim(),
+        facilitator: document.getElementById('grp-facilitator-input').value.trim(),
+        signupUrl: document.getElementById('grp-signup-url').value.trim(),
+        active: document.getElementById('grp-active-check').checked
+      };
+
+      if (!Array.isArray(activeConfig.upcomingGroups)) activeConfig.upcomingGroups = [];
+      if (editId) {
+        const idx = activeConfig.upcomingGroups.findIndex(g => g.id === editId);
+        if (idx !== -1) activeConfig.upcomingGroups[idx] = obj;
+      } else {
+        activeConfig.upcomingGroups.push(obj);
+      }
+
+      persistState();
+      cancelGroupEdit();
+      renderAdminGroupsList();
+      showToast(UI[currentLang].groupSavedToast, 'success');
+    }
+
+    function editGroupItem(id) {
+      const grp = (activeConfig.upcomingGroups || []).find(g => g.id === id);
+      if (!grp) return;
+      setVal('grp-edit-id', grp.id);
+      setVal('grp-course-select', grp.courseId || 'finanzas');
+      setVal('grp-format-select', grp.format || 'in-person');
+      setVal('grp-facilitator-input', grp.facilitator || '');
+      setVal('grp-title-es', grp.titleEs || '');
+      setVal('grp-title-en', grp.titleEn || '');
+      setVal('grp-schedule-es', grp.scheduleEs || '');
+      setVal('grp-schedule-en', grp.scheduleEn || '');
+      setVal('grp-location-es', grp.locationEs || '');
+      setVal('grp-location-en', grp.locationEn || '');
+      setVal('grp-signup-url', grp.signupUrl || '');
+      document.getElementById('grp-active-check').checked = grp.active !== false;
+
+      document.getElementById('grp-cancel-edit-btn').classList.remove('hidden');
+      setText('grp-form-mode-title', UI[currentLang].editModeTitle);
+      document.getElementById('group-editor-form').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function cancelGroupEdit() {
+      document.getElementById('group-editor-form').reset();
+      setVal('grp-edit-id', '');
+      document.getElementById('grp-active-check').checked = true;
+      document.getElementById('grp-cancel-edit-btn').classList.add('hidden');
+      setText('grp-form-mode-title', UI[currentLang].addModeTitle);
+    }
+
+    function toggleGroupActive(id) {
+      const grp = (activeConfig.upcomingGroups || []).find(g => g.id === id);
+      if (!grp) return;
+      grp.active = grp.active === false;
+      persistState();
+      renderAdminGroupsList();
+    }
+
+    function deleteGroupItem(id) {
+      activeConfig.upcomingGroups = (activeConfig.upcomingGroups || []).filter(g => g.id !== id);
+      persistState();
+      renderAdminGroupsList();
+      showToast(UI[currentLang].groupDeletedToast, 'info');
+    }
+
+    async function syncFromGoogleSheets() {
+      const url = (document.getElementById('cfg-groups-sheet').value || activeConfig.groupsSheetCsvUrl || '').trim();
+      if (!url) {
+        showToast(UI[currentLang].syncError, 'warning');
+        return;
+      }
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Fetch failed');
+        const text = await res.text();
+        const rows = parseCsvRows(text);
+        if (rows.length < 2) throw new Error('Empty CSV');
+
+        const headers = rows[0].map(h => h.toLowerCase().trim());
+        const findCol = (...candidates) => {
+          for (const name of candidates) {
+            const idx = headers.indexOf(name.toLowerCase());
+            if (idx !== -1) return idx;
+          }
+          return -1;
+        };
+
+        const idxCourse = findCol('courseid', 'coursekey', 'course');
+        const idxTitleEs = findCol('titlees', 'titulo');
+        const idxTitleEn = findCol('titleen', 'title');
+        const idxSchedEs = findCol('schedulees', 'horario');
+        const idxSchedEn = findCol('scheduleen', 'schedule');
+        const idxFormat = findCol('format', 'formato', 'modees', 'modeen');
+        const idxLocEs = findCol('locationes', 'lugar');
+        const idxLocEn = findCol('locationen', 'location');
+        const idxFac = findCol('facilitator', 'facilitador');
+        const idxSignup = findCol('signupurl', 'url', 'link');
+        const idxActive = findCol('active', 'activo');
+
+        const synced = rows.slice(1).map((r, idx) => {
+          const rawFmt = (idxFormat !== -1 ? r[idxFormat] : 'in-person').toLowerCase();
+          const fmt = (rawFmt.includes('virt') || rawFmt.includes('online') || rawFmt.includes('zoom'))
+            ? 'virtual'
+            : 'in-person';
+          const rawAct = (idxActive !== -1 ? r[idxActive] : 'true').toLowerCase().trim();
+          const act = !(rawAct === 'false' || rawAct === 'no' || rawAct === '0' || rawAct === 'inactivo');
+
+          return {
+            id: `sheet-grp-${idx + 1}`,
+            courseId: idxCourse !== -1 ? (r[idxCourse] || 'finanzas').trim() : 'finanzas',
+            titleEs: idxTitleEs !== -1 ? (r[idxTitleEs] || '') : (r[0] || ''),
+            titleEn: idxTitleEn !== -1 ? (r[idxTitleEn] || '') : (r[1] || r[0] || ''),
+            scheduleEs: idxSchedEs !== -1 ? (r[idxSchedEs] || '') : '',
+            scheduleEn: idxSchedEn !== -1 ? (r[idxSchedEn] || '') : '',
+            format: fmt,
+            locationEs: idxLocEs !== -1 ? (r[idxLocEs] || '') : '',
+            locationEn: idxLocEn !== -1 ? (r[idxLocEn] || '') : '',
+            facilitator: idxFac !== -1 ? (r[idxFac] || '') : '',
+            signupUrl: idxSignup !== -1 ? (r[idxSignup] || '') : '',
+            active: act
+          };
+        }).filter(g => g.titleEs || g.titleEn);
+
+        if (synced.length === 0) throw new Error('No rows parsed');
+        activeConfig.upcomingGroups = synced;
+        activeConfig.groupsSheetCsvUrl = url;
+        persistState();
+        renderAdminGroupsList();
+        showToast(UI[currentLang].syncSuccess(synced.length), 'success');
+      } catch (err) {
+        showToast(UI[currentLang].syncError, 'warning');
+      }
+    }
+
+    function parseCsvRows(csvText) {
+      const rows = [];
+      let row = [];
+      let field = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < csvText.length; i++) {
+        const ch = csvText[i];
+        const next = csvText[i + 1];
+
+        if (inQuotes) {
+          if (ch === '"' && next === '"') {
+            field += '"';
+            i++;
+          } else if (ch === '"') {
+            inQuotes = false;
+          } else {
+            field += ch;
+          }
+        } else {
+          if (ch === '"') {
+            inQuotes = true;
+          } else if (ch === ',') {
+            row.push(field.trim());
+            field = '';
+          } else if (ch === '\r' && next === '\n') {
+            row.push(field.trim());
+            rows.push(row);
+            row = [];
+            field = '';
+            i++;
+          } else if (ch === '\n' || ch === '\r') {
+            row.push(field.trim());
+            rows.push(row);
+            row = [];
+            field = '';
+          } else {
+            field += ch;
+          }
+        }
+      }
+      if (field.length > 0 || row.length > 0) {
+        row.push(field.trim());
+        rows.push(row);
+      }
+      return rows.filter(r => r.some(cell => cell !== ''));
+    }
+
+    // =========================================================================
+    // PART 2: SAVE GENERAL SETTINGS & PINS
+    // =========================================================================
+    function saveGeneralSettings(event) {
+      event.preventDefault();
+      activeConfig.unitNameEs = document.getElementById('cfg-unit-es').value.trim();
+      activeConfig.unitNameEn = document.getElementById('cfg-unit-en').value.trim();
+      activeConfig.leaderPin = document.getElementById('cfg-leader-pin').value.trim() || '2026';
+      activeAdminPin = document.getElementById('cfg-admin-pin').value.trim() || '2026ADMIN';
+      activeConfig.portalUrl = document.getElementById('cfg-portal-url').value.trim();
+      activeConfig.googleFormUrl = document.getElementById('cfg-form-url').value.trim();
+      activeConfig.whatsappChannelUrl = document.getElementById('cfg-wa-url').value.trim();
+      activeConfig.specialistContact = document.getElementById('cfg-specialist').value.trim();
+      activeConfig.localSupportEs = document.getElementById('cfg-local-es').value.trim();
+      activeConfig.localSupportEn = document.getElementById('cfg-local-en').value.trim();
+      activeConfig.groupsSheetCsvUrl = document.getElementById('cfg-groups-sheet').value.trim();
+
+      persistState();
+      showToast(UI[currentLang].generalSavedToast, 'success');
+    }
+
+    function persistState() {
+      try {
+        localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(activeConfig));
+        localStorage.setItem(STORAGE_KEY_ADMIN_PIN, activeAdminPin);
+      } catch (e) {}
+    }
+
+    function resetConfigToDefaults() {
+      activeConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+      activeAdminPin = DEFAULT_ADMIN_PIN;
+      try {
+        localStorage.removeItem(STORAGE_KEY_CONFIG);
+        localStorage.removeItem(STORAGE_KEY_ADMIN_PIN);
+      } catch (e) {}
+      cancelGroupEdit();
+      renderAdminUi();
+      showToast(UI[currentLang].resetToast, 'info');
+    }
+
+    // =========================================================================
+    // PART 3: ZERO-CODE HTML INJECTOR & EXPORTERS
+    // =========================================================================
+    function handleInjectIndexHtml(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = String(e.target.result || '');
+        const markerRegex = /\/\* === CONFIG_START === \*\/[\s\S]*?\/\* === CONFIG_END === \*\//;
+
+        if (!markerRegex.test(content)) {
+          showToast(UI[currentLang].injectError, 'warning');
+          event.target.value = '';
+          return;
+        }
+
+        const updatedConfigBlock =
+          `/* === CONFIG_START === */\nconst DEFAULT_CONFIG = ${JSON.stringify(activeConfig, null, 2)};\n/* === CONFIG_END === */`;
+
+        const updatedHtml = content.replace(markerRegex, updatedConfigBlock);
+        triggerFileDownload(updatedHtml, 'index.html');
+        event.target.value = '';
+        showToast(UI[currentLang].injectSuccess, 'success');
+      };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function downloadUpdatedAdminHtml() {
+      const clone = document.documentElement.cloneNode(true);
+      clone.setAttribute('lang', 'es');
+
+      // Clear dynamic list container in clone so exported HTML stays clean
+      const listEl = clone.querySelector('#admin-groups-list');
+      if (listEl) listEl.innerHTML = '';
+
+      // Ensure exported admin.html starts locked
+      const lockedEl = clone.querySelector('#admin-locked-view');
+      const unlockedEl = clone.querySelector('#admin-unlocked-view');
+      if (lockedEl) lockedEl.classList.remove('hidden');
+      if (unlockedEl) unlockedEl.classList.add('hidden');
+
+      const scriptEl = clone.querySelector('#admin-app-script');
+      if (scriptEl) {
+        const updatedPinBlock =
+          `/* === ADMIN_PIN_START === */\nconst DEFAULT_ADMIN_PIN = ${JSON.stringify(activeAdminPin)};\n/* === ADMIN_PIN_END === */`;
+        const updatedCfgBlock =
+          `/* === CONFIG_START === */\nconst DEFAULT_CONFIG = ${JSON.stringify(activeConfig, null, 2)};\n/* === CONFIG_END === */`;
+
+        scriptEl.textContent = scriptEl.textContent
+          .replace(/\/\* === ADMIN_PIN_START === \*\/[\s\S]*?\/\* === ADMIN_PIN_END === \*\//, updatedPinBlock)
+          .replace(/\/\* === CONFIG_START === \*\/[\s\S]*?\/\* === CONFIG_END === \*\//, updatedCfgBlock);
+      }
+
+      const finalHtml = '<!DOCTYPE html>\n' + clone.outerHTML;
+      triggerFileDownload(finalHtml, 'admin.html');
+      showToast(UI[currentLang].adminDownloadedToast, 'success');
+    }
+
+    function triggerFileDownload(textContent, filename) {
+      const blob = new Blob([textContent], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // =========================================================================
+    // TOAST NOTIFICATION UTILITY
+    // =========================================================================
+    function showToast(msg, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const borderClass = type === 'warning' ? 'border-amber-400' : 'border-[#2e6f5e]';
+      toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-xl text-xs sm:text-sm font-medium bg-[#1e3a5f] text-white border-l-4 ${borderClass} flex items-center justify-between gap-3 transition-all duration-300`;
+      toast.innerHTML = `
+        <span>${msg}</span>
+        <button type="button" onclick="this.parentElement.remove()" class="text-white/70 hover:text-white shrink-0" aria-label="Close">✕</button>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-6px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
