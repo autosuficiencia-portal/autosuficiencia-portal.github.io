@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal de Autosuficiencia — Hallar fortaleza en el Señor / Self-Reliance Portal — Find Strength in the Lord</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            srNavy: '#1e3a5f',
+            srNavyDark: '#142842',
+            srTeal: '#0f766e',
+            srTealDark: '#115e59',
+            srBlue: '#2b6cb0',
+            srGold: '#d97706',
+            srGoldDark: '#b45309',
+            srCream: '#f8fafc',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    .tab-panel {
+      animation: panelFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes panelFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Hide horizontal scrollbar on mobile tab strip while preserving touch scrolling */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-[#0f766e]/20 selection:text-[#1e3a5f] pb-24">
+
+  <!-- ===================================================================== -->
+  <!-- FLOATING TOAST NOTIFICATIONS (Non-blocking UI feedback)               -->
+  <!-- ===================================================================== -->
+  <div id="toast-container" aria-live="polite" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-[calc(100%-2rem)]"></div>
+
+  <!-- ===================================================================== -->
+  <!-- STICKY TOP NAVIGATION BAR WITH BILINGUAL TOGGLE (ES | EN)             -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 gap-3">
+        <!-- Brand / Logo -->
+        <button type="button" onclick="switchTab('inicio')" class="flex items-center gap-3 text-left group focus:outline-none">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1e3a5f] to-[#0f766e] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform shrink-0">
+            <i data-lucide="compass" class="w-5 h-5 text-amber-300"></i>
+          </div>
+          <div>
+            <span id="nav-brand-title" class="font-display font-bold text-[#1e3a5f] text-sm sm:text-base lg:text-lg leading-tight block">
+              Portal de Autosuficiencia
+            </span>
+            <span id="nav-brand-subtitle" class="text-xs text-[#0f766e] font-medium hidden sm:block">
+              Hallar fortaleza en el Señor
+            </span>
+          </div>
+        </button>
+
+        <!-- Desktop 4-Tab Navigation -->
+        <nav class="hidden lg:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/70" aria-label="Primary Navigation">
+          <button type="button" data-tab-btn="inicio" onclick="switchTab('inicio')" class="nav-btn px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all flex items-center gap-1.5 bg-[#1e3a5f] text-white shadow-sm">
+            <i data-lucide="home" class="w-4 h-4"></i>
+            <span id="tab-label-inicio">Inicio y Cursos</span>
+          </button>
+          <button type="button" data-tab-btn="diagnostico" onclick="switchTab('diagnostico')" class="nav-btn px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all flex items-center gap-1.5 text-slate-600 hover:text-[#1e3a5f] hover:bg-white">
+            <i data-lucide="clipboard-check" class="w-4 h-4 text-[#0f766e]"></i>
+            <span id="tab-label-diagnostico">Diagnóstico y Encuesta</span>
+          </button>
+          <button type="button" data-tab-btn="biblioteca" onclick="switchTab('biblioteca')" class="nav-btn px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all flex items-center gap-1.5 text-slate-600 hover:text-[#1e3a5f] hover:bg-white">
+            <i data-lucide="book-open" class="w-4 h-4 text-[#d97706]"></i>
+            <span id="tab-label-biblioteca">Biblioteca y Ayuda</span>
+          </button>
+          <button type="button" data-tab-btn="lideres" onclick="switchTab('lideres')" class="nav-btn px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all flex items-center gap-1.5 text-slate-600 hover:text-[#1e3a5f] hover:bg-white">
+            <i data-lucide="users" class="w-4 h-4 text-[#2b6cb0]"></i>
+            <span id="tab-label-lideres">Líderes y Especialistas</span>
+          </button>
+        </nav>
+
+        <!-- Right Controls: Zero Storage Indicator + ES / EN Toggle -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <span class="hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#0f766e]/10 text-[#0f766e] border border-[#0f766e]/25">
+            <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
+            <span id="nav-cloud-badge">0 MB en tu teléfono</span>
+          </span>
+
+          <!-- Accessible ES | EN Pill Toggle -->
+          <div role="group" aria-label="Language toggle / Selector de idioma" class="inline-flex items-center p-1 rounded-full bg-slate-100 border border-slate-300 shadow-inner">
+            <button
+              type="button"
+              id="lang-btn-es"
+              onclick="setLanguage('es')"
+              aria-pressed="true"
+              class="px-3 py-1 rounded-full text-xs font-extrabold tracking-wide transition-all bg-[#1e3a5f] text-white shadow-sm"
+            >
+              ES
+            </button>
+            <button
+              type="button"
+              id="lang-btn-en"
+              onclick="setLanguage('en')"
+              aria-pressed="false"
+              class="px-3 py-1 rounded-full text-xs font-extrabold tracking-wide transition-all text-slate-600 hover:text-[#1e3a5f]"
+            >
+              EN
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile / Tablet Scrollable Tab Strip -->
+      <nav class="flex lg:hidden items-center gap-2 overflow-x-auto no-scrollbar py-2.5 border-t border-slate-100" aria-label="Mobile Navigation">
+        <button type="button" data-tab-btn="inicio" onclick="switchTab('inicio')" class="nav-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 bg-[#1e3a5f] text-white shadow-sm">
+          <i data-lucide="home" class="w-3.5 h-3.5"></i>
+          <span id="mob-tab-label-inicio">Inicio y Cursos</span>
+        </button>
+        <button type="button" data-tab-btn="diagnostico" onclick="switchTab('diagnostico')" class="nav-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 bg-slate-100 text-slate-700">
+          <i data-lucide="clipboard-check" class="w-3.5 h-3.5 text-[#0f766e]"></i>
+          <span id="mob-tab-label-diagnostico">Diagnóstico y Encuesta</span>
+        </button>
+        <button type="button" data-tab-btn="biblioteca" onclick="switchTab('biblioteca')" class="nav-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 bg-slate-100 text-slate-700">
+          <i data-lucide="book-open" class="w-3.5 h-3.5 text-[#d97706]"></i>
+          <span id="mob-tab-label-biblioteca">Biblioteca y Ayuda</span>
+        </button>
+        <button type="button" data-tab-btn="lideres" onclick="switchTab('lideres')" class="nav-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 bg-slate-100 text-slate-700">
+          <i data-lucide="users" class="w-3.5 h-3.5 text-[#2b6cb0]"></i>
+          <span id="mob-tab-label-lideres">Líderes y Especialistas</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- MAIN CONTENT CONTAINER                                                -->
+  <!-- ===================================================================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 space-y-10">
+
+    <!-- =================================================================== -->
+    <!-- TAB 1: INICIO Y CURSOS / HOME & COURSES                             -->
+    <!-- =================================================================== -->
+    <section id="tab-inicio" class="tab-panel space-y-10">
+
+      <!-- HERO SECTION -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1e3a5f] via-[#234876] to-[#0f766e] text-white shadow-xl">
+        <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#d97706]/20 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-[#2b6cb0]/30 blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 p-6 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- Left Column: Title, Official Definition, Faith Foundation & Primary CTAs -->
+          <div class="lg:col-span-7 space-y-5">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-xs sm:text-sm font-medium text-amber-200">
+              <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
+              <span id="hero-church-badge">La Iglesia de Jesucristo de los Santos de los Últimos Días</span>
+            </div>
+
+            <h1 id="hero-title" class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+              Portal de Autosuficiencia — Hallar fortaleza en el Señor
+            </h1>
+
+            <!-- Official Definition Box -->
+            <div class="bg-white/10 backdrop-blur-md border-l-4 border-[#d97706] rounded-r-2xl p-4 sm:p-5 space-y-1">
+              <p id="hero-def-label" class="text-xs uppercase tracking-wider font-bold text-amber-300">
+                ¿Qué es la autosuficiencia?
+              </p>
+              <p id="hero-def-text" class="text-sm sm:text-base text-white font-medium leading-relaxed">
+                La autosuficiencia es la capacidad, el compromiso y el empeño de proporcionar los elementos espirituales y temporales indispensables para sostener la vida de uno mismo y de su familia.
+              </p>
+            </div>
+
+            <!-- Spiritual Foundation Note -->
+            <p id="hero-faith-text" class="text-sm text-slate-100/95 leading-relaxed">
+              La autosuficiencia es un viaje de fe. Al combinar el poder de Dios con nuestros esfuerzos, satisfacemos las necesidades prácticas y espirituales de la vida.
+            </p>
+
+            <!-- Primary & Secondary CTA Buttons -->
+            <div class="flex flex-wrap gap-3 pt-1">
+              <a
+                id="hero-survey-cta-link"
+                href="https://forms.gle/Vg8NKX7GGccs2pC46"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-5 py-3.5 rounded-xl bg-[#d97706] hover:bg-[#b45309] text-white font-bold text-sm sm:text-base shadow-lg shadow-amber-950/25 transition-all flex items-center gap-2"
+              >
+                <i data-lucide="clipboard-list" class="w-5 h-5"></i>
+                <span id="hero-cta-survey">Encuesta Anónima de Necesidades</span>
+                <i data-lucide="external-link" class="w-4 h-4"></i>
+              </a>
+
+              <a
+                id="hero-cta-hub-link"
+                href="https://www.churchofjesuschrist.org/life/self-reliance?lang=spa"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-5 py-3.5 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/25 font-semibold text-sm sm:text-base transition-all flex items-center gap-2"
+              >
+                <span id="hero-cta-hub">Centro Oficial de Autosuficiencia</span>
+                <i data-lucide="external-link" class="w-4 h-4 text-amber-300"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Elder Mark E. Petersen Quote Card & 3 Core Benefits -->
+          <div class="lg:col-span-5 space-y-5">
+            <blockquote class="bg-white text-slate-800 rounded-2xl p-6 shadow-lg border border-slate-100">
+              <div class="w-10 h-10 rounded-full bg-amber-100 text-[#d97706] flex items-center justify-center mb-3">
+                <i data-lucide="quote" class="w-5 h-5"></i>
+              </div>
+              <p id="hero-quote-text" class="text-sm sm:text-base italic text-slate-700 leading-relaxed mb-4">
+                "[Dios] espera que utilicemos nuestra inteligencia e ingenio para mejorar nuestras circunstancias, tanto espiritual como temporalmente. Él desea que tengamos éxito en la vida y desea ayudarnos."
+              </p>
+              <footer class="flex items-center justify-between gap-2 pt-3 border-t border-slate-100">
+                <span id="hero-quote-author" class="font-display font-bold text-sm text-[#1e3a5f]">Élder Mark E. Petersen</span>
+                <a id="hero-quote-link" href="https://www.churchofjesuschrist.org/study/general-conference/1981/04/blessings-in-self-reliance?lang=spa" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs font-bold text-[#0f766e] hover:underline">
+                  <span id="hero-quote-link-label">Leer discurso</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+              </footer>
+            </blockquote>
+
+            <!-- Three Core Benefits Badges -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="hero-benefits-grid">
+              <!-- Populated dynamically in ES / EN -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIX ESSENTIAL LIFE SKILLS SECTION -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-5">
+        <div class="max-w-3xl">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#0f766e]/10 text-[#0f766e] mb-2">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+            <span id="skills-badge">Habilidades transversales</span>
+          </span>
+          <h2 id="skills-title" class="font-display text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
+            6 Habilidades Esenciales para la Vida
+          </h2>
+          <p id="skills-subtitle" class="text-sm sm:text-base text-slate-600 mt-1">
+            Los cursos de autosuficiencia de la Iglesia ayudan a las personas a desarrollar estas seis habilidades prácticas:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="skills-grid">
+          <!-- Populated dynamically in ES / EN -->
+        </div>
+      </div>
+
+      <!-- SEARCH BAR & CATEGORY FILTER PILLS FOR THE 7 COURSES -->
+      <div id="catalogo-cursos" class="bg-white rounded-3xl p-5 sm:p-7 shadow-sm border border-slate-200/80 space-y-5">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 id="courses-section-title" class="font-display text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
+              Los 7 Cursos Oficiales de Autosuficiencia
+            </h2>
+            <p id="courses-section-subtitle" class="text-sm text-slate-600 mt-1">
+              Explora cada grupo y abre sus recursos oficiales directamente en la nube sin ocupar almacenamiento en tu teléfono.
+            </p>
+          </div>
+
+          <!-- Search Input -->
+          <div class="relative w-full md:w-80">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input
+              type="text"
+              id="search-input"
+              oninput="filterCourses()"
+              placeholder="Buscar curso o tema..."
+              class="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2b6cb0]/35 focus:border-[#2b6cb0] transition-all"
+            />
+            <button type="button" id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label="Clear search">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex flex-wrap items-center gap-2 pt-1" id="category-filters">
+          <!-- Populated dynamically in ES / EN -->
+        </div>
+      </div>
+
+      <!-- 7 OFFICIAL COURSES GRID -->
+      <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Populated dynamically in ES / EN -->
+      </div>
+
+      <!-- Empty Search Results State -->
+      <div id="no-courses-msg" class="hidden text-center py-12 bg-white rounded-3xl border border-slate-200">
+        <i data-lucide="search-x" class="w-10 h-10 text-slate-400 mx-auto mb-3"></i>
+        <p id="no-courses-title" class="font-display font-bold text-[#1e3a5f]">No se encontraron cursos con ese término</p>
+        <p id="no-courses-desc" class="text-sm text-slate-500 mt-1">Intenta con otra palabra clave o restablece los filtros.</p>
+        <button type="button" id="no-courses-btn" onclick="clearSearch()" class="mt-4 px-4 py-2 rounded-xl bg-[#1e3a5f] text-white text-sm font-semibold">
+          Mostrar todos los cursos
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 2: DIAGNÓSTICO Y ENCUESTA / DIAGNOSTIC & SURVEY                 -->
+    <!-- =================================================================== -->
+    <section id="tab-diagnostico" class="tab-panel hidden space-y-8">
+
+      <!-- TOP BANNER CARD: OFFICIAL ANONYMOUS NEEDS SURVEY -->
+      <div class="bg-gradient-to-br from-[#1e3a5f] via-[#244775] to-[#0f766e] text-white rounded-3xl p-6 sm:p-8 shadow-lg border border-white/10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+        <div class="space-y-2.5 max-w-2xl">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#d97706] text-white">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            <span id="survey-card-badge">100 % Anónima y Confidencial</span>
+          </span>
+          <h2 id="survey-card-title" class="font-display text-2xl sm:text-3xl font-bold">
+            Encuesta Anónima de Necesidades
+          </h2>
+          <p id="survey-card-desc" class="text-sm sm:text-base text-slate-100 leading-relaxed">
+            Comparte tus intereses y horarios preferidos de forma totalmente anónima para ayudar a los especialistas de barrio y estaca a organizar los próximos grupos y recursos.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto shrink-0">
+          <a
+            id="survey-direct-btn"
+            href="https://forms.gle/Vg8NKX7GGccs2pC46"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-6 py-4 rounded-2xl bg-[#d97706] hover:bg-[#b45309] text-white font-bold text-sm sm:text-base shadow-xl transition-all flex items-center justify-center gap-2"
+          >
+            <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+            <span id="survey-card-btn">Abrir Encuesta en Google Forms</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </a>
+
+          <button
+            type="button"
+            onclick="copySurveyLink()"
+            class="px-5 py-3 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/25 font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-2"
+          >
+            <i data-lucide="copy" class="w-4 h-4 text-amber-300"></i>
+            <span id="survey-copy-btn">Copiar enlace de encuesta</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SELF-ASSESSMENT CHECKLIST -->
+      <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200/80">
+        <div class="max-w-3xl space-y-2 mb-8">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#2b6cb0]/10 text-[#2b6cb0]">
+            <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+            <span id="diag-badge">Ruta personalizada en la nube (0 MB)</span>
+          </span>
+          <h2 id="diag-title" class="font-display text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
+            Autoevaluación Interactiva
+          </h2>
+          <p id="diag-subtitle" class="text-sm sm:text-base text-slate-600">
+            Marca los cursos y áreas de ayuda relacionada que te interesan hoy para generar al instante tu plan de estudio con enlaces directos a los manuales digitales en la Biblioteca del Evangelio.
+          </p>
+        </div>
+
+        <form id="diagnostic-form" onsubmit="generatePersonalPlan(event)" class="space-y-8">
+          <!-- Step 1: 7 Courses -->
+          <div class="space-y-4">
+            <h3 class="font-display font-bold text-lg text-[#1e3a5f] flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-full bg-[#1e3a5f] text-white text-xs flex items-center justify-center shrink-0">1</span>
+              <span id="diag-step1-title">¿En qué cursos de autosuficiencia te gustaría enfocarte?</span>
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="diag-courses-options"></div>
+          </div>
+
+          <!-- Step 2: 3 Related Help Areas -->
+          <div class="space-y-4 pt-6 border-t border-slate-100">
+            <h3 class="font-display font-bold text-lg text-[#1e3a5f] flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-full bg-[#0f766e] text-white text-xs flex items-center justify-center shrink-0">2</span>
+              <span id="diag-step2-title">¿Necesitas apoyo en alguna área de ayuda relacionada? (Opcional)</span>
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3" id="diag-related-options"></div>
+          </div>
+
+          <!-- Step 3: Preferred Format -->
+          <div class="space-y-4 pt-6 border-t border-slate-100">
+            <h3 class="font-display font-bold text-lg text-[#1e3a5f] flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-full bg-[#d97706] text-white text-xs flex items-center justify-center shrink-0">3</span>
+              <span id="diag-step3-title">¿Cómo prefieres estudiar o participar?</span>
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="diag-modality-options"></div>
+          </div>
+
+          <!-- Submit & Clear Buttons -->
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button type="submit" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#1e3a5f] to-[#0f766e] hover:opacity-95 text-white font-bold text-sm sm:text-base shadow-lg transition-all flex items-center gap-2">
+              <i data-lucide="route" class="w-5 h-5 text-amber-300"></i>
+              <span id="diag-submit-btn">Generar mi ruta en la nube</span>
+            </button>
+            <button type="button" onclick="resetDiagnostic()" class="px-4 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all">
+              <span id="diag-reset-btn">Limpiar selección</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- GENERATED ROADMAP CARD -->
+      <div id="diagnostic-result-card" class="hidden bg-gradient-to-br from-[#1e3a5f] to-[#142842] text-white rounded-3xl p-6 sm:p-10 shadow-xl space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/15 pb-6">
+          <div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#0f766e] text-white mb-2">
+              <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
+              <span id="res-badge">Ruta en la nube • 0 MB en tu teléfono</span>
+            </span>
+            <h3 id="res-title" class="font-display text-2xl sm:text-3xl font-bold">Tu Ruta Personalizada de Autosuficiencia</h3>
+            <p id="result-modality-text" class="text-sm text-amber-300 mt-1 font-medium"></p>
+          </div>
+          <button type="button" onclick="copyPersonalPlan()" class="shrink-0 px-5 py-3.5 rounded-xl bg-[#d97706] hover:bg-[#b45309] text-white font-bold text-sm shadow-lg transition-all flex items-center gap-2">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span id="res-copy-btn">Copiar mi plan personalizado para WhatsApp</span>
+          </button>
+        </div>
+
+        <!-- Direct Course & Related Help Cards -->
+        <div id="result-links-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+        <!-- Always-included Gospel Library Digital Manuals Link -->
+        <div class="bg-white/10 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/15">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+              <i data-lucide="play-circle" class="w-5 h-5 text-amber-300"></i>
+            </div>
+            <div>
+              <h4 id="res-library-title" class="font-display font-bold text-sm sm:text-base">Manuales y videos de los cursos (Biblioteca del Evangelio)</h4>
+              <p id="res-library-desc" class="text-xs text-slate-200">Consulta todos los manuales y videos digitales en línea sin ocupar memoria en tu celular.</p>
+            </div>
+          </div>
+          <a id="res-library-link" href="https://www.churchofjesuschrist.org/study/books-and-lessons/self-reliance-resources?lang=spa" target="_blank" rel="noopener noreferrer" class="shrink-0 px-4 py-2.5 rounded-xl bg-white text-[#1e3a5f] hover:bg-slate-100 font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5">
+            <span id="res-library-btn">Abrir manuales digitales</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 3: BIBLIOTECA Y AYUDA / LIBRARY & HELP                          -->
+    <!-- =================================================================== -->
+    <section id="tab-biblioteca" class="tab-panel hidden space-y-10">
+      <!-- Cloud Study Resources -->
+      <div class="space-y-6">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#0f766e]/10 text-[#0f766e] mb-2">
+            <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
+            <span id="lib-badge">Cero almacenamiento en tu teléfono</span>
+          </span>
+          <h2 id="lib-title" class="font-display text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
+            Biblioteca de Estudio y Materiales Oficiales
+          </h2>
+          <p id="lib-subtitle" class="text-sm sm:text-base text-slate-600 mt-1">
+            Accede directamente en la nube a manuales, videos, relatos inspiradores y manuales impresos sin descargar archivos pesados.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="library-cards-grid">
+          <!-- Populated dynamically in ES / EN -->
+        </div>
+      </div>
+
+      <!-- Related Help Section -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#d97706]/15 text-[#d97706] mb-2">
+            <i data-lucide="life-buoy" class="w-3.5 h-3.5"></i>
+            <span id="rel-badge">Programas complementarios</span>
+          </span>
+          <h2 id="rel-title" class="font-display text-2xl font-bold text-[#1e3a5f]">
+            Ayuda Relacionada
+          </h2>
+          <p id="rel-subtitle" class="text-sm text-slate-600 mt-1">
+            Servicios oficiales adicionales para empleo, preparación temporal y recuperación de adicciones.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="related-help-grid">
+          <!-- Populated dynamically in ES / EN -->
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 4: LÍDERES Y ESPECIALISTAS / LEADERS & SPECIALISTS              -->
+    <!-- =================================================================== -->
+    <section id="tab-lideres" class="tab-panel hidden space-y-8">
+      <div class="bg-gradient-to-r from-[#1e3a5f] to-[#0f766e] text-white rounded-3xl p-6 sm:p-8 shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div class="space-y-2 max-w-3xl">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/15 text-amber-200">
+            <i data-lucide="shield" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span id="lead-badge">Recursos para el llamamiento</span>
+          </span>
+          <h2 id="lead-title" class="font-display text-2xl sm:text-3xl font-bold">
+            Líderes y Especialistas de Autosuficiencia
+          </h2>
+          <p id="lead-subtitle" class="text-sm sm:text-base text-slate-100">
+            Herramientas oficiales para organizar grupos, capacitar facilitadores y ministrar a los miembros, junto con mensajes bilingües listos para tu Canal de WhatsApp.
+          </p>
+        </div>
+
+        <div id="whatsapp-channel-cta-wrapper" class="shrink-0">
+          <!-- Optional WhatsApp Channel button if configured -->
+        </div>
+      </div>
+
+      <!-- 4 Official Leadership & Facilitation Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="leadership-cards-grid">
+        <!-- Populated dynamically in ES / EN -->
+      </div>
+
+      <!-- Ready-to-Copy Bilingual WhatsApp Channel Templates -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#0f766e]/10 text-[#0f766e] mb-2">
+            <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            <span id="wa-badge">Difusión rápida sin llenar memorias</span>
+          </span>
+          <h3 id="wa-title" class="font-display text-xl sm:text-2xl font-bold text-[#1e3a5f]">
+            Plantillas Listas para tu Canal de WhatsApp
+          </h3>
+          <p id="wa-subtitle" class="text-sm text-slate-600 mt-1">
+            Incluyen automáticamente el enlace de tu Encuesta Anónima y la dirección web actual de este portal. Cambia entre ES y EN arriba para copiarlos en el idioma que necesites.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5" id="whatsapp-templates-grid">
+          <!-- Populated dynamically in ES / EN -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- FOOTER                                                                -->
+  <!-- ===================================================================== -->
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-slate-200">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center md:text-left">
+      <div class="space-y-1">
+        <p id="footer-title" class="font-display font-bold text-[#1e3a5f] text-sm">
+          Portal de Autosuficiencia — Hallar fortaleza en el Señor / Self-Reliance Portal — Find Strength in the Lord
+        </p>
+        <p id="footer-storage-note" class="text-[#0f766e] font-medium flex items-center justify-center md:justify-start gap-1.5">
+          <i data-lucide="cloud-check" class="w-4 h-4 shrink-0"></i>
+          <span>0 MB de almacenamiento en tu teléfono: todos los cursos, manuales y videos se abren en la nube oficial.</span>
+        </p>
+      </div>
+      <div class="flex items-center gap-4 shrink-0">
+        <a id="footer-official-link" href="https://www.churchofjesuschrist.org/life/self-reliance?lang=spa" target="_blank" rel="noopener noreferrer" class="font-bold text-[#1e3a5f] hover:text-[#2b6cb0] hover:underline flex items-center gap-1">
+          <span id="footer-official-label">Sitio oficial de Autosuficiencia</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- FLOATING SHARE PORTAL BUTTON                                          -->
+  <!-- ===================================================================== -->
+  <button
+    type="button"
+    onclick="sharePortal()"
+    class="fixed bottom-5 right-5 z-40 px-5 py-3.5 rounded-full bg-gradient-to-r from-[#1e3a5f] to-[#0f766e] hover:scale-105 active:scale-95 text-white font-bold text-sm shadow-xl shadow-slate-900/25 flex items-center gap-2.5 transition-all"
+    aria-label="Share portal / Compartir portal"
+  >
+    <i data-lucide="share-2" class="w-4 h-4 text-amber-300"></i>
+    <span id="floating-share-label">Compartir portal</span>
+  </button>
+
+  <!-- ===================================================================== -->
+  <!-- CONFIGURATION & BILINGUAL APPLICATION LOGIC                           -->
+  <!-- ===================================================================== -->
+  <script>
+    /**
+     * =========================================================================
+     * 1. SPECIALIST CONFIGURATION
+     * =========================================================================
+     */
+    const CONFIG = {
+      googleFormUrl: "https://forms.gle/Vg8NKX7GGccs2pC46",
+      whatsappChannelUrl: ""
+    };
+
+    /**
+     * =========================================================================
+     * 2. BILINGUAL CONTENT DICTIONARY (ESPAÑOL & ENGLISH)
+     * =========================================================================
+     */
+    const CONTENT = {
+      es: {
+        htmlLang: 'es',
+        nav: {
+          brandTitle: 'Portal de Autosuficiencia',
+          brandSubtitle: 'Hallar fortaleza en el Señor',
+          cloudBadge: '0 MB en tu teléfono',
+          tabInicio: 'Inicio y Cursos',
+          tabDiagnostico: 'Diagnóstico y Encuesta',
+          tabBiblioteca: 'Biblioteca y Ayuda',
+          tabLideres: 'Líderes y Especialistas',
+          shareBtn: 'Compartir portal',
+          shareSuccess: 'Enlace del portal copiado al portapapeles. ¡Compártelo en WhatsApp!'
+        },
+        hero: {
+          churchBadge: 'La Iglesia de Jesucristo de los Santos de los Últimos Días',
+          title: 'Portal de Autosuficiencia — Hallar fortaleza en el Señor',
+          defLabel: '¿Qué es la autosuficiencia?',
+          defText: 'La autosuficiencia es la capacidad, el compromiso y el empeño de proporcionar los elementos espirituales y temporales indispensables para sostener la vida de uno mismo y de su familia.',
+          faithText: 'La autosuficiencia es un viaje de fe. Al combinar el poder de Dios con nuestros esfuerzos, satisfacemos las necesidades prácticas y espirituales de la vida.',
+          ctaSurvey: 'Encuesta Anónima de Necesidades',
+          ctaHub: 'Centro Oficial de Autosuficiencia',
+          hubUrl: 'https://www.churchofjesuschrist.org/life/self-reliance?lang=spa',
+          quoteText: '"[Dios] espera que utilicemos nuestra inteligencia e ingenio para mejorar nuestras circunstancias, tanto espiritual como temporalmente. Él desea que tengamos éxito en la vida y desea ayudarnos."',
+          quoteAuthor: 'Élder Mark E. Petersen',
+          quoteLinkLabel: 'Leer discurso',
+          quoteUrl: 'https://www.churchofjesuschrist.org/study/general-conference/1981/04/blessings-in-self-reliance?lang=spa',
+          benefits: [
+            { title: 'Mayor independencia', icon: 'shield-check' },
+            { title: 'Respeto por sí mismo', icon: 'award' },
+            { title: 'Crecimiento espiritual', icon: 'sun' }
+          ]
+        },
+        skillsSection: {
+          badge: 'Habilidades transversales',
+          title: '6 Habilidades Esenciales para la Vida',
+          subtitle: 'Los cursos de autosuficiencia de la Iglesia ayudan a las personas a desarrollar estas seis habilidades prácticas:',
+          items: [
+            {
+              title: 'Comunicarse eficazmente',
+              icon: 'message-circle',
+              detail: 'Expresar ideas con claridad, escuchar con empatía y fortalecer la comunicación familiar y laboral.'
+            },
+            {
+              title: 'Establecer relaciones saludables',
+              icon: 'users',
+              detail: 'Construir vínculos sólidos basados en el respeto mutuo, la confianza y el apoyo colaborativo.'
+            },
+            {
+              title: 'Resolver problemas',
+              icon: 'puzzle',
+              detail: 'Analizar los desafíos con calma, buscar soluciones prácticas y actuar con fe ante las dificultades.'
+            },
+            {
+              title: 'Tomar decisiones',
+              icon: 'git-fork',
+              detail: 'Evaluar opciones con sabiduría e inspiración para elegir el rumbo que bendiga a la familia.'
+            },
+            {
+              title: 'Administrar el tiempo',
+              icon: 'clock',
+              detail: 'Priorizar lo más importante para equilibrar las responsabilidades espirituales, familiares y laborales.'
+            },
+            {
+              title: 'Comprender la formación financiera',
+              icon: 'bar-chart-3',
+              detail: 'Administrar con prudencia los recursos temporales para lograr estabilidad y mayor independencia.'
+            }
+          ]
+        },
+        coursesSection: {
+          title: 'Los 7 Cursos Oficiales de Autosuficiencia',
+          subtitle: 'Explora cada grupo y abre sus recursos oficiales directamente en la nube sin ocupar almacenamiento en tu teléfono.',
+          searchPlaceholder: 'Buscar curso o tema (ej. finanzas, inglés)...',
+          categories: [
+            { id: 'all', label: 'Todos (7)' },
+            { id: 'wellbeing', label: 'Bienestar' },
+            { id: 'finance', label: 'Finanzas y Negocios' },
+            { id: 'jobs', label: 'Empleo y Educación' },
+            { id: 'languages', label: 'Idiomas y Habilidades' }
+          ],
+          courseBadgePrefix: 'Curso',
+          openCourseBtn: 'Abrir curso oficial',
+          noResultsTitle: 'No se encontraron cursos con ese término',
+          noResultsDesc: 'Intenta con otra palabra clave o restablece los filtros.',
+          noResultsBtn: 'Mostrar todos los cursos'
+        },
+        courses: [
+          {
+            id: 'resiliencia',
+            number: '01',
+            title: 'Hallar fortaleza en el Señor: Resiliencia emocional',
+            category: 'wellbeing',
+            categoryLabel: 'Bienestar',
+            description: 'Desarrolla fortaleza interior, espiritual y emocional para afrontar las pruebas y dificultades de la vida apoyándote en el Salvador.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/emotional-resilience?lang=spa',
+            icon: 'heart-pulse',
+            accent: 'teal'
+          },
+          {
+            id: 'finanzas',
+            number: '02',
+            title: 'Las finanzas personales',
+            category: 'finance',
+            categoryLabel: 'Finanzas y Negocios',
+            description: 'Aprende principios prácticos y espirituales para administrar tus ingresos, elaborar un presupuesto, salir de deudas y ahorrar.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/personal-finances?lang=spa',
+            icon: 'wallet',
+            accent: 'gold'
+          },
+          {
+            id: 'empleo',
+            number: '03',
+            title: 'Buscar un mejor empleo',
+            category: 'jobs',
+            categoryLabel: 'Empleo y Educación',
+            description: 'Adquiere estrategias efectivas para identificar oportunidades laborales, preparar tu currículum, destacar en entrevistas y conseguir empleo.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/find-a-better-job?lang=spa',
+            icon: 'briefcase',
+            accent: 'navy'
+          },
+          {
+            id: 'educacion',
+            number: '04',
+            title: 'Educación para un mejor empleo',
+            category: 'jobs',
+            categoryLabel: 'Empleo y Educación',
+            description: 'Planifica tu preparación académica o técnica para calificar hacia mejores oportunidades laborales y aumentar tu capacidad de autosuficiencia.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/education-for-better-work?lang=spa',
+            icon: 'graduation-cap',
+            accent: 'blue'
+          },
+          {
+            id: 'englishconnect',
+            number: '05',
+            title: 'EnglishConnect',
+            category: 'languages',
+            categoryLabel: 'Idiomas y Habilidades',
+            description: 'Programa diseñado para aprender y practicar el idioma inglés en un ambiente de fe y compañerismo que amplía tus oportunidades.',
+            url: 'https://www.englishconnect.org/es',
+            icon: 'languages',
+            accent: 'teal'
+          },
+          {
+            id: 'negocio',
+            number: '06',
+            title: 'Cómo iniciar y hacer crecer mi negocio',
+            category: 'finance',
+            categoryLabel: 'Finanzas y Negocios',
+            description: 'Domina los fundamentos para emprender, validar ideas, atraer clientes, llevar registros financieros y hacer crecer tu propio negocio.',
+            url: 'https://www.churchofjesuschrist.org/life/starting-and-growing-my-business?lang=spa',
+            icon: 'store',
+            accent: 'gold'
+          },
+          {
+            id: 'habilidades',
+            number: '07',
+            title: 'Habilidades para la vida',
+            category: 'languages',
+            categoryLabel: 'Idiomas y Habilidades',
+            description: 'Fortalece destrezas cotidianas esenciales como comunicarte eficazmente, tomar decisiones, resolver problemas y administrar tu tiempo.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/life-skills-course?lang=spa',
+            icon: 'compass',
+            accent: 'navy'
+          }
+        ],
+        diagnostic: {
+          surveyBadge: '100 % Anónima y Confidencial',
+          surveyTitle: 'Encuesta Anónima de Necesidades',
+          surveyDesc: 'Comparte tus intereses y horarios preferidos de forma totalmente anónima para ayudar a los especialistas de barrio y estaca a organizar los próximos grupos y recursos.',
+          surveyBtn: 'Abrir Encuesta en Google Forms',
+          surveyCopyBtn: 'Copiar enlace de encuesta',
+          surveyCopySuccess: 'Enlace de la encuesta copiado al portapapeles.',
+          diagBadge: 'Ruta personalizada en la nube (0 MB)',
+          diagTitle: 'Autoevaluación Interactiva',
+          diagSubtitle: 'Marca los cursos y áreas de ayuda relacionada que te interesan hoy para generar al instante tu plan de estudio con enlaces directos a los manuales digitales en la Biblioteca del Evangelio.',
+          step1Title: '¿En qué cursos de autosuficiencia te gustaría enfocarte?',
+          step2Title: '¿Necesitas apoyo en alguna área de ayuda relacionada? (Opcional)',
+          step3Title: '¿Cómo prefieres estudiar o participar?',
+          modalities: [
+            {
+              value: 'Estudio individual en la nube (manuales y videos digitales)',
+              title: 'Estudio individual',
+              desc: 'A mi propio ritmo usando manuales y videos en línea.'
+            },
+            {
+              value: 'Grupo de autosuficiencia con un facilitador',
+              title: 'Grupo con facilitador',
+              desc: 'Aprender y compartir experiencias junto a otros miembros.'
+            },
+            {
+              value: 'Orientación breve con mi Especialista de Autosuficiencia',
+              title: 'Orientación con especialista',
+              desc: 'Recibir guía personalizada sobre por dónde empezar.'
+            }
+          ],
+          submitBtn: 'Generar mi ruta en la nube',
+          resetBtn: 'Limpiar selección',
+          validationWarning: 'Selecciona al menos un curso o área de ayuda relacionada para generar tu plan.',
+          resetToast: 'Selección limpiada.',
+          successToast: '¡Tu ruta personalizada está lista!',
+          copyToast: 'Plan personalizado copiado. ¡Listo para pegar y enviar por WhatsApp!',
+          resBadge: 'Ruta en la nube • 0 MB en tu teléfono',
+          resTitle: 'Tu Ruta Personalizada de Autosuficiencia',
+          resModalityPrefix: 'Modalidad preferida:',
+          resCopyBtn: 'Copiar mi plan personalizado para WhatsApp',
+          resCourseTag: 'Curso Seleccionado',
+          resRelatedTag: 'Ayuda Relacionada',
+          resOpenBtn: 'Abrir en la nube',
+          resLibraryTitle: 'Manuales y videos de los cursos (Biblioteca del Evangelio)',
+          resLibraryDesc: 'Consulta todos los manuales y videos digitales en línea sin ocupar memoria en tu celular.',
+          resLibraryBtn: 'Abrir manuales digitales',
+          resLibraryUrl: 'https://www.churchofjesuschrist.org/study/books-and-lessons/self-reliance-resources?lang=spa',
+          planHeader: '📋 *MI PLAN PERSONALIZADO DE AUTOSUFICIENCIA*',
+          planModalityLabel: '• *Modalidad preferida:*',
+          planCoursesLabel: '*Cursos seleccionados:*',
+          planRelatedLabel: '*Ayuda relacionada:*',
+          planLibraryLabel: '📚 *Manuales digitales (Biblioteca del Evangelio):*'
+        },
+        librarySection: {
+          badge: 'Cero almacenamiento en tu teléfono',
+          title: 'Biblioteca de Estudio y Materiales Oficiales',
+          subtitle: 'Accede directamente en la nube a manuales, videos, relatos inspiradores y manuales impresos sin descargar archivos pesados.',
+          cards: [
+            {
+              title: 'Manuales y videos de los cursos',
+              desc: 'Consulta y reproduce en línea todos los manuales y videos oficiales de cada curso de autosuficiencia en la Biblioteca del Evangelio.',
+              btn: 'Abrir manuales y videos',
+              url: 'https://www.churchofjesuschrist.org/study/books-and-lessons/self-reliance-resources?lang=spa',
+              icon: 'video',
+              accent: 'navy'
+            },
+            {
+              title: 'Todos los cursos y relatos de participantes',
+              desc: 'Conoce experiencias reales de participantes y explora el panorama general de los cursos de autosuficiencia.',
+              btn: 'Ver cursos y relatos',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/courses?lang=spa',
+              icon: 'message-square-quote',
+              accent: 'teal'
+            },
+            {
+              title: 'Cómo desarrollar mi autosuficiencia',
+              desc: 'Guía práctica con principios espirituales y temporales para comenzar a fortalecer tu autosuficiencia hoy mismo.',
+              btn: 'Explorar guía práctica',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/how-to-increase-my-self-reliance?lang=spa',
+              icon: 'trending-up',
+              accent: 'gold'
+            },
+            {
+              title: 'Comprar manuales impresos',
+              desc: 'Si prefieres estudiar y tomar notas en formato físico, solicita los manuales oficiales en la tienda en línea de la Iglesia.',
+              btn: 'Ir a la tienda en línea',
+              url: 'https://store.churchofjesuschrist.org/top-cat/gospel-study/manuals-and-guides/self-reliance-manuals/5637160365.c?lang=spa',
+              icon: 'book',
+              accent: 'blue'
+            }
+          ],
+          relBadge: 'Programas complementarios',
+          relTitle: 'Ayuda Relacionada',
+          relSubtitle: 'Servicios oficiales adicionales para empleo, preparación temporal y recuperación de adicciones.',
+          relActionLabel: 'Abrir recurso',
+          relatedHelp: [
+            {
+              id: 'ayuda-empleo',
+              title: 'Servicios de empleo',
+              desc: 'Herramientas, asesoría y recursos oficiales para conectar con oportunidades laborales.',
+              url: 'https://www.churchofjesuschrist.org/life/employment-services?lang=spa',
+              icon: 'briefcase',
+              accent: 'navy'
+            },
+            {
+              id: 'ayuda-preparacion',
+              title: 'Preparación',
+              desc: 'Guías para la preparación temporal y el almacenamiento de alimentos en el hogar.',
+              url: 'https://www.churchofjesuschrist.org/life/preparedness?lang=spa',
+              icon: 'home',
+              accent: 'teal'
+            },
+            {
+              id: 'ayuda-adicciones',
+              title: 'Recuperarse de las adicciones',
+              desc: 'Programa de recuperación de adicciones centrado en el Evangelio y grupos de apoyo.',
+              url: 'https://addictionrecovery.churchofjesuschrist.org/?lang=spa',
+              icon: 'heart-handshake',
+              accent: 'gold'
+            }
+          ]
+        },
+        leadersSection: {
+          badge: 'Recursos para el llamamiento',
+          title: 'Líderes y Especialistas de Autosuficiencia',
+          subtitle: 'Herramientas oficiales para organizar grupos, capacitar facilitadores y ministrar a los miembros, junto con mensajes bilingües listos para tu Canal de WhatsApp.',
+          channelBtnLabel: 'Abrir Canal de WhatsApp',
+          openBtnLabel: 'Abrir recurso oficial',
+          cards: [
+            {
+              title: 'Recursos para líderes y especialistas',
+              desc: 'Orientación oficial para especialistas y líderes de la Iglesia sobre cómo impulsar la autosuficiencia en el barrio y la estaca.',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/leader-resources?lang=spa',
+              icon: 'users',
+              accent: 'navy'
+            },
+            {
+              title: 'Recursos del facilitador',
+              desc: 'Capacitación y materiales prácticos para quienes facilitan las reuniones semanales de los grupos de autosuficiencia.',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/resources-group-facilitator?lang=spa',
+              icon: 'presentation',
+              accent: 'gold'
+            },
+            {
+              title: 'Recursos de bienestar y autosuficiencia para líderes',
+              desc: 'Principios y herramientas de bienestar y autosuficiencia para consejos de barrio y presidencia de estaca.',
+              url: 'https://www.churchofjesuschrist.org/callings/welfare-self-reliance?lang=spa',
+              icon: 'landmark',
+              accent: 'teal'
+            },
+            {
+              title: 'Ayudar a los demás a mejorar su autosuficiencia',
+              desc: 'Ideas y principios para acompañar y ministrar a otras personas en su camino hacia la autosuficiencia.',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/helping-others-improve-their-self-reliance?lang=spa',
+              icon: 'hand-heart',
+              accent: 'blue'
+            }
+          ],
+          waBadge: 'Difusión rápida sin llenar memorias',
+          waTitle: 'Plantillas Listas para tu Canal de WhatsApp',
+          waSubtitle: 'Incluyen automáticamente el enlace de tu Encuesta Anónima y la dirección web actual de este portal. Cambia entre ES y EN arriba para copiarlos en el idioma que necesites.',
+          waCopyBtn: 'Copiar mensaje para WhatsApp',
+          waCopySuccess: 'Mensaje copiado al portapapeles para tu Canal de WhatsApp.',
+          getTemplates: (portalUrl, surveyUrl) => [
+            {
+              badge: '1. Encuesta Anónima',
+              title: 'Invitación a responder la encuesta',
+              text: `📋 *Encuesta Anónima de Autosuficiencia*\n\nQueremos conocer qué cursos y recursos serían de mayor bendición para ti y tu familia. Responder toma menos de 2 minutos y es 100 % confidencial:\n👉 ${surveyUrl}\n\nTambién puedes explorar todos los cursos y manuales sin ocupar memoria en tu teléfono aquí:\n🌐 ${portalUrl}`
+            },
+            {
+              badge: '2. Portal Digital (0 MB)',
+              title: 'Bienvenida al Portal de Autosuficiencia',
+              text: `¡Hola! Te damos la bienvenida al *Portal de Autosuficiencia — Hallar fortaleza en el Señor*.\n\nAccede en un clic a los 7 cursos oficiales, manuales y videos en la nube sin gastar almacenamiento de tu teléfono:\n🌐 ${portalUrl}\n\n📝 Si aún no has llenado nuestra encuesta anónima de necesidades, hazlo aquí:\n👉 ${surveyUrl}`
+            },
+            {
+              badge: '3. Cita Inspiradora',
+              title: 'Reflexión — Élder Mark E. Petersen',
+              text: `✨ *Hallar fortaleza en el Señor*\n\n"[Dios] espera que utilicemos nuestra inteligencia e ingenio para mejorar nuestras circunstancias, tanto espiritual como temporalmente. Él desea que tengamos éxito en la vida y desea ayudarnos."\n— Élder Mark E. Petersen\n\nExplora los recursos oficiales de Autosuficiencia aquí:\n🌐 ${portalUrl}`
+            }
+          ]
+        },
+        footer: {
+          title: 'Portal de Autosuficiencia — Hallar fortaleza en el Señor / Self-Reliance Portal — Find Strength in the Lord',
+          storageNote: '0 MB de almacenamiento en tu teléfono: todos los cursos, manuales y videos se abren en la nube oficial.',
+          officialLabel: 'Sitio oficial de Autosuficiencia',
+          officialUrl: 'https://www.churchofjesuschrist.org/life/self-reliance?lang=spa'
+        }
+      },
+
+      en: {
+        htmlLang: 'en',
+        nav: {
+          brandTitle: 'Self-Reliance Portal',
+          brandSubtitle: 'Find Strength in the Lord',
+          cloudBadge: '0 MB on your phone',
+          tabInicio: 'Home & Courses',
+          tabDiagnostico: 'Diagnostic & Survey',
+          tabBiblioteca: 'Library & Help',
+          tabLideres: 'Leaders & Specialists',
+          shareBtn: 'Share portal',
+          shareSuccess: 'Portal link copied to clipboard. Share it on WhatsApp!'
+        },
+        hero: {
+          churchBadge: 'The Church of Jesus Christ of Latter-day Saints',
+          title: 'Self-Reliance Portal — Find Strength in the Lord',
+          defLabel: 'What is self-reliance?',
+          defText: 'Self-reliance is the ability, commitment, and effort to provide the spiritual and temporal necessities of life for self and family.',
+          faithText: 'Self-reliance is a journey of faith. As we combine God’s power with our efforts, we meet both the practical and spiritual needs of life.',
+          ctaSurvey: 'Anonymous Needs Survey',
+          ctaHub: 'Official Self-Reliance Hub',
+          hubUrl: 'https://www.churchofjesuschrist.org/life/self-reliance?lang=eng',
+          quoteText: '"[God] expects us to use our intelligence and ingenuity to improve our circumstances both spiritually and temporally. He wants to be successful in life and desires to help us."',
+          quoteAuthor: 'Elder Mark E. Petersen',
+          quoteLinkLabel: 'Read talk',
+          quoteUrl: 'https://www.churchofjesuschrist.org/study/general-conference/1981/04/blessings-in-self-reliance?lang=eng',
+          benefits: [
+            { title: 'Greater independence', icon: 'shield-check' },
+            { title: 'Self-respect', icon: 'award' },
+            { title: 'Spiritual growth', icon: 'sun' }
+          ]
+        },
+        skillsSection: {
+          badge: 'Cross-cutting life skills',
+          title: '6 Essential Life Skills',
+          subtitle: 'Church self-reliance courses help individuals develop these six essential practical skills:',
+          items: [
+            {
+              title: 'Communicating effectively',
+              icon: 'message-circle',
+              detail: 'Express ideas clearly, listen with empathy, and strengthen communication at home and work.'
+            },
+            {
+              title: 'Building healthy relationships',
+              icon: 'users',
+              detail: 'Foster strong relationships grounded in mutual respect, trust, and collaborative support.'
+            },
+            {
+              title: 'Solving problems',
+              icon: 'puzzle',
+              detail: 'Analyze challenges calmly, identify practical solutions, and act with faith when facing difficulties.'
+            },
+            {
+              title: 'Making decisions',
+              icon: 'git-fork',
+              detail: 'Evaluate options with wisdom and inspiration to choose paths that bless your family.'
+            },
+            {
+              title: 'Managing time',
+              icon: 'clock',
+              detail: 'Prioritize what matters most to balance spiritual, family, and work responsibilities.'
+            },
+            {
+              title: 'Understanding financial literacy',
+              icon: 'bar-chart-3',
+              detail: 'Wisely manage temporal resources to achieve financial stability and greater independence.'
+            }
+          ]
+        },
+        coursesSection: {
+          title: 'The 7 Official Self-Reliance Courses',
+          subtitle: 'Explore each group and open official cloud resources directly without taking up storage space on your phone.',
+          searchPlaceholder: 'Search course or topic (e.g. finances, English)...',
+          categories: [
+            { id: 'all', label: 'All (7)' },
+            { id: 'wellbeing', label: 'Well-being' },
+            { id: 'finance', label: 'Finance & Business' },
+            { id: 'jobs', label: 'Jobs & Education' },
+            { id: 'languages', label: 'Languages & Skills' }
+          ],
+          courseBadgePrefix: 'Course',
+          openCourseBtn: 'Open official course',
+          noResultsTitle: 'No courses found matching that term',
+          noResultsDesc: 'Try another keyword or reset the filters.',
+          noResultsBtn: 'Show all courses'
+        },
+        courses: [
+          {
+            id: 'resiliencia',
+            number: '01',
+            title: 'Finding Strength in the Lord: Emotional Resilience',
+            category: 'wellbeing',
+            categoryLabel: 'Well-being',
+            description: 'Develop inner spiritual and emotional strength to face life’s trials and challenges by relying on the Savior.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/emotional-resilience?lang=eng',
+            icon: 'heart-pulse',
+            accent: 'teal'
+          },
+          {
+            id: 'finanzas',
+            number: '02',
+            title: 'Personal Finances',
+            category: 'finance',
+            categoryLabel: 'Finance & Business',
+            description: 'Learn practical and spiritual principles to manage income, build a budget, eliminate debt, and save for the future.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/personal-finances?lang=eng',
+            icon: 'wallet',
+            accent: 'gold'
+          },
+          {
+            id: 'empleo',
+            number: '03',
+            title: 'Find a Better Job',
+            category: 'jobs',
+            categoryLabel: 'Jobs & Education',
+            description: 'Gain effective strategies to identify job opportunities, prepare a strong resume, succeed in interviews, and secure better work.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/find-a-better-job?lang=eng',
+            icon: 'briefcase',
+            accent: 'navy'
+          },
+          {
+            id: 'educacion',
+            number: '04',
+            title: 'Education for Better Work',
+            category: 'jobs',
+            categoryLabel: 'Jobs & Education',
+            description: 'Plan your academic or technical training to qualify for better employment opportunities and increase self-reliance.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/education-for-better-work?lang=eng',
+            icon: 'graduation-cap',
+            accent: 'blue'
+          },
+          {
+            id: 'englishconnect',
+            number: '05',
+            title: 'EnglishConnect',
+            category: 'languages',
+            categoryLabel: 'Languages & Skills',
+            description: 'A program designed to learn and practice English in an environment of fellowship and faith that expands opportunities.',
+            url: 'https://www.englishconnect.org/',
+            icon: 'languages',
+            accent: 'teal'
+          },
+          {
+            id: 'negocio',
+            number: '06',
+            title: 'Starting and Growing My Business',
+            category: 'finance',
+            categoryLabel: 'Finance & Business',
+            description: 'Master entrepreneurship fundamentals: validating ideas, attracting customers, keeping financial records, and growing a business.',
+            url: 'https://www.churchofjesuschrist.org/life/starting-and-growing-my-business?lang=eng',
+            icon: 'store',
+            accent: 'gold'
+          },
+          {
+            id: 'habilidades',
+            number: '07',
+            title: 'Life Skills',
+            category: 'languages',
+            categoryLabel: 'Languages & Skills',
+            description: 'Strengthen essential everyday skills such as communicating effectively, making decisions, solving problems, and managing time.',
+            url: 'https://www.churchofjesuschrist.org/life/self-reliance/life-skills-course?lang=eng',
+            icon: 'compass',
+            accent: 'navy'
+          }
+        ],
+        diagnostic: {
+          surveyBadge: '100% Anonymous & Confidential',
+          surveyTitle: 'Anonymous Needs Survey',
+          surveyDesc: 'Share your interests and preferred schedules completely anonymously to help ward and stake specialists organize upcoming groups and resources.',
+          surveyBtn: 'Open Survey on Google Forms',
+          surveyCopyBtn: 'Copy Survey Link',
+          surveyCopySuccess: 'Survey link copied to clipboard.',
+          diagBadge: 'Personalized cloud roadmap (0 MB)',
+          diagTitle: 'Interactive Self-Assessment',
+          diagSubtitle: 'Select the courses and related help areas you want to focus on today to generate an instant study roadmap with direct links to Gospel Library digital manuals.',
+          step1Title: 'Which self-reliance courses would you like to focus on?',
+          step2Title: 'Do you need support in any related help area? (Optional)',
+          step3Title: 'How do you prefer to study or participate?',
+          modalities: [
+            {
+              value: 'Cloud self-paced study (digital manuals and videos)',
+              title: 'Individual study',
+              desc: 'At my own pace using online manuals and videos.'
+            },
+            {
+              value: 'Self-reliance group with a facilitator',
+              title: 'Facilitated group',
+              desc: 'Learn and share experiences alongside other members.'
+            },
+            {
+              value: 'Brief guidance with my Self-Reliance Specialist',
+              title: 'Specialist guidance',
+              desc: 'Receive personalized orientation on where to begin.'
+            }
+          ],
+          submitBtn: 'Generate my cloud roadmap',
+          resetBtn: 'Clear selection',
+          validationWarning: 'Please select at least one course or related help area to generate your plan.',
+          resetToast: 'Selection cleared.',
+          successToast: 'Your personalized roadmap is ready!',
+          copyToast: 'Personalized plan copied! Ready to paste and send via WhatsApp.',
+          resBadge: 'Cloud roadmap • 0 MB on your phone',
+          resTitle: 'Your Personalized Self-Reliance Roadmap',
+          resModalityPrefix: 'Preferred format:',
+          resCopyBtn: 'Copy my personalized plan for WhatsApp',
+          resCourseTag: 'Selected Course',
+          resRelatedTag: 'Related Help',
+          resOpenBtn: 'Open in cloud',
+          resLibraryTitle: 'Course Manuals and Videos (Gospel Library)',
+          resLibraryDesc: 'Stream all digital manuals and videos online without taking up phone storage.',
+          resLibraryBtn: 'Open digital manuals',
+          resLibraryUrl: 'https://www.churchofjesuschrist.org/study/books-and-lessons/self-reliance-resources?lang=eng',
+          planHeader: '📋 *MY PERSONALIZED SELF-RELIANCE PLAN*',
+          planModalityLabel: '• *Preferred format:*',
+          planCoursesLabel: '*Selected courses:*',
+          planRelatedLabel: '*Related help:*',
+          planLibraryLabel: '📚 *Digital Manuals (Gospel Library):*'
+        },
+        librarySection: {
+          badge: 'Zero phone storage used',
+          title: 'Cloud Study Library & Official Materials',
+          subtitle: 'Access manuals, videos, participant stories, and print manuals directly in the cloud without downloading heavy files.',
+          cards: [
+            {
+              title: 'Course Manuals and Videos',
+              desc: 'Read and stream all official study manuals and videos for every self-reliance course online in Gospel Library.',
+              btn: 'Open manuals and videos',
+              url: 'https://www.churchofjesuschrist.org/study/books-and-lessons/self-reliance-resources?lang=eng',
+              icon: 'video',
+              accent: 'navy'
+            },
+            {
+              title: 'All Courses & Participant Stories',
+              desc: 'Read inspiring participant experiences and explore the full overview of Church self-reliance courses.',
+              btn: 'View courses and stories',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/courses?lang=eng',
+              icon: 'message-square-quote',
+              accent: 'teal'
+            },
+            {
+              title: 'How to Build My Self-Reliance',
+              desc: 'Practical guide featuring spiritual and temporal principles to begin strengthening your self-reliance today.',
+              btn: 'Explore practical guide',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/how-to-increase-my-self-reliance?lang=eng',
+              icon: 'trending-up',
+              accent: 'gold'
+            },
+            {
+              title: 'Purchase Print Manuals',
+              desc: 'If you prefer studying and taking notes on paper, order official physical manuals through the online Church Store.',
+              btn: 'Visit online store',
+              url: 'https://store.churchofjesuschrist.org/top-cat/gospel-study/manuals-and-guides/self-reliance-manuals/5637160365.c?lang=eng',
+              icon: 'book',
+              accent: 'blue'
+            }
+          ],
+          relBadge: 'Complementary programs',
+          relTitle: 'Related Help',
+          relSubtitle: 'Additional official services for employment, temporal preparedness, and addiction recovery.',
+          relActionLabel: 'Open resource',
+          relatedHelp: [
+            {
+              id: 'ayuda-empleo',
+              title: 'Employment Services',
+              desc: 'Tools, coaching, and official resources to connect with employment opportunities.',
+              url: 'https://www.churchofjesuschrist.org/life/employment-services?lang=eng',
+              icon: 'briefcase',
+              accent: 'navy'
+            },
+            {
+              id: 'ayuda-preparacion',
+              title: 'Preparedness',
+              desc: 'Guides for temporal preparedness and home food storage.',
+              url: 'https://www.churchofjesuschrist.org/life/preparedness?lang=eng',
+              icon: 'home',
+              accent: 'teal'
+            },
+            {
+              id: 'ayuda-adicciones',
+              title: 'Addiction Recovery',
+              desc: 'Gospel-centered addiction recovery program and support groups.',
+              url: 'https://addictionrecovery.churchofjesuschrist.org/?lang=eng',
+              icon: 'heart-handshake',
+              accent: 'gold'
+            }
+          ]
+        },
+        leadersSection: {
+          badge: 'Calling resources',
+          title: 'Self-Reliance Leaders & Specialists',
+          subtitle: 'Official tools to organize groups, train facilitators, and minister to members, along with ready-to-copy bilingual WhatsApp Channel templates.',
+          channelBtnLabel: 'Open WhatsApp Channel',
+          openBtnLabel: 'Open official resource',
+          cards: [
+            {
+              title: 'Leader and Specialist Resources',
+              desc: 'Official guidance for Church specialists and leaders on fostering self-reliance in the ward and stake.',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/leader-resources?lang=eng',
+              icon: 'users',
+              accent: 'navy'
+            },
+            {
+              title: 'Facilitator Resources',
+              desc: 'Training and practical materials for those facilitating weekly self-reliance group meetings.',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/resources-group-facilitator?lang=eng',
+              icon: 'presentation',
+              accent: 'gold'
+            },
+            {
+              title: 'Welfare and Self-Reliance Leader Resources',
+              desc: 'Welfare and self-reliance principles and tools for ward councils and stake presidencies.',
+              url: 'https://www.churchofjesuschrist.org/callings/welfare-self-reliance?lang=eng',
+              icon: 'landmark',
+              accent: 'teal'
+            },
+            {
+              title: 'Helping Others Improve Their Self-Reliance',
+              desc: 'Ideas and principles for accompanying and ministering to others on their self-reliance journey.',
+              url: 'https://www.churchofjesuschrist.org/life/self-reliance/helping-others-improve-their-self-reliance?lang=eng',
+              icon: 'hand-heart',
+              accent: 'blue'
+            }
+          ],
+          waBadge: 'Fast sharing with zero phone storage used',
+          waTitle: 'Ready-to-Copy WhatsApp Channel Templates',
+          waSubtitle: 'Automatically pre-filled with your Anonymous Survey link and the live URL of this portal. Switch between ES and EN at the top to copy in your preferred language.',
+          waCopyBtn: 'Copy message for WhatsApp',
+          waCopySuccess: 'Message copied to clipboard for your WhatsApp Channel.',
+          getTemplates: (portalUrl, surveyUrl) => [
+            {
+              badge: '1. Anonymous Survey',
+              title: 'Survey Invitation Post',
+              text: `📋 *Anonymous Self-Reliance Survey*\n\nWe want to know which courses and resources would best bless you and your family. It takes less than 2 minutes and is 100% confidential:\n👉 ${surveyUrl}\n\nYou can also explore all courses and digital manuals with zero phone storage used here:\n🌐 ${portalUrl}`
+            },
+            {
+              badge: '2. Zero-Storage Portal',
+              title: 'Welcome to the Self-Reliance Portal',
+              text: `Welcome to the *Self-Reliance Portal — Find Strength in the Lord*!\n\nAccess all 7 official courses, manuals, and cloud videos in one click without using phone storage:\n🌐 ${portalUrl}\n\n📝 Haven’t taken our anonymous needs survey yet? Submit it here:\n👉 ${surveyUrl}`
+            },
+            {
+              badge: '3. Inspiring Quote',
+              title: 'Thought — Elder Mark E. Petersen',
+              text: `✨ *Find Strength in the Lord*\n\n"[God] expects us to use our intelligence and ingenuity to improve our circumstances both spiritually and temporally. He wants to be successful in life and desires to help us."\n— Elder Mark E. Petersen\n\nExplore official Self-Reliance resources here:\n🌐 ${portalUrl}`
+            }
+          ]
+        },
+        footer: {
+          title: 'Portal de Autosuficiencia — Hallar fortaleza en el Señor / Self-Reliance Portal — Find Strength in the Lord',
+          storageNote: '0 MB of phone storage used: all courses, manuals, and videos open directly in the official cloud.',
+          officialLabel: 'Official Self-Reliance Site',
+          officialUrl: 'https://www.churchofjesuschrist.org/life/self-reliance?lang=eng'
+        }
+      }
+    };
+
+    // =========================================================================
+    // 3. APPLICATION STATE & INITIALIZATION
+    // =========================================================================
+    let currentLang = 'es';
+    let activeCategory = 'all';
+    let lastGeneratedPlanText = '';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlLang = urlParams.get('lang');
+        const savedLang = localStorage.getItem('sr_portal_lang');
+
+        if (urlLang === 'en' || urlLang === 'eng') {
+          currentLang = 'en';
+        } else if (urlLang === 'es' || urlLang === 'spa') {
+          currentLang = 'es';
+        } else if (savedLang === 'en' || savedLang === 'es') {
+          currentLang = savedLang;
+        }
+      } catch (e) {
+        currentLang = 'es';
+      }
+
+      applyLanguage(currentLang, false);
+    });
+
+    // =========================================================================
+    // 4. BILINGUAL LANGUAGE ENGINE (ES | EN)
+    // =========================================================================
+    function setLanguage(lang) {
+      if (lang !== 'es' && lang !== 'en') return;
+      currentLang = lang;
+
+      try {
+        localStorage.setItem('sr_portal_lang', lang);
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', lang);
+        window.history.replaceState({}, '', url);
+      } catch (e) {
+        // Ignore in restricted iframe contexts
+      }
+
+      applyLanguage(lang, true);
+    }
+
+    function applyLanguage(lang, preserveChecklist) {
+      const t = CONTENT[lang];
+      document.documentElement.lang = t.htmlLang;
+
+      // Update ES | EN Pill Toggle
+      const btnEs = document.getElementById('lang-btn-es');
+      const btnEn = document.getElementById('lang-btn-en');
+      if (lang === 'es') {
+        btnEs.className = 'px-3 py-1 rounded-full text-xs font-extrabold tracking-wide transition-all bg-[#1e3a5f] text-white shadow-sm';
+        btnEs.setAttribute('aria-pressed', 'true');
+        btnEn.className = 'px-3 py-1 rounded-full text-xs font-extrabold tracking-wide transition-all text-slate-600 hover:text-[#1e3a5f]';
+        btnEn.setAttribute('aria-pressed', 'false');
+      } else {
+        btnEn.className = 'px-3 py-1 rounded-full text-xs font-extrabold tracking-wide transition-all bg-[#1e3a5f] text-white shadow-sm';
+        btnEn.setAttribute('aria-pressed', 'true');
+        btnEs.className = 'px-3 py-1 rounded-full text-xs font-extrabold tracking-wide transition-all text-slate-600 hover:text-[#1e3a5f]';
+        btnEs.setAttribute('aria-pressed', 'false');
+      }
+
+      // Preserve checked diagnostic options across language switches
+      const prevCourses = preserveChecklist
+        ? Array.from(document.querySelectorAll('input[name="selected_courses"]:checked')).map(i => i.value)
+        : [];
+      const prevRelated = preserveChecklist
+        ? Array.from(document.querySelectorAll('input[name="selected_related"]:checked')).map(i => i.value)
+        : [];
+      const prevModIdx = preserveChecklist
+        ? document.querySelector('input[name="modality"]:checked')?.getAttribute('data-mod-idx') || '0'
+        : '0';
+
+      // Navigation
+      setText('nav-brand-title', t.nav.brandTitle);
+      setText('nav-brand-subtitle', t.nav.brandSubtitle);
+      setText('nav-cloud-badge', t.nav.cloudBadge);
+      setText('tab-label-inicio', t.nav.tabInicio);
+      setText('tab-label-diagnostico', t.nav.tabDiagnostico);
+      setText('tab-label-biblioteca', t.nav.tabBiblioteca);
+      setText('tab-label-lideres', t.nav.tabLideres);
+      setText('mob-tab-label-inicio', t.nav.tabInicio);
+      setText('mob-tab-label-diagnostico', t.nav.tabDiagnostico);
+      setText('mob-tab-label-biblioteca', t.nav.tabBiblioteca);
+      setText('mob-tab-label-lideres', t.nav.tabLideres);
+      setText('floating-share-label', t.nav.shareBtn);
+
+      // Hero
+      setText('hero-church-badge', t.hero.churchBadge);
+      setText('hero-title', t.hero.title);
+      setText('hero-def-label', t.hero.defLabel);
+      setText('hero-def-text', t.hero.defText);
+      setText('hero-faith-text', t.hero.faithText);
+      setText('hero-cta-survey', t.hero.ctaSurvey);
+      document.getElementById('hero-survey-cta-link').href = CONFIG.googleFormUrl;
+      setText('hero-cta-hub', t.hero.ctaHub);
+      document.getElementById('hero-cta-hub-link').href = t.hero.hubUrl;
+      setText('hero-quote-text', t.hero.quoteText);
+      setText('hero-quote-author', t.hero.quoteAuthor);
+      setText('hero-quote-link-label', t.hero.quoteLinkLabel);
+      document.getElementById('hero-quote-link').href = t.hero.quoteUrl;
+
+      document.getElementById('hero-benefits-grid').innerHTML = t.hero.benefits.map(b => `
+        <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-4 text-center hover:bg-white/15 transition-colors">
+          <div class="w-9 h-9 mx-auto mb-2 rounded-xl bg-[#d97706]/30 text-amber-200 flex items-center justify-center">
+            <i data-lucide="${b.icon}" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-display font-bold text-sm text-white">${b.title}</h3>
+        </div>
+      `).join('');
+
+      // 6 Essential Life Skills
+      setText('skills-badge', t.skillsSection.badge);
+      setText('skills-title', t.skillsSection.title);
+      setText('skills-subtitle', t.skillsSection.subtitle);
+      renderSkills();
+
+      // 7 Courses Section
+      setText('courses-section-title', t.coursesSection.title);
+      setText('courses-section-subtitle', t.coursesSection.subtitle);
+      document.getElementById('search-input').placeholder = t.coursesSection.searchPlaceholder;
+      setText('no-courses-title', t.coursesSection.noResultsTitle);
+      setText('no-courses-desc', t.coursesSection.noResultsDesc);
+      setText('no-courses-btn', t.coursesSection.noResultsBtn);
+      renderCategoryFilters();
+      renderCourses();
+
+      // Tab 2: Diagnostic & Survey
+      setText('survey-card-badge', t.diagnostic.surveyBadge);
+      setText('survey-card-title', t.diagnostic.surveyTitle);
+      setText('survey-card-desc', t.diagnostic.surveyDesc);
+      setText('survey-card-btn', t.diagnostic.surveyBtn);
+      setText('survey-copy-btn', t.diagnostic.surveyCopyBtn);
+      document.getElementById('survey-direct-btn').href = CONFIG.googleFormUrl;
+
+      setText('diag-badge', t.diagnostic.diagBadge);
+      setText('diag-title', t.diagnostic.diagTitle);
+      setText('diag-subtitle', t.diagnostic.diagSubtitle);
+      setText('diag-step1-title', t.diagnostic.step1Title);
+      setText('diag-step2-title', t.diagnostic.step2Title);
+      setText('diag-step3-title', t.diagnostic.step3Title);
+      setText('diag-submit-btn', t.diagnostic.submitBtn);
+      setText('diag-reset-btn', t.diagnostic.resetBtn);
+      setText('res-badge', t.diagnostic.resBadge);
+      setText('res-title', t.diagnostic.resTitle);
+      setText('res-copy-btn', t.diagnostic.resCopyBtn);
+      setText('res-library-title', t.diagnostic.resLibraryTitle);
+      setText('res-library-desc', t.diagnostic.resLibraryDesc);
+      setText('res-library-btn', t.diagnostic.resLibraryBtn);
+      document.getElementById('res-library-link').href = t.diagnostic.resLibraryUrl;
+
+      renderDiagnosticOptions(prevCourses, prevRelated, prevModIdx);
+      if (!document.getElementById('diagnostic-result-card').classList.contains('hidden')) {
+        buildRoadmapOutput(false);
+      }
+
+      // Tab 3: Library & Help
+      setText('lib-badge', t.librarySection.badge);
+      setText('lib-title', t.librarySection.title);
+      setText('lib-subtitle', t.librarySection.subtitle);
+      setText('rel-badge', t.librarySection.relBadge);
+      setText('rel-title', t.librarySection.relTitle);
+      setText('rel-subtitle', t.librarySection.relSubtitle);
+      renderLibraryAndRelated();
+
+      // Tab 4: Leaders & Specialists
+      setText('lead-badge', t.leadersSection.badge);
+      setText('lead-title', t.leadersSection.title);
+      setText('lead-subtitle', t.leadersSection.subtitle);
+      setText('wa-badge', t.leadersSection.waBadge);
+      setText('wa-title', t.leadersSection.waTitle);
+      setText('wa-subtitle', t.leadersSection.waSubtitle);
+      renderLeadersAndTemplates();
+
+      // Footer
+      setText('footer-title', t.footer.title);
+      document.querySelector('#footer-storage-note span').textContent = t.footer.storageNote;
+      setText('footer-official-label', t.footer.officialLabel);
+      document.getElementById('footer-official-link').href = t.footer.officialUrl;
+
+      lucide.createIcons();
+    }
+
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    // =========================================================================
+    // 5. TAB NAVIGATION
+    // =========================================================================
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+      const target = document.getElementById(`tab-${tabName}`);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        const isSelected = btn.getAttribute('data-tab-btn') === tabName;
+        if (isSelected) {
+          btn.classList.add('bg-[#1e3a5f]', 'text-white', 'shadow-sm');
+          btn.classList.remove('bg-slate-100', 'text-slate-600', 'text-slate-700');
+        } else {
+          btn.classList.remove('bg-[#1e3a5f]', 'text-white', 'shadow-sm');
+          btn.classList.add('text-slate-700');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // 6. COURSES FILTERING & RENDERING
+    // =========================================================================
+    function renderCategoryFilters() {
+      const t = CONTENT[currentLang];
+      const container = document.getElementById('category-filters');
+      container.innerHTML = t.coursesSection.categories.map(cat => {
+        const active = activeCategory === cat.id;
+        const classes = active
+          ? 'bg-[#1e3a5f] text-white shadow-sm'
+          : 'bg-slate-100 text-slate-700 hover:bg-slate-200';
+        return `
+          <button type="button" onclick="setCategory('${cat.id}')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${classes}">
+            ${cat.label}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setCategory(catId) {
+      activeCategory = catId;
+      renderCategoryFilters();
+      renderCourses();
+    }
+
+    function filterCourses() {
+      const val = document.getElementById('search-input').value.trim();
+      document.getElementById('clear-search-btn').classList.toggle('hidden', val.length === 0);
+      renderCourses();
+    }
+
+    function clearSearch() {
+      document.getElementById('search-input').value = '';
+      document.getElementById('clear-search-btn').classList.add('hidden');
+      activeCategory = 'all';
+      renderCategoryFilters();
+      renderCourses();
+    }
+
+    function renderCourses() {
+      const t = CONTENT[currentLang];
+      const grid = document.getElementById('courses-grid');
+      const noMsg = document.getElementById('no-courses-msg');
+      const query = document.getElementById('search-input').value.toLowerCase().trim();
+
+      const filtered = t.courses.filter(c => {
+        const matchCat = activeCategory === 'all' || c.category === activeCategory;
+        const matchQuery =
+          c.title.toLowerCase().includes(query) ||
+          c.description.toLowerCase().includes(query) ||
+          c.categoryLabel.toLowerCase().includes(query);
+        return matchCat && matchQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        noMsg.classList.remove('hidden');
+        return;
+      }
+
+      noMsg.classList.add('hidden');
+
+      const accentStyles = {
+        teal: { bg: 'bg-[#0f766e]/10', text: 'text-[#0f766e]', badge: 'bg-[#0f766e]/10 text-[#0f766e]' },
+        gold: { bg: 'bg-[#d97706]/15', text: 'text-[#b45309]', badge: 'bg-[#d97706]/15 text-[#b45309]' },
+        navy: { bg: 'bg-[#1e3a5f]/10', text: 'text-[#1e3a5f]', badge: 'bg-[#1e3a5f]/10 text-[#1e3a5f]' },
+        blue: { bg: 'bg-[#2b6cb0]/10', text: 'text-[#2b6cb0]', badge: 'bg-[#2b6cb0]/10 text-[#2b6cb0]' }
+      };
+
+      grid.innerHTML = filtered.map(course => {
+        const st = accentStyles[course.accent] || accentStyles.navy;
+        return `
+          <article class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between gap-6">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between gap-2">
+                <div class="w-12 h-12 rounded-2xl ${st.bg} ${st.text} flex items-center justify-center shrink-0">
+                  <i data-lucide="${course.icon}" class="w-6 h-6"></i>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-bold ${st.badge}">
+                  ${t.coursesSection.courseBadgePrefix} ${course.number} • ${course.categoryLabel}
+                </span>
+              </div>
+
+              <h3 class="font-display text-xl font-bold text-[#1e3a5f] leading-snug">
+                ${course.title}
+              </h3>
+
+              <p class="text-sm text-slate-600 leading-relaxed">
+                ${course.description}
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100">
+              <a
+                href="${course.url}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full py-3 px-4 rounded-xl bg-[#1e3a5f] hover:bg-[#0f766e] text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
+              >
+                <span>${t.coursesSection.openCourseBtn}</span>
+                <i data-lucide="external-link" class="w-4 h-4"></i>
+              </a>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // =========================================================================
+    // 7. 6 ESSENTIAL LIFE SKILLS
+    // =========================================================================
+    function renderSkills() {
+      const t = CONTENT[currentLang];
+      document.getElementById('skills-grid').innerHTML = t.skillsSection.items.map(skill => `
+        <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50/80 hover:bg-white hover:border-[#0f766e] hover:shadow-md transition-all group">
+          <div class="flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 text-[#0f766e] group-hover:bg-[#0f766e] group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
+              <i data-lucide="${skill.icon}" class="w-5 h-5"></i>
+            </div>
+            <div class="space-y-1">
+              <h3 class="font-display font-bold text-base text-[#1e3a5f]">
+                ${skill.title}
+              </h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                ${skill.detail}
+              </p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // =========================================================================
+    // 8. SURVEY LINK COPY & INTERACTIVE SELF-ASSESSMENT ROADMAP
+    // =========================================================================
+    function copySurveyLink() {
+      const t = CONTENT[currentLang];
+      copyToClipboard(CONFIG.googleFormUrl, t.diagnostic.surveyCopySuccess);
+    }
+
+    function renderDiagnosticOptions(prevCourses = [], prevRelated = [], prevModIdx = '0') {
+      const t = CONTENT[currentLang];
+
+      document.getElementById('diag-courses-options').innerHTML = t.courses.map(course => {
+        const checked = prevCourses.includes(course.id) ? 'checked' : '';
+        return `
+          <label class="cursor-pointer select-none">
+            <input type="checkbox" name="selected_courses" value="${course.id}" ${checked} class="peer sr-only" />
+            <div class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50/70 peer-checked:border-[#0f766e] peer-checked:bg-[#0f766e]/10 hover:border-slate-300 transition-all flex items-center justify-between gap-3 h-full">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 text-[#1e3a5f] flex items-center justify-center shrink-0">
+                  <i data-lucide="${course.icon}" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <span class="font-display font-bold text-sm text-[#1e3a5f] block">${course.title}</span>
+                  <span class="text-xs text-slate-500">${course.categoryLabel}</span>
+                </div>
+              </div>
+              <div class="w-5 h-5 rounded-md border-2 border-slate-300 flex items-center justify-center shrink-0 peer-checked:bg-[#0f766e] peer-checked:border-[#0f766e]">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-white"></i>
+              </div>
+            </div>
+          </label>
+        `;
+      }).join('');
+
+      document.getElementById('diag-related-options').innerHTML = t.librarySection.relatedHelp.map(item => {
+        const checked = prevRelated.includes(item.id) ? 'checked' : '';
+        return `
+          <label class="cursor-pointer select-none">
+            <input type="checkbox" name="selected_related" value="${item.id}" ${checked} class="peer sr-only" />
+            <div class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50/70 peer-checked:border-[#d97706] peer-checked:bg-amber-50/80 hover:border-slate-300 transition-all flex items-center justify-between gap-2 h-full">
+              <span class="font-semibold text-xs sm:text-sm text-[#1e3a5f]">${item.title}</span>
+              <div class="w-5 h-5 rounded-md border-2 border-slate-300 flex items-center justify-center shrink-0 peer-checked:bg-[#d97706] peer-checked:border-[#d97706]">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-white"></i>
+              </div>
+            </div>
+          </label>
+        `;
+      }).join('');
+
+      document.getElementById('diag-modality-options').innerHTML = t.diagnostic.modalities.map((mod, idx) => {
+        const checked = String(idx) === String(prevModIdx) ? 'checked' : '';
+        return `
+          <label class="cursor-pointer">
+            <input type="radio" name="modality" data-mod-idx="${idx}" value="${mod.value}" ${checked} class="peer sr-only" />
+            <div class="p-4 rounded-2xl border-2 border-slate-200 peer-checked:border-[#2b6cb0] peer-checked:bg-blue-50/60 transition-all h-full">
+              <div class="font-display font-bold text-sm text-[#1e3a5f] mb-1">${mod.title}</div>
+              <p class="text-xs text-slate-600">${mod.desc}</p>
+            </div>
+          </label>
+        `;
+      }).join('');
+    }
+
+    function generatePersonalPlan(event) {
+      event.preventDefault();
+      buildRoadmapOutput(true);
+    }
+
+    function buildRoadmapOutput(scrollAndToast) {
+      const t = CONTENT[currentLang];
+
+      const checkedCoursesIds = Array.from(document.querySelectorAll('input[name="selected_courses"]:checked')).map(cb => cb.value);
+      const checkedRelatedIds = Array.from(document.querySelectorAll('input[name="selected_related"]:checked')).map(cb => cb.value);
+      const modalityInput = document.querySelector('input[name="modality"]:checked');
+      const modality = modalityInput ? modalityInput.value : t.diagnostic.modalities[0].value;
+
+      if (checkedCoursesIds.length === 0 && checkedRelatedIds.length === 0) {
+        if (scrollAndToast) showToast(t.diagnostic.validationWarning, 'warning');
+        return;
+      }
+
+      const selectedCourses = t.courses.filter(c => checkedCoursesIds.includes(c.id));
+      const selectedRelated = t.librarySection.relatedHelp.filter(r => checkedRelatedIds.includes(r.id));
+
+      const container = document.getElementById('result-links-container');
+      let cardsHtml = '';
+
+      selectedCourses.forEach(course => {
+        cardsHtml += `
+          <div class="bg-white text-slate-800 rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-md">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#0f766e]">${t.diagnostic.resCourseTag}</span>
+              <h4 class="font-display font-bold text-base text-[#1e3a5f] mt-1">${course.title}</h4>
+              <p class="text-xs text-slate-600 mt-1">${course.description}</p>
+            </div>
+            <a href="${course.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#1e3a5f] hover:bg-[#0f766e] text-white font-semibold text-xs transition-all">
+              ${t.diagnostic.resOpenBtn} <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        `;
+      });
+
+      selectedRelated.forEach(item => {
+        cardsHtml += `
+          <div class="bg-white text-slate-800 rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-md">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#d97706]">${t.diagnostic.resRelatedTag}</span>
+              <h4 class="font-display font-bold text-base text-[#1e3a5f] mt-1">${item.title}</h4>
+              <p class="text-xs text-slate-600 mt-1">${item.desc}</p>
+            </div>
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#0f766e] hover:bg-[#115e59] text-white font-semibold text-xs transition-all">
+              ${t.diagnostic.resOpenBtn} <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        `;
+      });
+
+      container.innerHTML = cardsHtml;
+      document.getElementById('result-modality-text').textContent = `${t.diagnostic.resModalityPrefix} ${modality}`;
+
+      // Build WhatsApp-ready plain text summary
+      const lines = [
+        t.diagnostic.planHeader,
+        `${t.diagnostic.planModalityLabel} ${modality}`,
+        ''
+      ];
+
+      if (selectedCourses.length > 0) {
+        lines.push(t.diagnostic.planCoursesLabel);
+        selectedCourses.forEach(c => lines.push(`✅ ${c.title}\n   🔗 ${c.url}`));
+        lines.push('');
+      }
+
+      if (selectedRelated.length > 0) {
+        lines.push(t.diagnostic.planRelatedLabel);
+        selectedRelated.forEach(r => lines.push(`🤝 ${r.title}\n   🔗 ${r.url}`));
+        lines.push('');
+      }
+
+      lines.push(`${t.diagnostic.planLibraryLabel}\n${t.diagnostic.resLibraryUrl}`);
+      lastGeneratedPlanText = lines.join('\n');
+
+      const resultCard = document.getElementById('diagnostic-result-card');
+      resultCard.classList.remove('hidden');
+      lucide.createIcons();
+
+      if (scrollAndToast) {
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        showToast(t.diagnostic.successToast, 'success');
+      }
+    }
+
+    function resetDiagnostic() {
+      const t = CONTENT[currentLang];
+      document.getElementById('diagnostic-form').reset();
+      document.getElementById('diagnostic-result-card').classList.add('hidden');
+      lastGeneratedPlanText = '';
+      showToast(t.diagnostic.resetToast, 'info');
+    }
+
+    function copyPersonalPlan() {
+      if (!lastGeneratedPlanText) return;
+      copyToClipboard(lastGeneratedPlanText, CONTENT[currentLang].diagnostic.copyToast);
+    }
+
+    // =========================================================================
+    // 9. LIBRARY & RELATED HELP RENDERING
+    // =========================================================================
+    function renderLibraryAndRelated() {
+      const t = CONTENT[currentLang];
+
+      const accentBtn = {
+        navy: 'bg-[#1e3a5f] hover:bg-[#142842] text-white',
+        teal: 'bg-[#0f766e] hover:bg-[#115e59] text-white',
+        gold: 'bg-[#d97706] hover:bg-[#b45309] text-white',
+        blue: 'bg-[#2b6cb0] hover:bg-[#1e4e8c] text-white'
+      };
+
+      const accentIcon = {
+        navy: 'bg-[#1e3a5f]/10 text-[#1e3a5f]',
+        teal: 'bg-[#0f766e]/10 text-[#0f766e]',
+        gold: 'bg-[#d97706]/15 text-[#b45309]',
+        blue: 'bg-[#2b6cb0]/10 text-[#2b6cb0]'
+      };
+
+      document.getElementById('library-cards-grid').innerHTML = t.librarySection.cards.map(card => `
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 hover:shadow-md transition-all flex flex-col justify-between gap-5">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl ${accentIcon[card.accent]} flex items-center justify-center">
+              <i data-lucide="${card.icon}" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-display text-xl font-bold text-[#1e3a5f]">${card.title}</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">${card.desc}</p>
+          </div>
+          <a href="${card.url}" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 rounded-xl ${accentBtn[card.accent]} font-bold text-sm text-center transition-all flex items-center justify-center gap-2">
+            <span>${card.btn}</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </a>
+        </div>
+      `).join('');
+
+      document.getElementById('related-help-grid').innerHTML = t.librarySection.relatedHelp.map(item => `
+        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="group p-5 rounded-2xl border border-slate-200 bg-slate-50/80 hover:bg-white hover:border-[#0f766e] hover:shadow-md transition-all flex flex-col justify-between gap-4">
+          <div class="space-y-2.5">
+            <div class="w-10 h-10 rounded-xl ${accentIcon[item.accent]} flex items-center justify-center group-hover:scale-105 transition-transform">
+              <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+            </div>
+            <h3 class="font-display font-bold text-base text-[#1e3a5f] group-hover:text-[#0f766e]">${item.title}</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">${item.desc}</p>
+          </div>
+          <span class="inline-flex items-center gap-1 text-xs font-bold text-[#0f766e]">
+            ${t.librarySection.relActionLabel} <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          </span>
+        </a>
+      `).join('');
+    }
+
+    // =========================================================================
+    // 10. LEADERS, SPECIALISTS & WHATSAPP TEMPLATES RENDERING
+    // =========================================================================
+    function getLivePortalUrl() {
+      try {
+        const url = new URL(window.location.href);
+        url.hash = '';
+        return url.toString();
+      } catch (e) {
+        return window.location.href;
+      }
+    }
+
+    function renderLeadersAndTemplates() {
+      const t = CONTENT[currentLang];
+
+      const channelCta = document.getElementById('whatsapp-channel-cta-wrapper');
+      if (CONFIG.whatsappChannelUrl && CONFIG.whatsappChannelUrl.trim().startsWith('http')) {
+        channelCta.innerHTML = `
+          <a href="${CONFIG.whatsappChannelUrl.trim()}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-[#d97706] hover:bg-[#b45309] text-white font-bold text-sm shadow-lg transition-all">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            <span>${t.leadersSection.channelBtnLabel}</span>
+          </a>
+        `;
+      } else {
+        channelCta.innerHTML = '';
+      }
+
+      const btnColors = {
+        navy: 'bg-[#1e3a5f] hover:bg-[#142842] text-white',
+        teal: 'bg-[#0f766e] hover:bg-[#115e59] text-white',
+        gold: 'bg-[#d97706] hover:bg-[#b45309] text-white',
+        blue: 'bg-[#2b6cb0] hover:bg-[#1e4e8c] text-white'
+      };
+
+      const iconColors = {
+        navy: 'bg-[#1e3a5f]/10 text-[#1e3a5f]',
+        teal: 'bg-[#0f766e]/10 text-[#0f766e]',
+        gold: 'bg-[#d97706]/15 text-[#b45309]',
+        blue: 'bg-[#2b6cb0]/10 text-[#2b6cb0]'
+      };
+
+      document.getElementById('leadership-cards-grid').innerHTML = t.leadersSection.cards.map(card => `
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col justify-between gap-4">
+          <div class="space-y-2.5">
+            <div class="w-11 h-11 rounded-2xl ${iconColors[card.accent]} flex items-center justify-center">
+              <i data-lucide="${card.icon}" class="w-5 h-5"></i>
+            </div>
+            <h3 class="font-display text-lg font-bold text-[#1e3a5f]">${card.title}</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">${card.desc}</p>
+          </div>
+          <a href="${card.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl ${btnColors[card.accent]} font-bold text-sm transition-all">
+            <span>${t.leadersSection.openBtnLabel}</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </a>
+        </div>
+      `).join('');
+
+      const templates = t.leadersSection.getTemplates(getLivePortalUrl(), CONFIG.googleFormUrl);
+      document.getElementById('whatsapp-templates-grid').innerHTML = templates.map((tpl, idx) => `
+        <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 flex flex-col justify-between gap-4">
+          <div class="space-y-2.5">
+            <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#0f766e]/15 text-[#0f766e]">
+              ${tpl.badge}
+            </span>
+            <h4 class="font-display font-bold text-base text-[#1e3a5f]">${tpl.title}</h4>
+            <pre class="whitespace-pre-wrap font-sans text-xs text-slate-700 bg-white p-3.5 rounded-xl border border-slate-200/80 max-h-52 overflow-y-auto leading-relaxed">${tpl.text}</pre>
+          </div>
+          <button
+            type="button"
+            onclick="copyWhatsAppTemplate(${idx})"
+            class="w-full py-2.5 px-4 rounded-xl bg-[#0f766e] hover:bg-[#115e59] text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 shadow-sm"
+          >
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>${t.leadersSection.waCopyBtn}</span>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function copyWhatsAppTemplate(idx) {
+      const t = CONTENT[currentLang];
+      const templates = t.leadersSection.getTemplates(getLivePortalUrl(), CONFIG.googleFormUrl);
+      const tpl = templates[idx];
+      if (tpl) {
+        copyToClipboard(tpl.text, t.leadersSection.waCopySuccess);
+      }
+    }
+
+    // =========================================================================
+    // 11. SHARE & CLIPBOARD / TOAST UTILITIES
+    // =========================================================================
+    function sharePortal() {
+      const t = CONTENT[currentLang];
+      const shareUrl = getLivePortalUrl();
+      if (navigator.share && shareUrl.startsWith('http')) {
+        navigator.share({
+          title: document.title,
+          url: shareUrl
+        }).catch(() => copyToClipboard(shareUrl, t.nav.shareSuccess));
+      } else {
+        copyToClipboard(shareUrl, t.nav.shareSuccess);
+      }
+    }
+
+    function copyToClipboard(text, successMessage) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMessage, 'success');
+      } catch (err) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => showToast(successMessage, 'success'));
+        }
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const colors = {
+        success: 'bg-[#1e3a5f] text-white border-l-4 border-[#d97706]',
+        warning: 'bg-amber-900 text-white border-l-4 border-amber-400',
+        info: 'bg-slate-800 text-white border-l-4 border-[#0f766e]'
+      };
+      toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-xl text-xs sm:text-sm font-medium flex items-center justify-between gap-3 transition-all duration-300 ${colors[type] || colors.success}`;
+      toast.innerHTML = `
+        <span>${message}</span>
+        <button type="button" onclick="this.parentElement.remove()" class="text-white/70 hover:text-white shrink-0" aria-label="Close">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-8px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
