@@ -9,11 +9,6 @@
   <meta name="apple-mobile-web-app-title" content="Autosuficiencia" />
   <title>Portal de Autosuficiencia — Hallar fortaleza en el Señor / Self-Reliance Portal — Find Strength in the Lord</title>
 
-  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
-
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -21,14 +16,13 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Plus Jakarta Sans', 'sans-serif'],
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
           },
           colors: {
             brandNavy: '#1e3a5f',
             brandNavyDark: '#132844',
-            brandTeal: '#0f766e',
-            brandTealDark: '#115e59',
+            brandSage: '#2e6f5e',
+            brandSageDark: '#215245',
             brandAmber: '#b45309',
             brandSand: '#f8fafc',
           }
@@ -95,6 +89,7 @@
       body.print-mode-poster #tab-diagnostico,
       body.print-mode-poster #tab-biblioteca,
       body.print-mode-poster #leaders-unlocked-header,
+      body.print-mode-poster #no-code-configurator-section,
       body.print-mode-poster #analytics-section,
       body.print-mode-poster #leaders-resources-section,
       body.print-mode-poster #whatsapp-templates-section {
@@ -110,7 +105,7 @@
     }
   </style>
 </head>
-<body class="antialiased selection:bg-teal-700/20 selection:text-[#1e3a5f] pb-24">
+<body class="antialiased selection:bg-[#2e6f5e]/20 selection:text-[#1e3a5f] pb-24">
 
   <!-- Toast Notification Container -->
   <div id="toast-container" aria-live="polite" class="fixed top-20 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-[calc(100%-2rem)]"></div>
@@ -123,17 +118,17 @@
       <div class="flex items-center justify-between h-16 gap-2 sm:gap-4">
         <!-- Brand Logo & Title -->
         <button type="button" onclick="switchTab('inicio')" class="flex items-center gap-2.5 sm:gap-3 text-left group focus:outline-none min-w-0">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#1e3a5f] to-[#0f766e] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform shrink-0">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#1e3a5f] to-[#2e6f5e] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform shrink-0">
             <svg class="w-5 h-5 text-amber-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10"></circle>
               <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
             </svg>
           </div>
           <div class="truncate">
-            <span id="hdr-title" class="font-display font-bold text-[#1e3a5f] text-sm sm:text-base lg:text-lg leading-tight block truncate">
+            <span id="hdr-title" class="font-bold text-[#1e3a5f] text-sm sm:text-base lg:text-lg leading-tight block truncate">
               Portal de Autosuficiencia
             </span>
-            <span id="hdr-subtitle" class="text-xs text-[#0f766e] font-semibold hidden sm:block truncate">
+            <span id="hdr-subtitle" class="text-xs text-[#2e6f5e] font-semibold hidden sm:block truncate">
               Hallar fortaleza en el Señor
             </span>
           </div>
@@ -145,13 +140,13 @@
             <span id="nav-tab-inicio">Inicio y Cursos</span>
           </button>
           <button type="button" data-tab="diagnostico" onclick="switchTab('diagnostico')" class="tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-[#1e3a5f] hover:bg-white">
-            <span id="nav-tab-diagnostico">Diagnóstico (24 Preguntas)</span>
+            <span id="nav-tab-diagnostico">Diagnóstico 24 Preguntas</span>
           </button>
           <button type="button" data-tab="biblioteca" onclick="switchTab('biblioteca')" class="tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-[#1e3a5f] hover:bg-white">
-            <span id="nav-tab-biblioteca">Biblioteca, Familia y Ayuda</span>
+            <span id="nav-tab-biblioteca">Biblioteca y Ayuda</span>
           </button>
           <button type="button" data-tab="lideres" onclick="switchTab('lideres')" class="tab-btn px-3.5 py-2 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-[#1e3a5f] hover:bg-white inline-flex items-center gap-1.5">
-            <svg id="nav-lock-icon" class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <svg class="w-3.5 h-3.5 text-[#b45309]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
@@ -175,7 +170,7 @@
           <button
             type="button"
             onclick="toggleInstallTip()"
-            class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-teal-50 text-[#0f766e] border border-teal-200/80 hover:bg-teal-100 transition-colors"
+            class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#2e6f5e]/10 text-[#2e6f5e] border border-[#2e6f5e]/25 hover:bg-[#2e6f5e]/20 transition-colors"
           >
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
@@ -231,26 +226,26 @@
           <span id="mob-tab-inicio">Inicio y Cursos</span>
         </button>
         <button type="button" data-tab="diagnostico" onclick="switchTab('diagnostico')" class="tab-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 text-slate-700">
-          <span id="mob-tab-diagnostico">Diagnóstico (24 Preguntas)</span>
+          <span id="mob-tab-diagnostico">Diagnóstico 24 Preguntas</span>
         </button>
         <button type="button" data-tab="biblioteca" onclick="switchTab('biblioteca')" class="tab-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 text-slate-700">
-          <span id="mob-tab-biblioteca">Biblioteca, Familia y Ayuda</span>
+          <span id="mob-tab-biblioteca">Biblioteca y Ayuda</span>
         </button>
         <button type="button" data-tab="lideres" onclick="switchTab('lideres')" class="tab-btn shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 text-slate-700 inline-flex items-center gap-1">
           <span>🔒</span>
           <span id="mob-tab-lideres">Líderes y Especialistas</span>
         </button>
-        <button type="button" onclick="toggleInstallTip()" class="md:hidden shrink-0 px-3 py-2 rounded-xl text-xs font-semibold bg-teal-50 text-[#0f766e] border border-teal-200">
+        <button type="button" onclick="toggleInstallTip()" class="md:hidden shrink-0 px-3 py-2 rounded-xl text-xs font-semibold bg-[#2e6f5e]/10 text-[#2e6f5e] border border-[#2e6f5e]/25">
           <span id="mob-install-pill">📲 Instalar (0 MB)</span>
         </button>
       </nav>
     </div>
 
     <!-- Collapsible Add-to-Home-Screen Tip Banner -->
-    <div id="install-tip-banner" class="hidden bg-teal-900 text-white border-t border-teal-700">
+    <div id="install-tip-banner" class="hidden bg-[#2e6f5e] text-white border-t border-white/15">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4 text-xs sm:text-sm">
         <p id="install-tip-text" class="leading-relaxed">
-          <strong>Acceso directo sin ocupar memoria (0 MB):</strong> En <strong>iPhone (Safari)</strong> toca el ícono <em>Compartir (□↑) → Agregar a inicio</em>. En <strong>Android (Chrome)</strong> toca los <em>3 puntos (⋮) → Agregar a la pantalla principal</em>.
+          <strong>Acceso directo sin ocupar memoria (0 MB):</strong> En <strong>iPhone (Safari)</strong> toca <em>Compartir (□↑) → Agregar a inicio</em>. En <strong>Android (Chrome)</strong> toca los <em>3 puntos (⋮) → Agregar a la pantalla principal</em>.
         </p>
         <button type="button" onclick="toggleInstallTip()" class="shrink-0 px-2.5 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-xs font-bold">
           ✕
@@ -270,9 +265,9 @@
     <section id="tab-inicio" class="tab-panel space-y-10">
 
       <!-- Hero Section -->
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1e3a5f] via-[#1b4668] to-[#0f766e] text-white shadow-xl">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1e3a5f] via-[#224867] to-[#2e6f5e] text-white shadow-xl">
         <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-amber-500/20 blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-teal-300/20 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-emerald-300/15 blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10 p-6 sm:p-10 lg:p-12 space-y-8">
           <!-- 4-Step Official Growth Model -->
@@ -286,12 +281,14 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <!-- Left Column -->
             <div class="lg:col-span-7 space-y-5">
-              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm font-medium text-amber-200">
+              <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm font-medium text-amber-200">
                 <span id="hero-church-name">La Iglesia de Jesucristo de los Santos de los Últimos Días</span>
+                <span class="opacity-60">•</span>
+                <span id="hero-unit-badge" class="font-bold text-white">Barrio / Estaca</span>
               </div>
 
               <div>
-                <h1 id="hero-title" class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                <h1 id="hero-title" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
                   Autosuficiencia: Hallar fortaleza en el Señor
                 </h1>
                 <p id="hero-lead" class="text-sm sm:text-base text-slate-100 mt-3 leading-relaxed">
@@ -322,7 +319,7 @@
                     <path d="M9 11l3 3L22 4"></path>
                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                   </svg>
-                  <span id="hero-survey-label">Diagnóstico Anónimo (24 Preguntas)</span>
+                  <span id="hero-survey-label">Encuesta Anónima (24 Preguntas)</span>
                 </a>
 
                 <div class="flex flex-wrap gap-3">
@@ -331,7 +328,7 @@
                     href="https://whatsapp.com/channel/0029VbAn87EHltYBQm7Xpl0Z"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="px-4 py-3.5 rounded-xl bg-[#0f766e] hover:bg-[#115e59] text-white border border-white/25 font-bold text-sm shadow-md transition-all inline-flex items-center gap-2"
+                    class="px-4 py-3.5 rounded-xl bg-[#2e6f5e] hover:bg-[#215245] text-white border border-white/25 font-bold text-sm shadow-md transition-all inline-flex items-center gap-2"
                   >
                     <span id="hero-whatsapp-label">Canal de WhatsApp</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
@@ -371,8 +368,8 @@
                   "[Dios] espera que utilicemos nuestra inteligencia e ingenio para mejorar nuestras circunstancias, tanto espiritual como temporalmente. Él desea que tengamos éxito en la vida y desea ayudarnos."
                 </p>
                 <footer class="flex items-center justify-between gap-2 pt-3 border-t border-slate-100">
-                  <span id="hero-quote-author" class="font-display font-bold text-sm text-[#1e3a5f]">Élder Mark E. Petersen</span>
-                  <a id="hero-quote-link" href="https://www.churchofjesuschrist.org/study/general-conference/1981/04/blessings-in-self-reliance?lang=spa" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs font-bold text-[#0f766e] hover:underline">
+                  <span id="hero-quote-author" class="font-bold text-sm text-[#1e3a5f]">Élder Mark E. Petersen</span>
+                  <a id="hero-quote-link" href="https://www.churchofjesuschrist.org/study/general-conference/1981/04/blessings-in-self-reliance?lang=spa" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs font-bold text-[#2e6f5e] hover:underline">
                     <span id="hero-quote-link-text">Leer discurso</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -389,13 +386,37 @@
         </div>
       </div>
 
+      <!-- Dynamic Upcoming Groups & Workshops Board -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span id="groups-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-[#b45309]">
+                Inscripciones abiertas
+              </span>
+              <span id="groups-live-sync-badge" class="hidden inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#2e6f5e]/10 text-[#2e6f5e]">
+                ● Sincronizado en vivo
+              </span>
+            </div>
+            <h2 id="groups-heading" class="text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
+              Próximos Grupos y Talleres
+            </h2>
+            <p id="groups-desc" class="text-sm text-slate-600 mt-1">
+              Grupos pequeños con facilitador y talleres prácticos disponibles en nuestra unidad.
+            </p>
+          </div>
+        </div>
+
+        <div id="upcoming-groups-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </div>
+
       <!-- 6 Essential Life Skills -->
       <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-5">
         <div class="max-w-3xl">
-          <span id="skills-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-teal-50 text-[#0f766e] mb-2">
+          <span id="skills-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#2e6f5e]/10 text-[#2e6f5e] mb-2">
             Habilidades transversales
           </span>
-          <h2 id="skills-heading" class="font-display text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
+          <h2 id="skills-heading" class="text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
             6 Habilidades Esenciales para la Vida
           </h2>
           <p id="skills-desc" class="text-sm sm:text-base text-slate-600 mt-1">
@@ -410,7 +431,7 @@
       <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-sm border border-slate-200/80 space-y-5">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 id="courses-heading" class="font-display text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
+            <h2 id="courses-heading" class="text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
               Los 7 Cursos Oficiales de Autosuficiencia
             </h2>
             <p id="courses-desc" class="text-sm text-slate-600 mt-1">
@@ -428,7 +449,7 @@
               id="course-search-input"
               oninput="handleCourseSearch()"
               placeholder="Buscar curso o tema..."
-              class="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0f766e]/30 focus:border-[#0f766e] transition-all"
+              class="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2e6f5e]/30 focus:border-[#2e6f5e] transition-all"
             />
             <button type="button" id="clear-search-btn" onclick="resetCourseSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label="Clear search">
               ✕
@@ -443,49 +464,30 @@
       <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
       <div id="courses-empty-state" class="hidden text-center py-12 bg-white rounded-3xl border border-slate-200">
-        <p id="courses-empty-title" class="font-display font-bold text-[#1e3a5f]">No se encontraron cursos con ese término</p>
+        <p id="courses-empty-title" class="font-bold text-[#1e3a5f]">No se encontraron cursos con ese término</p>
         <p id="courses-empty-desc" class="text-sm text-slate-500 mt-1">Intenta con otra palabra clave o restablece los filtros.</p>
         <button type="button" id="courses-empty-btn" onclick="resetCourseSearch()" class="mt-4 px-4 py-2 rounded-xl bg-[#1e3a5f] text-white text-sm font-semibold">
           Mostrar todos los cursos
         </button>
       </div>
-
-      <!-- Upcoming Groups & Workshops Section (From CONFIG.upcomingGroups) -->
-      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <span id="groups-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-[#b45309] mb-2">
-              Inscripciones abiertas
-            </span>
-            <h2 id="groups-heading" class="font-display text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
-              Próximos Grupos y Talleres
-            </h2>
-            <p id="groups-desc" class="text-sm text-slate-600 mt-1">
-              Grupos pequeños con facilitador y talleres prácticos disponibles en nuestra unidad.
-            </p>
-          </div>
-        </div>
-
-        <div id="upcoming-groups-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
-      </div>
     </section>
 
     <!-- =================================================================== -->
-    <!-- TAB 2: DIAGNÓSTICO (24 PREGUNTAS) / 24-QUESTION DIAGNOSTIC          -->
+    <!-- TAB 2: DIAGNÓSTICO 24 PREGUNTAS / 24-QUESTION DIAGNOSTIC            -->
     <!-- =================================================================== -->
     <section id="tab-diagnostico" class="tab-panel hidden space-y-8">
 
       <!-- Top Banner Linking to Official Google Form -->
-      <div id="diag-top-banner" class="bg-gradient-to-br from-[#1e3a5f] via-[#1b4668] to-[#0f766e] text-white rounded-3xl p-6 sm:p-8 shadow-lg flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+      <div id="diag-top-banner" class="bg-gradient-to-br from-[#1e3a5f] via-[#224867] to-[#2e6f5e] text-white rounded-3xl p-6 sm:p-8 shadow-lg flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
         <div class="space-y-2 max-w-2xl">
           <span id="diag-banner-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#b45309] text-white">
             100 % Anónima y Confidencial
           </span>
-          <h2 id="diag-banner-title" class="font-display text-2xl sm:text-3xl font-bold">
+          <h2 id="diag-banner-title" class="text-2xl sm:text-3xl font-bold">
             Encuesta Oficial del Barrio (24 Preguntas)
           </h2>
           <p id="diag-banner-desc" class="text-sm sm:text-base text-slate-100 leading-relaxed">
-            Envía tus respuestas anónimas en Google Forms para ayudar a los líderes y especialistas a conocer las necesidades del barrio, y usa la autoevaluación interactiva de abajo (guardada solo en tu navegador) para generar tu plan personalizado.
+            Envía tus respuestas anónimas en Google Forms para ayudar a los líderes a conocer las necesidades del barrio, y usa la autoevaluación interactiva de abajo (guardada solo en tu navegador) para generar tu plan personalizado.
           </p>
         </div>
 
@@ -520,10 +522,10 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
           <div>
             <div class="flex flex-wrap items-center gap-2 mb-1">
-              <h3 id="self-assess-title" class="font-display text-xl sm:text-2xl font-bold text-[#1e3a5f]">
+              <h3 id="self-assess-title" class="text-xl sm:text-2xl font-bold text-[#1e3a5f]">
                 Autoevaluación Privada de 24 Preguntas
               </h3>
-              <span id="local-saved-badge" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-teal-50 text-[#0f766e] border border-teal-200">
+              <span id="local-saved-badge" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#2e6f5e]/10 text-[#2e6f5e] border border-[#2e6f5e]/25">
                 ✓ Guardado localmente
               </span>
             </div>
@@ -553,14 +555,14 @@
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/15 pb-6">
           <div class="space-y-2">
             <div class="flex flex-wrap items-center gap-2">
-              <span id="dash-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#0f766e] text-white">
+              <span id="dash-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#2e6f5e] text-white">
                 Resultados en vivo • 0 MB en tu teléfono
               </span>
               <span id="overall-readiness-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-amber-400 text-[#1e3a5f]">
                 Índice general: 0%
               </span>
             </div>
-            <h3 id="dash-title" class="font-display text-2xl sm:text-3xl font-bold">
+            <h3 id="dash-title" class="text-2xl sm:text-3xl font-bold">
               Panel de Progreso y Ruta Personalizada
             </h3>
             <p id="dash-subtitle" class="text-sm text-slate-200">
@@ -572,7 +574,7 @@
             <button
               type="button"
               onclick="copyDiagnosticSummary()"
-              class="px-4 py-3 rounded-xl bg-[#0f766e] hover:bg-[#115e59] text-white font-bold text-xs sm:text-sm shadow-lg transition-all inline-flex items-center gap-2"
+              class="px-4 py-3 rounded-xl bg-[#2e6f5e] hover:bg-[#215245] text-white font-bold text-xs sm:text-sm shadow-lg transition-all inline-flex items-center gap-2"
             >
               <span id="dash-copy-btn-label">Copiar Plan para WhatsApp</span>
             </button>
@@ -593,7 +595,7 @@
         <!-- Personalized Cloud Roadmap -->
         <div class="space-y-4 pt-2">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <h4 id="roadmap-heading" class="font-display text-xl font-bold text-amber-300">
+            <h4 id="roadmap-heading" class="text-xl font-bold text-amber-300">
               Tu Ruta Recomendada de Estudio en la Nube (0 MB)
             </h4>
             <span id="roadmap-count-label" class="text-xs text-slate-200 font-medium"></span>
@@ -605,17 +607,17 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- TAB 3: BIBLIOTECA, FAMILIA Y AYUDA / LIBRARY, FAMILY & HELP         -->
+    <!-- TAB 3: BIBLIOTECA Y AYUDA / LIBRARY & HELP                          -->
     <!-- =================================================================== -->
     <section id="tab-biblioteca" class="tab-panel hidden space-y-10">
 
       <!-- Cloud Study Library (0 MB) -->
       <div class="space-y-6">
         <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
-          <span id="lib-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-teal-50 text-[#0f766e] mb-2">
+          <span id="lib-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#2e6f5e]/10 text-[#2e6f5e] mb-2">
             Cero almacenamiento en tu teléfono (0 MB)
           </span>
-          <h2 id="lib-heading" class="font-display text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
+          <h2 id="lib-heading" class="text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
             Biblioteca Multimedia y Materiales de Estudio
           </h2>
           <p id="lib-desc" class="text-sm sm:text-base text-slate-600 mt-1">
@@ -626,18 +628,18 @@
         <div id="library-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
 
         <!-- Offline Gospel Library App Guide Card -->
-        <div class="bg-gradient-to-r from-[#1e3a5f] to-[#0f766e] text-white rounded-3xl p-6 sm:p-8 shadow-md flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+        <div class="bg-gradient-to-r from-[#1e3a5f] to-[#2e6f5e] text-white rounded-3xl p-6 sm:p-8 shadow-md flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div class="space-y-2 max-w-3xl">
             <span id="offline-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/15 text-amber-300">
               Lectura sin conexión a internet
             </span>
-            <h3 id="offline-heading" class="font-display text-xl sm:text-2xl font-bold">
+            <h3 id="offline-heading" class="text-xl sm:text-2xl font-bold">
               Cómo leer los manuales sin internet en la app Biblioteca del Evangelio
             </h3>
             <p id="offline-desc" class="text-sm text-slate-100 leading-relaxed">
               Si ya tienes instalada la aplicación oficial <strong>Biblioteca del Evangelio</strong>, puedes abrir todos los manuales de autosuficiencia siguiendo esta ruta:
             </p>
-            <div id="offline-path-box" class="inline-block px-4 py-2 rounded-xl bg-white/15 border border-white/25 font-display font-bold text-xs sm:text-sm text-amber-200 mt-1">
+            <div id="offline-path-box" class="inline-block px-4 py-2 rounded-xl bg-white/15 border border-white/25 font-bold text-xs sm:text-sm text-amber-200 mt-1">
               Biblioteca → Ayuda para la vida → Autosuficiencia
             </div>
           </div>
@@ -649,11 +651,7 @@
             class="shrink-0 px-5 py-3.5 rounded-2xl bg-white text-[#1e3a5f] hover:bg-slate-100 font-bold text-sm shadow-md transition-all inline-flex items-center gap-2"
           >
             <span id="offline-btn-label">Abrir en Biblioteca Web</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
+            <span>↗</span>
           </a>
         </div>
       </div>
@@ -664,7 +662,7 @@
           <span id="fhe-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-[#b45309] mb-2">
             15 minutos en familia
           </span>
-          <h2 id="fhe-heading" class="font-display text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
+          <h2 id="fhe-heading" class="text-2xl sm:text-3xl font-bold text-[#1e3a5f]">
             3 Guías Breves para la Noche de Hogar y Estudio Familiar
           </h2>
           <p id="fhe-desc" class="text-sm text-slate-600 mt-1">
@@ -678,10 +676,10 @@
       <!-- Related Help & Local Support -->
       <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
         <div>
-          <span id="rel-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-teal-50 text-[#0f766e] mb-2">
+          <span id="rel-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#2e6f5e]/10 text-[#2e6f5e] mb-2">
             Apoyo especializado complementario
           </span>
-          <h2 id="rel-heading" class="font-display text-2xl font-bold text-[#1e3a5f]">
+          <h2 id="rel-heading" class="text-2xl font-bold text-[#1e3a5f]">
             Ayuda Relacionada y Apoyo Local
           </h2>
           <p id="rel-desc" class="text-sm text-slate-600 mt-1">
@@ -691,17 +689,17 @@
 
         <div id="related-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
 
-        <!-- Local Support Card (From CONFIG.localSupport) -->
-        <div id="local-support-card" class="rounded-2xl border-2 border-slate-200 bg-slate-50/90 p-5 sm:p-6 space-y-4"></div>
+        <!-- Local Support Card -->
+        <div id="local-support-card" class="rounded-2xl border-2 border-slate-200 bg-slate-50/90 p-5 sm:p-6 space-y-3"></div>
       </div>
     </section>
 
     <!-- =================================================================== -->
-    <!-- TAB 4: LÍDERES Y ESPECIALISTAS (PIN-PROTECTED)                      -->
+    <!-- TAB 4: LÍDERES Y ESPECIALISTAS (PIN-PROTECTED: 2026)                -->
     <!-- =================================================================== -->
     <section id="tab-lideres" class="tab-panel hidden space-y-8">
 
-      <!-- LOCKED VIEW (Requires PIN) -->
+      <!-- LOCKED VIEW -->
       <div id="leaders-locked-view" class="max-w-lg mx-auto bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-slate-200 text-center space-y-6 my-6">
         <div class="w-16 h-16 mx-auto rounded-2xl bg-[#1e3a5f]/10 text-[#1e3a5f] flex items-center justify-center">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -714,11 +712,11 @@
           <span id="lock-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-[#b45309]">
             Acceso Restringido
           </span>
-          <h2 id="lock-title" class="font-display text-2xl font-bold text-[#1e3a5f]">
+          <h2 id="lock-title" class="text-2xl font-bold text-[#1e3a5f]">
             Panel para Líderes y Especialistas
           </h2>
           <p id="lock-desc" class="text-sm text-slate-600 leading-relaxed">
-            Ingresa el PIN de liderazgo para acceder al Analizador de Encuestas del Barrio, recursos para facilitadores, plantillas de WhatsApp y cartel QR imprimible.
+            Ingresa el PIN de liderazgo para configurar grupos y horarios sin tocar código, analizar las encuestas del barrio, copiar el mensaje de WhatsApp e imprimir el cartel QR.
           </p>
         </div>
 
@@ -732,7 +730,7 @@
               maxlength="12"
               placeholder="••••"
               required
-              class="w-full text-center tracking-[0.5em] font-display font-extrabold text-xl py-3.5 px-4 rounded-2xl border-2 border-slate-300 focus:border-[#1e3a5f] focus:outline-none bg-slate-50 focus:bg-white"
+              class="w-full text-center tracking-[0.5em] font-extrabold text-xl py-3.5 px-4 rounded-2xl border-2 border-slate-300 focus:border-[#1e3a5f] focus:outline-none bg-slate-50 focus:bg-white"
             />
           </div>
           <button
@@ -748,16 +746,16 @@
       <div id="leaders-unlocked-view" class="hidden space-y-8">
 
         <!-- Unlocked Top Header -->
-        <div id="leaders-unlocked-header" class="bg-gradient-to-r from-[#1e3a5f] to-[#0f766e] text-white rounded-3xl p-6 sm:p-8 shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div id="leaders-unlocked-header" class="bg-gradient-to-r from-[#1e3a5f] to-[#2e6f5e] text-white rounded-3xl p-6 sm:p-8 shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div class="space-y-2 max-w-3xl">
             <span id="lead-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/15 text-amber-200">
-              Panel desbloqueado • Herramientas del llamamiento
+              Panel desbloqueado • Gestión sin código
             </span>
-            <h2 id="lead-heading" class="font-display text-2xl sm:text-3xl font-bold">
+            <h2 id="lead-heading" class="text-2xl sm:text-3xl font-bold">
               Líderes y Especialistas de Autosuficiencia
             </h2>
             <p id="lead-desc" class="text-sm sm:text-base text-slate-100">
-              Analiza los resultados anónimos del barrio, consulta guías oficiales, copia mensajes para el Canal de WhatsApp e imprime el cartel con códigos QR.
+              Administra los Próximos Grupos y Talleres, analiza las respuestas de la encuesta, copia el mensaje para WhatsApp e imprime el cartel con códigos QR.
             </p>
           </div>
 
@@ -767,7 +765,7 @@
               href="https://whatsapp.com/channel/0029VbAn87EHltYBQm7Xpl0Z"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-4 py-3 rounded-xl bg-[#0f766e] hover:bg-[#115e59] border border-white/25 text-white font-bold text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2"
+              class="px-4 py-3 rounded-xl bg-[#2e6f5e] hover:bg-[#215245] border border-white/25 text-white font-bold text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2"
             >
               <span id="lead-channel-btn">Abrir Canal de WhatsApp</span>
             </a>
@@ -783,15 +781,218 @@
         </div>
 
         <!-- =============================================================== -->
-        <!-- SECTION A: WARD SURVEY ANALYTICS ENGINE (CSV / GOOGLE SHEETS)   -->
+        <!-- SUB-SECTION A: NO-CODE VISUAL CONFIGURATOR                      -->
+        <!-- =============================================================== -->
+        <div id="no-code-configurator-section" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border-2 border-[#2e6f5e]/30 space-y-8">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+            <div class="space-y-1">
+              <span id="cfg-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#2e6f5e]/10 text-[#2e6f5e]">
+                Sin tocar código • Visual Admin
+              </span>
+              <h3 id="cfg-heading" class="text-xl sm:text-2xl font-bold text-[#1e3a5f]">
+                Configurador Visual de Grupos, Horarios y Portal
+              </h3>
+              <p id="cfg-desc" class="text-sm text-slate-600">
+                Agrega o edita los grupos y horarios que ven los miembros en la portada. Para publicar los cambios para todos, usa la sincronización en vivo con Google Sheets o descarga el archivo <strong>index.html</strong> actualizado con un clic.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2.5 shrink-0">
+              <button
+                type="button"
+                onclick="downloadUpdatedHtml()"
+                class="px-5 py-3.5 rounded-2xl bg-[#b45309] hover:bg-amber-700 text-white font-bold text-xs sm:text-sm shadow-lg transition-all inline-flex items-center gap-2"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span id="cfg-download-btn">Descargar index.html Actualizado</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="resetConfigToDefaults()"
+                class="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-all"
+              >
+                <span id="cfg-reset-btn">Restaurar valores iniciales</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Part 1: Manage Upcoming Groups & Workshops -->
+          <div class="space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <h4 id="cfg-groups-title" class="text-lg font-bold text-[#1e3a5f]">
+                1. Gestionar Próximos Grupos y Talleres
+              </h4>
+              <span id="cfg-groups-count" class="text-xs font-bold text-[#2e6f5e]"></span>
+            </div>
+
+            <!-- Add / Edit Group Form -->
+            <form id="group-editor-form" onsubmit="saveGroupFromForm(event)" class="rounded-2xl bg-slate-50 border border-slate-200 p-5 space-y-4">
+              <input type="hidden" id="grp-edit-id" value="" />
+              <div class="flex items-center justify-between">
+                <h5 id="grp-form-mode-title" class="font-bold text-sm text-[#1e3a5f]">+ Agregar nuevo grupo o taller</h5>
+                <button type="button" id="grp-cancel-edit-btn" onclick="cancelGroupEdit()" class="hidden text-xs font-bold text-slate-500 hover:text-slate-800">
+                  Cancelar edición
+                </button>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div>
+                  <label for="grp-course-select" id="lbl-grp-course" class="block text-xs font-bold text-slate-700 mb-1">Curso oficial</label>
+                  <select id="grp-course-select" onchange="autoFillCourseTitles()" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs font-medium"></select>
+                </div>
+
+                <div>
+                  <label for="grp-format-select" id="lbl-grp-format" class="block text-xs font-bold text-slate-700 mb-1">Modalidad</label>
+                  <select id="grp-format-select" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs font-medium">
+                    <option value="in-person">Presencial / In-Person</option>
+                    <option value="virtual">Virtual (Videollamada / Video Call)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="grp-facilitator-input" id="lbl-grp-facilitator" class="block text-xs font-bold text-slate-700 mb-1">Facilitador(es)</label>
+                  <input type="text" id="grp-facilitator-input" required placeholder="Ej. Hno. Carlos Pérez" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label for="grp-title-es" id="lbl-grp-title-es" class="block text-xs font-bold text-slate-700 mb-1">Título del grupo (Español)</label>
+                  <input type="text" id="grp-title-es" required placeholder="Las finanzas personales" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs" />
+                </div>
+                <div>
+                  <label for="grp-title-en" id="lbl-grp-title-en" class="block text-xs font-bold text-slate-700 mb-1">Group Title (English)</label>
+                  <input type="text" id="grp-title-en" required placeholder="Personal Finances" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label for="grp-schedule-es" id="lbl-grp-schedule-es" class="block text-xs font-bold text-slate-700 mb-1">Día y horario (Español)</label>
+                  <input type="text" id="grp-schedule-es" required placeholder="Domingos • 4:00 PM (12 semanas)" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs" />
+                </div>
+                <div>
+                  <label for="grp-schedule-en" id="lbl-grp-schedule-en" class="block text-xs font-bold text-slate-700 mb-1">Day & Schedule (English)</label>
+                  <input type="text" id="grp-schedule-en" required placeholder="Sundays • 4:00 PM (12 weeks)" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div>
+                  <label for="grp-location-es" id="lbl-grp-location-es" class="block text-xs font-bold text-slate-700 mb-1">Lugar o enlace (Español)</label>
+                  <input type="text" id="grp-location-es" required placeholder="Salón Cultural / Zoom" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs" />
+                </div>
+                <div>
+                  <label for="grp-location-en" id="lbl-grp-location-en" class="block text-xs font-bold text-slate-700 mb-1">Location or link (English)</label>
+                  <input type="text" id="grp-location-en" required placeholder="Cultural Hall / Zoom" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs" />
+                </div>
+                <div>
+                  <label for="grp-signup-url" id="lbl-grp-signup" class="block text-xs font-bold text-slate-700 mb-1">Enlace de inscripción (Opcional)</label>
+                  <input type="url" id="grp-signup-url" placeholder="https://forms.gle/..." class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white text-xs" />
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                <label class="inline-flex items-center gap-2 text-xs font-bold text-[#1e3a5f] cursor-pointer select-none">
+                  <input type="checkbox" id="grp-active-check" checked class="rounded text-[#2e6f5e]" />
+                  <span id="lbl-grp-active">Visible en la portada (Activo)</span>
+                </label>
+
+                <button type="submit" class="px-5 py-2.5 rounded-xl bg-[#2e6f5e] hover:bg-[#215245] text-white font-bold text-xs shadow-sm transition-all">
+                  <span id="grp-save-btn">Guardar Grupo / Taller</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Active & Paused Groups List -->
+            <div id="admin-groups-list" class="space-y-2.5"></div>
+          </div>
+
+          <!-- Part 2: General Portal Settings Form -->
+          <form id="general-settings-form" onsubmit="saveGeneralSettings(event)" class="pt-6 border-t border-slate-200 space-y-4">
+            <h4 id="cfg-general-title" class="text-lg font-bold text-[#1e3a5f]">
+              2. Configuración General del Portal y Sincronización
+            </h4>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label for="cfg-unit-es" id="lbl-cfg-unit-es" class="block text-xs font-bold text-slate-700 mb-1">Nombre de la unidad (Español)</label>
+                <input type="text" id="cfg-unit-es" required class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs" />
+              </div>
+              <div>
+                <label for="cfg-unit-en" id="lbl-cfg-unit-en" class="block text-xs font-bold text-slate-700 mb-1">Unit Name (English)</label>
+                <input type="text" id="cfg-unit-en" required class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs" />
+              </div>
+              <div>
+                <label for="cfg-pin" id="lbl-cfg-pin" class="block text-xs font-bold text-slate-700 mb-1">PIN de Líderes y Especialistas</label>
+                <input type="text" id="cfg-pin" required maxlength="12" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs font-bold" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label for="cfg-form-url" id="lbl-cfg-form" class="block text-xs font-bold text-slate-700 mb-1">Enlace Encuesta Google Forms</label>
+                <input type="url" id="cfg-form-url" required class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs" />
+              </div>
+              <div>
+                <label for="cfg-wa-url" id="lbl-cfg-wa" class="block text-xs font-bold text-slate-700 mb-1">Enlace Canal de WhatsApp</label>
+                <input type="url" id="cfg-wa-url" required class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs" />
+              </div>
+              <div>
+                <label for="cfg-specialist" id="lbl-cfg-spec" class="block text-xs font-bold text-slate-700 mb-1">Contacto del Especialista (Opcional)</label>
+                <input type="text" id="cfg-specialist" placeholder="Ej. Hno. Daniel — WhatsApp / Correo" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="cfg-local-es" id="lbl-cfg-local-es" class="block text-xs font-bold text-slate-700 mb-1">Aviso de apoyo local (Español)</label>
+                <textarea id="cfg-local-es" rows="2" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs"></textarea>
+              </div>
+              <div>
+                <label for="cfg-local-en" id="lbl-cfg-local-en" class="block text-xs font-bold text-slate-700 mb-1">Local Support Note (English)</label>
+                <textarea id="cfg-local-en" rows="2" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white text-xs"></textarea>
+              </div>
+            </div>
+
+            <div class="rounded-2xl bg-[#2e6f5e]/5 border border-[#2e6f5e]/20 p-4 space-y-2">
+              <label for="cfg-groups-sheet" id="lbl-cfg-sheet" class="block text-xs font-bold text-[#1e3a5f]">
+                Sincronización en vivo con Google Sheets CSV para Grupos (Opcional — actualiza todos los celulares sin volver a subir a GitHub)
+              </label>
+              <input
+                type="url"
+                id="cfg-groups-sheet"
+                placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv"
+                class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs"
+              />
+              <p id="cfg-sheet-help" class="text-[11px] text-slate-600">
+                Columnas sugeridas en Google Sheets: <code>courseId, titleEs, titleEn, scheduleEs, scheduleEn, format, locationEs, locationEn, facilitator, signupUrl, active</code>
+              </p>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-end gap-3">
+              <button type="submit" class="px-5 py-3 rounded-xl bg-[#1e3a5f] hover:bg-[#132844] text-white font-bold text-xs sm:text-sm shadow-sm transition-all">
+                <span id="cfg-save-general-btn">Guardar Configuración General</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- SUB-SECTION B: WARD SURVEY ANALYTICS ENGINE                     -->
         <!-- =============================================================== -->
         <div id="analytics-section" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/90 space-y-6">
           <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-5">
             <div>
-              <span id="ana-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-teal-50 text-[#0f766e] mb-2">
+              <span id="ana-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#2e6f5e]/10 text-[#2e6f5e] mb-2">
                 Termómetro del Barrio • Procesamiento local privado
               </span>
-              <h3 id="ana-heading" class="font-display text-xl sm:text-2xl font-bold text-[#1e3a5f]">
+              <h3 id="ana-heading" class="text-xl sm:text-2xl font-bold text-[#1e3a5f]">
                 Analizador de Encuestas del Barrio (CSV / Google Sheets)
               </h3>
               <p id="ana-desc" class="text-sm text-slate-600 mt-1">
@@ -808,11 +1009,9 @@
             </button>
           </div>
 
-          <!-- Data Source Controls: File Upload OR Google Sheets CSV URL -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <!-- Upload CSV File -->
             <div class="p-4 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50/70 space-y-2">
-              <label for="csv-file-input" id="ana-file-label" class="block font-display font-bold text-sm text-[#1e3a5f]">
+              <label for="csv-file-input" id="ana-file-label" class="block font-bold text-sm text-[#1e3a5f]">
                 Opción 1: Subir archivo .CSV de Google Forms
               </label>
               <input
@@ -824,9 +1023,8 @@
               />
             </div>
 
-            <!-- Google Sheets Published CSV URL -->
             <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/70 space-y-2">
-              <label for="sheets-url-input" id="ana-url-label" class="block font-display font-bold text-sm text-[#1e3a5f]">
+              <label for="sheets-url-input" id="ana-url-label" class="block font-bold text-sm text-[#1e3a5f]">
                 Opción 2: Enlace CSV publicado de Google Sheets
               </label>
               <div class="flex gap-2">
@@ -834,12 +1032,12 @@
                   type="url"
                   id="sheets-url-input"
                   placeholder="https://docs.google.com/spreadsheets/d/.../pub?output=csv"
-                  class="flex-1 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#0f766e]"
+                  class="flex-1 px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:border-[#2e6f5e]"
                 />
                 <button
                   type="button"
                   onclick="fetchGoogleSheetsCsv()"
-                  class="px-4 py-2 rounded-xl bg-[#0f766e] hover:bg-[#115e59] text-white font-bold text-xs shrink-0 transition-colors"
+                  class="px-4 py-2 rounded-xl bg-[#2e6f5e] hover:bg-[#215245] text-white font-bold text-xs shrink-0 transition-colors"
                 >
                   <span id="ana-fetch-btn">Analizar</span>
                 </button>
@@ -847,39 +1045,34 @@
             </div>
           </div>
 
-          <!-- Analytics Results Dashboard (Hidden until data loaded) -->
           <div id="analytics-results-container" class="hidden space-y-6 pt-2">
-            <!-- KPI Summary Row -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="ana-kpi-grid"></div>
 
-            <!-- Top 3 Most Urgent Ward Needs -->
             <div class="rounded-2xl bg-amber-50/80 border border-amber-200 p-5 space-y-3">
-              <h4 id="ana-urgent-title" class="font-display font-bold text-base text-[#b45309]">
+              <h4 id="ana-urgent-title" class="font-bold text-base text-[#b45309]">
                 Top 3 Necesidades Más Urgentes del Barrio
               </h4>
               <div id="ana-urgent-list" class="grid grid-cols-1 md:grid-cols-3 gap-3"></div>
             </div>
 
-            <!-- Stacked Bar Charts for Each of the 6 Diagnostic Blocks -->
             <div class="space-y-3">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <h4 id="ana-charts-title" class="font-display font-bold text-base sm:text-lg text-[#1e3a5f]">
+                <h4 id="ana-charts-title" class="font-bold text-base sm:text-lg text-[#1e3a5f]">
                   Resultados por Bloque (% Sí / En proceso / No)
                 </h4>
                 <div class="flex items-center gap-3 text-xs font-semibold">
-                  <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-[#0f766e]"></span> <span id="legend-yes">Sí</span></span>
-                  <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-[#d97706]"></span> <span id="legend-prog">En proceso</span></span>
+                  <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-[#2e6f5e]"></span> <span id="legend-yes">Sí</span></span>
+                  <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-[#b45309]"></span> <span id="legend-prog">En proceso</span></span>
                   <span class="inline-flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-[#dc2626]"></span> <span id="legend-no">No</span></span>
                 </div>
               </div>
               <div id="ana-blocks-charts" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
 
-            <!-- SQL-Style Filter Explorer -->
             <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-4">
               <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
-                  <h4 id="ana-filter-title" class="font-display font-bold text-base text-[#1e3a5f]">
+                  <h4 id="ana-filter-title" class="font-bold text-base text-[#1e3a5f]">
                     Explorador y Filtros de Respuestas (Consulta Rápida)
                   </h4>
                   <p id="ana-filter-desc" class="text-xs text-slate-600">
@@ -896,7 +1089,6 @@
                 </button>
               </div>
 
-              <!-- Filter Controls -->
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label for="filter-modality" id="lbl-filter-mod" class="block text-[11px] font-bold text-slate-600 mb-1">Modalidad preferida</label>
@@ -923,44 +1115,52 @@
 
                 <div class="flex items-end">
                   <label class="w-full flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-300 bg-white cursor-pointer select-none">
-                    <input type="checkbox" id="filter-followup-only" onchange="applyAnalyticsFilters()" class="rounded text-[#0f766e] focus:ring-[#0f766e]" />
+                    <input type="checkbox" id="filter-followup-only" onchange="applyAnalyticsFilters()" class="rounded text-[#2e6f5e]" />
                     <span id="lbl-filter-followup" class="text-xs font-bold text-[#1e3a5f]">Solo solicitudes de contacto (P.26)</span>
                   </label>
                 </div>
               </div>
 
-              <!-- Filtered Rows Table -->
               <div id="ana-filtered-table-wrap" class="overflow-x-auto bg-white rounded-xl border border-slate-200"></div>
             </div>
           </div>
         </div>
 
         <!-- =============================================================== -->
-        <!-- SECTION B1: OFFICIAL LEADER & FACILITATOR RESOURCES             -->
+        <!-- SUB-SECTION C1: OFFICIAL LEADER & FACILITATOR RESOURCES           -->
         <!-- =============================================================== -->
         <div id="leaders-resources-section" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
 
         <!-- =============================================================== -->
-        <!-- SECTION B2: 4 COPY-READY WHATSAPP CHANNEL TEMPLATES             -->
+        <!-- SUB-SECTION C2: SINGLE ALL-IN-ONE WHATSAPP CHANNEL MESSAGE      -->
         <!-- =============================================================== -->
-        <div id="whatsapp-templates-section" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
-          <div>
-            <span id="wa-tpl-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-teal-50 text-[#0f766e] mb-2">
-              Difusión sin saturar teléfonos
-            </span>
-            <h3 id="wa-tpl-heading" class="font-display text-xl sm:text-2xl font-bold text-[#1e3a5f]">
-              4 Plantillas Listas para tu Canal de WhatsApp
-            </h3>
-            <p id="wa-tpl-desc" class="text-sm text-slate-600 mt-1">
-              Copia cada publicación con un clic; todas incluyen los enlaces activos de tu Encuesta, Portal Web y Canal de WhatsApp.
-            </p>
+        <div id="whatsapp-templates-section" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span id="wa-tpl-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#2e6f5e]/10 text-[#2e6f5e] mb-2">
+                Mensaje único sin saturar teléfonos
+              </span>
+              <h3 id="wa-tpl-heading" class="text-xl sm:text-2xl font-bold text-[#1e3a5f]">
+                Mensaje Completo Listo para tu Canal de WhatsApp
+              </h3>
+              <p id="wa-tpl-desc" class="text-sm text-slate-600 mt-1">
+                Un solo mensaje claro y fácil de leer desde el celular que resume la encuesta, los 7 cursos y el portal (0 MB).
+              </p>
+            </div>
+            <button
+              type="button"
+              onclick="copySingleWaMessage()"
+              class="shrink-0 px-5 py-3 rounded-xl bg-[#2e6f5e] hover:bg-[#215245] text-white font-bold text-xs sm:text-sm shadow-sm transition-all"
+            >
+              <span id="wa-copy-single-btn">Copiar Mensaje para WhatsApp</span>
+            </button>
           </div>
 
-          <div id="whatsapp-templates-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+          <pre id="wa-single-message-box" class="whitespace-pre-wrap font-sans text-xs sm:text-sm text-slate-700 bg-slate-50 p-5 rounded-2xl border border-slate-200 leading-relaxed"></pre>
         </div>
 
         <!-- =============================================================== -->
-        <!-- SECTION B3: PRINTABLE BULLETIN BOARD QR POSTER                  -->
+        <!-- SUB-SECTION C3: PRINTABLE BULLETIN BOARD QR POSTER              -->
         <!-- =============================================================== -->
         <div id="qr-poster-card" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/90 space-y-6">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
@@ -968,7 +1168,7 @@
               <span id="qr-pill" class="no-print inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-[#b45309] mb-2">
                 Tablero de anuncios / Bulletin Board
               </span>
-              <h3 id="qr-heading" class="font-display text-xl sm:text-2xl font-bold text-[#1e3a5f]">
+              <h3 id="qr-heading" class="text-xl sm:text-2xl font-bold text-[#1e3a5f]">
                 Cartel Imprimible con Códigos QR — Autosuficiencia
               </h3>
               <p id="qr-desc" class="text-sm text-slate-600 mt-1">
@@ -999,20 +1199,16 @@
   <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-slate-200">
     <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center md:text-left">
       <div class="space-y-1">
-        <p id="ftr-title" class="font-display font-bold text-[#1e3a5f] text-sm">
+        <p id="ftr-title" class="font-bold text-[#1e3a5f] text-sm">
           Portal de Autosuficiencia — Hallar fortaleza en el Señor / Self-Reliance Portal — Find Strength in the Lord
         </p>
-        <p id="ftr-note" class="text-[#0f766e] font-medium">
+        <p id="ftr-note" class="text-[#2e6f5e] font-medium">
           0 MB de almacenamiento en tu teléfono: todos los cursos, manuales y videos se abren en la nube oficial.
         </p>
       </div>
-      <a id="ftr-official-link" href="https://www.churchofjesuschrist.org/life/self-reliance?lang=spa" target="_blank" rel="noopener noreferrer" class="font-bold text-[#1e3a5f] hover:text-[#0f766e] hover:underline inline-flex items-center gap-1 shrink-0">
+      <a id="ftr-official-link" href="https://www.churchofjesuschrist.org/life/self-reliance?lang=spa" target="_blank" rel="noopener noreferrer" class="font-bold text-[#1e3a5f] hover:text-[#2e6f5e] hover:underline inline-flex items-center gap-1 shrink-0">
         <span id="ftr-official-label">Sitio oficial de Autosuficiencia</span>
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-          <polyline points="15 3 21 3 21 9"></polyline>
-          <line x1="10" y1="14" x2="21" y2="3"></line>
-        </svg>
+        <span>↗</span>
       </a>
     </div>
   </footer>
@@ -1022,7 +1218,7 @@
     id="floating-share-btn"
     type="button"
     onclick="sharePortal()"
-    class="fixed bottom-5 right-5 z-40 px-5 py-3.5 rounded-full bg-gradient-to-r from-[#1e3a5f] to-[#0f766e] hover:scale-105 active:scale-95 text-white font-bold text-sm shadow-xl shadow-slate-900/25 flex items-center gap-2 transition-all"
+    class="fixed bottom-5 right-5 z-40 px-5 py-3.5 rounded-full bg-gradient-to-r from-[#1e3a5f] to-[#2e6f5e] hover:scale-105 active:scale-95 text-white font-bold text-sm shadow-xl shadow-slate-900/25 flex items-center gap-2 transition-all"
     aria-label="Share portal"
   >
     <svg class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -1036,69 +1232,70 @@
   </button>
 
   <!-- ===================================================================== -->
-  <!-- JAVASCRIPT: CONFIG, BILINGUAL CONTENT, DIAGNOSTIC & CSV ANALYZER      -->
+  <!-- JAVASCRIPT: CONFIG, NO-CODE ADMIN, DIAGNOSTIC & CSV ANALYZER          -->
   <!-- ===================================================================== -->
-  <script>
-    // =========================================================================
-    // 1. TOP CONFIGURATION BLOCK (Edit directly on GitHub anytime)
-    // =========================================================================
-    const CONFIG = {
-      portalUrl: 'https://autosuficiencia-portal.github.io/',
-      googleFormUrl: 'https://forms.gle/Vg8NKX7GGccs2pC46',
-      whatsappChannelUrl: 'https://whatsapp.com/channel/0029VbAn87EHltYBQm7Xpl0Z',
-      // Change this PIN anytime to update access to the Leaders & Specialists tab:
-      leaderPin: '2026',
+  <script id="app-script">
+/* === CONFIG_START === */
+const DEFAULT_CONFIG = {
+  "portalUrl": "https://autosuficiencia-portal.github.io/",
+  "googleFormUrl": "https://forms.gle/Vg8NKX7GGccs2pC46",
+  "whatsappChannelUrl": "https://whatsapp.com/channel/0029VbAn87EHltYBQm7Xpl0Z",
+  "leaderPin": "2026",
+  "unitNameEs": "Barrio / Estaca",
+  "unitNameEn": "Ward / Stake",
+  "specialistContact": "",
+  "groupsSheetCsvUrl": "",
+  "localSupportEs": "Consulta con el Especialista de Autosuficiencia o el Consejo de Barrio para horarios locales de Servicios de Empleo y Recuperación de Adicciones.",
+  "localSupportEn": "Contact your Self-Reliance Specialist or Ward Council for local Employment Services and Addiction Recovery meeting schedules.",
+  "upcomingGroups": [
+    {
+      "id": "grp-1",
+      "courseId": "finanzas",
+      "titleEs": "Las finanzas personales",
+      "titleEn": "Personal Finances",
+      "scheduleEs": "Domingos • 4:00 PM (12 semanas)",
+      "scheduleEn": "Sundays • 4:00 PM (12 weeks)",
+      "format": "in-person",
+      "locationEs": "Salón Cultural — Capilla",
+      "locationEn": "Cultural Hall — Chapel",
+      "facilitator": "Especialistas de Autosuficiencia",
+      "signupUrl": "https://forms.gle/Vg8NKX7GGccs2pC46",
+      "active": true
+    },
+    {
+      "id": "grp-2",
+      "courseId": "resiliencia",
+      "titleEs": "Hallar fortaleza en el Señor: Resiliencia emocional",
+      "titleEn": "Finding Strength in the Lord: Emotional Resilience",
+      "scheduleEs": "Miércoles • 7:30 PM (10 semanas)",
+      "scheduleEn": "Wednesdays • 7:30 PM (10 weeks)",
+      "format": "virtual",
+      "locationEs": "Virtual (Videollamada)",
+      "locationEn": "Virtual (Video Call)",
+      "facilitator": "Facilitadores asignados",
+      "signupUrl": "https://forms.gle/Vg8NKX7GGccs2pC46",
+      "active": true
+    },
+    {
+      "id": "grp-3",
+      "courseId": "englishconnect",
+      "titleEs": "EnglishConnect 1 y 2",
+      "titleEn": "EnglishConnect 1 & 2",
+      "scheduleEs": "Jueves • 7:00 PM",
+      "scheduleEn": "Thursdays • 7:00 PM",
+      "format": "in-person",
+      "locationEs": "Salón de Clases / Híbrido",
+      "locationEn": "Classroom / Hybrid",
+      "facilitator": "Instructores EnglishConnect",
+      "signupUrl": "https://forms.gle/Vg8NKX7GGccs2pC46",
+      "active": true
+    }
+  ]
+};
+/* === CONFIG_END === */
 
-      // Editable list of upcoming groups & workshops displayed on Tab 1
-      upcomingGroups: [
-        {
-          courseEs: 'Las finanzas personales',
-          courseEn: 'Personal Finances',
-          scheduleEs: 'Domingos • 4:00 PM (12 semanas)',
-          scheduleEn: 'Sundays • 4:00 PM (12 weeks)',
-          formatEs: 'Presencial — Salón Cultural',
-          formatEn: 'In-Person — Cultural Hall',
-          facilitator: 'Especialistas de Autosuficiencia',
-          noteEs: 'Inscripción vía encuesta anónima o Canal de WhatsApp.',
-          noteEn: 'Sign up via anonymous survey or WhatsApp Channel.'
-        },
-        {
-          courseEs: 'Hallar fortaleza en el Señor: Resiliencia emocional',
-          courseEn: 'Finding Strength in the Lord: Emotional Resilience',
-          scheduleEs: 'Miércoles • 7:30 PM (10 semanas)',
-          scheduleEn: 'Wednesdays • 7:30 PM (10 weeks)',
-          formatEs: 'Virtual (Videollamada)',
-          formatEn: 'Virtual (Video Call)',
-          facilitator: 'Facilitadores asignados del barrio',
-          noteEs: 'Abierto a jóvenes adultos y familias.',
-          noteEn: 'Open to young adults and families.'
-        },
-        {
-          courseEs: 'EnglishConnect 1 y 2',
-          courseEn: 'EnglishConnect 1 & 2',
-          scheduleEs: 'Jueves • 7:00 PM',
-          scheduleEn: 'Thursdays • 7:00 PM',
-          formatEs: 'Presencial / Híbrido',
-          formatEn: 'In-Person / Hybrid',
-          facilitator: 'Instructores EnglishConnect',
-          noteEs: 'Practica inglés en un ambiente de fe y compañerismo.',
-          noteEn: 'Practice English in a fellowship-centered environment.'
-        }
-      ],
-
-      // Editable local support directory displayed at the bottom of Tab 3
-      localSupport: {
-        specialistEs: 'Especialista de Autosuficiencia del Barrio / Estaca — Disponible los domingos después de las reuniones o mediante la encuesta anónima.',
-        specialistEn: 'Ward / Stake Self-Reliance Specialist — Available Sundays after church meetings or through the anonymous survey.',
-        employmentEs: 'Servicios de Empleo — Talleres semanales de currículum, entrevistas y orientación laboral en línea.',
-        employmentEn: 'Employment Services — Weekly resume, interview, and career coaching workshops online.',
-        recoveryEs: 'Programa para Recuperarse de las Adicciones — Reuniones confidenciales presenciales y virtuales cada semana.',
-        recoveryEn: 'Addiction Recovery Program — Confidential in-person and virtual support meetings held weekly.'
-      }
-    };
-
     // =========================================================================
-    // 2. COMPLETE BILINGUAL STORE (ES / EN)
+    // 2. COMPLETE BILINGUAL CONTENT STORE (ES / EN)
     // =========================================================================
     const DATA = {
       es: {
@@ -1110,8 +1307,8 @@
         installTipHtml: '<strong>Acceso directo sin ocupar memoria (0 MB):</strong> En <strong>iPhone (Safari)</strong> toca <em>Compartir (□↑) → Agregar a inicio</em>. En <strong>Android (Chrome)</strong> toca los <em>3 puntos (⋮) → Agregar a la pantalla principal</em>.',
         tabs: {
           inicio: 'Inicio y Cursos',
-          diagnostico: 'Diagnóstico (24 Preguntas)',
-          biblioteca: 'Biblioteca, Familia y Ayuda',
+          diagnostico: 'Diagnóstico 24 Preguntas',
+          biblioteca: 'Biblioteca y Ayuda',
           lideres: 'Líderes y Especialistas'
         },
         shareBtn: 'Compartir portal',
@@ -1124,7 +1321,7 @@
           lead: 'La autosuficiencia es un viaje de fe. Al combinar el poder de Dios con nuestros esfuerzos, satisfacemos las necesidades prácticas y espirituales de la vida.',
           defTitle: '¿Qué es la autosuficiencia?',
           defBody: 'La autosuficiencia es la capacidad, el compromiso y el empeño de proporcionar los elementos espirituales y temporales indispensables para sostener la vida de uno mismo y de su familia.',
-          surveyLabel: 'Diagnóstico Anónimo (24 Preguntas)',
+          surveyLabel: 'Encuesta Anónima (24 Preguntas)',
           whatsappLabel: 'Canal de WhatsApp',
           hubLabel: 'Sitio Oficial',
           hubUrl: 'https://www.churchofjesuschrist.org/life/self-reliance?lang=spa',
@@ -1174,7 +1371,7 @@
             catLabel: 'Emocional / Vida',
             desc: 'Desarrolla fortaleza interior, espiritual y emocional para afrontar las pruebas y dificultades apoyándote en el Salvador.',
             url: 'https://www.churchofjesuschrist.org/life/self-reliance/emotional-resilience?lang=spa',
-            accent: 'teal'
+            accent: 'sage'
           },
           {
             id: 'finanzas',
@@ -1214,7 +1411,7 @@
             catLabel: 'Idiomas',
             desc: 'Programa diseñado para aprender y practicar el idioma inglés en un ambiente de fe y compañerismo.',
             url: 'https://www.englishconnect.org/es',
-            accent: 'teal'
+            accent: 'sage'
           },
           {
             id: 'negocio',
@@ -1239,14 +1436,19 @@
         ],
         groupsSection: {
           pill: 'Inscripciones abiertas',
+          liveBadge: '● Sincronizado en vivo',
           heading: 'Próximos Grupos y Talleres',
           desc: 'Grupos pequeños con facilitador y talleres prácticos disponibles en nuestra unidad.',
-          interestBtn: 'Me interesa este grupo'
+          inPersonBadge: 'Presencial',
+          virtualBadge: 'Virtual',
+          facilitatorLabel: 'Facilitador:',
+          signupBtn: 'Inscribirme / Consultar',
+          emptyMsg: 'Aún no hay grupos activos publicados. Responde la encuesta anónima para solicitar la apertura de un grupo.'
         },
         diagnostic: {
           bannerPill: '100 % Anónima y Confidencial',
           bannerTitle: 'Encuesta Oficial del Barrio (24 Preguntas)',
-          bannerDesc: 'Envía tus respuestas anónimas en Google Forms para ayudar a los líderes y especialistas a conocer las necesidades del barrio, y usa la autoevaluación interactiva de abajo (guardada solo en tu navegador) para generar tu plan personalizado.',
+          bannerDesc: 'Envía tus respuestas anónimas en Google Forms para ayudar a los líderes a conocer las necesidades del barrio, y usa la autoevaluación interactiva de abajo (guardada solo en tu navegador) para generar tu plan personalizado.',
           openSurveyBtn: 'Abrir Encuesta Oficial',
           copySurveyBtn: 'Copiar Enlace de Encuesta',
           copySurveyToast: 'Enlace de la encuesta copiado al portapapeles.',
@@ -1418,7 +1620,7 @@
           desc: 'Consulta y reproduce los manuales, videos y relatos oficiales directamente en la nube sin llenar la memoria de tu celular.',
           cards: [
             {
-              title: 'Manuales y videos de los cursos',
+              title: 'Manuales y videos del curso',
               desc: 'Accede en línea a todos los manuales y videos de estudio de cada curso de autosuficiencia.',
               btn: 'Abrir manuales y videos',
               url: 'https://www.churchofjesuschrist.org/study/books-and-lessons/self-reliance-resources?lang=spa',
@@ -1429,10 +1631,10 @@
               desc: 'Principios y pasos prácticos para comenzar a fortalecer tu autosuficiencia espiritual y temporal.',
               btn: 'Explorar guía práctica',
               url: 'https://www.churchofjesuschrist.org/life/self-reliance/how-to-increase-my-self-reliance?lang=spa',
-              accent: 'teal'
+              accent: 'sage'
             },
             {
-              title: 'Relatos de los participantes y cursos',
+              title: 'Relatos de los participantes / Cursos',
               desc: 'Conoce testimonios y experiencias reales de miembros que han desarrollado mayor autosuficiencia.',
               btn: 'Ver relatos y cursos',
               url: 'https://www.churchofjesuschrist.org/life/self-reliance/courses?lang=spa',
@@ -1499,21 +1701,67 @@
               url: 'https://addictionrecovery.churchofjesuschrist.org/?lang=spa'
             }
           ],
-          localTitle: 'Directorio Local de Apoyo del Barrio / Estaca'
+          localTitle: 'Información Local del Barrio / Estaca',
+          specialistLabel: 'Especialista de Autosuficiencia:'
         },
         leaders: {
           lockBadge: 'Acceso Restringido',
           lockTitle: 'Panel para Líderes y Especialistas',
-          lockDesc: 'Ingresa el PIN de liderazgo para acceder al Analizador de Encuestas del Barrio, recursos para facilitadores, plantillas de WhatsApp y cartel QR imprimible.',
+          lockDesc: 'Ingresa el PIN de liderazgo para configurar grupos y horarios sin tocar código, analizar las encuestas del barrio, copiar el mensaje de WhatsApp e imprimir el cartel QR.',
           lockSubmit: 'Desbloquear Panel',
-          lockError: 'PIN incorrecto. Verifica el código configurado en CONFIG.leaderPin.',
+          lockError: 'PIN incorrecto. Verifica el código configurado.',
           lockSuccess: 'Panel de Líderes y Especialistas desbloqueado.',
           lockPanelBtn: 'Bloquear Panel',
-          pill: 'Panel desbloqueado • Herramientas del llamamiento',
+          pill: 'Panel desbloqueado • Gestión sin código',
           heading: 'Líderes y Especialistas de Autosuficiencia',
-          desc: 'Analiza los resultados anónimos del barrio, consulta guías oficiales, copia mensajes para el Canal de WhatsApp e imprime el cartel con códigos QR.',
+          desc: 'Administra los Próximos Grupos y Talleres, analiza las respuestas de la encuesta, copia el mensaje para WhatsApp e imprime el cartel con códigos QR.',
           channelBtn: 'Abrir Canal de WhatsApp',
           openBtn: 'Abrir recurso oficial',
+          configurator: {
+            pill: 'Sin tocar código • Visual Admin',
+            heading: 'Configurador Visual de Grupos, Horarios y Portal',
+            descHtml: 'Agrega o edita los grupos y horarios que ven los miembros en la portada. Para publicar los cambios para todos, usa la sincronización en vivo con Google Sheets o descarga el archivo <strong>index.html</strong> actualizado con un clic.',
+            downloadBtn: 'Descargar index.html Actualizado',
+            downloadToast: 'Archivo index.html descargado con tus cambios. ¡Súbelo a GitHub Pages para publicarlo!',
+            resetBtn: 'Restaurar valores iniciales',
+            resetToast: 'Configuración restaurada a los valores iniciales.',
+            groupsTitle: '1. Gestionar Próximos Grupos y Talleres',
+            groupsCount: (active, total) => `${active} activo(s) de ${total} grupo(s)`,
+            addModeTitle: '+ Agregar nuevo grupo o taller',
+            editModeTitle: '✎ Editando grupo o taller',
+            cancelEdit: 'Cancelar edición',
+            lblCourse: 'Curso oficial',
+            lblFormat: 'Modalidad',
+            lblFacilitator: 'Facilitador(es)',
+            lblTitleEs: 'Título del grupo (Español)',
+            lblTitleEn: 'Group Title (English)',
+            lblSchedEs: 'Día y horario (Español)',
+            lblSchedEn: 'Day & Schedule (English)',
+            lblLocEs: 'Lugar o enlace (Español)',
+            lblLocEn: 'Location or link (English)',
+            lblSignup: 'Enlace de inscripción (Opcional)',
+            lblActive: 'Visible en la portada (Activo)',
+            saveGroupBtn: 'Guardar Grupo / Taller',
+            groupSavedToast: 'Grupo guardado y actualizado en la portada.',
+            groupDeletedToast: 'Grupo eliminado.',
+            statusActive: 'Activo',
+            statusPaused: 'Pausado',
+            btnEdit: 'Editar',
+            btnToggle: 'Activar/Pausar',
+            btnDelete: 'Eliminar',
+            generalTitle: '2. Configuración General del Portal y Sincronización',
+            lblUnitEs: 'Nombre de la unidad (Español)',
+            lblUnitEn: 'Unit Name (English)',
+            lblPin: 'PIN de Líderes y Especialistas',
+            lblForm: 'Enlace Encuesta Google Forms',
+            lblWa: 'Enlace Canal de WhatsApp',
+            lblSpec: 'Contacto del Especialista (Opcional)',
+            lblLocalEs: 'Aviso de apoyo local (Español)',
+            lblLocalEn: 'Local Support Note (English)',
+            lblSheet: 'Sincronización en vivo con Google Sheets CSV para Grupos (Opcional — actualiza todos los celulares sin volver a subir a GitHub)',
+            saveGeneralBtn: 'Guardar Configuración General',
+            generalSavedToast: 'Configuración general guardada.'
+          },
           cards: [
             {
               title: 'Recursos para líderes y especialistas',
@@ -1525,7 +1773,7 @@
               title: 'Recursos de bienestar y autosuficiencia para líderes',
               desc: 'Principios y herramientas de bienestar y autosuficiencia para consejos de barrio y presidencia de estaca.',
               url: 'https://www.churchofjesuschrist.org/callings/welfare-self-reliance?lang=spa',
-              accent: 'teal'
+              accent: 'sage'
             },
             {
               title: 'Recursos del facilitador',
@@ -1565,58 +1813,37 @@
             kpiIndiv: 'Prefieren estudio individual',
             loadedToast: (n) => `Se analizaron ${n} respuesta(s) correctamente.`
           },
-          waPill: 'Difusión sin saturar teléfonos',
-          waHeading: '4 Plantillas Listas para tu Canal de WhatsApp',
-          waDesc: 'Copia cada publicación con un clic; todas incluyen los enlaces activos de tu Encuesta, Portal Web y Canal de WhatsApp.',
-          waCopyBtn: 'Copiar mensaje para WhatsApp',
+          waPill: 'Mensaje único sin saturar teléfonos',
+          waHeading: 'Mensaje Completo Listo para tu Canal de WhatsApp',
+          waDesc: 'Un solo mensaje claro y fácil de leer desde el celular que resume la encuesta, los 7 cursos y el portal (0 MB).',
+          waCopyBtn: 'Copiar Mensaje para WhatsApp',
           waCopyToast: 'Mensaje copiado para tu Canal de WhatsApp.',
-          getTemplates: (portal, survey, channel) => [
-            {
-              badge: '1. Bienvenida + Encuesta (24 preguntas)',
-              title: 'Bienvenida y Encuesta Anónima de Diagnóstico',
-              text: `¡Bienvenidos al Canal de Autosuficiencia! | Welcome to the Self-Reliance Channel!\n\nModelo oficial: 1. Evaluar → 2. Aprender → 3. Practicar → 4. Servir.\n\n📝 Paso 1 (2 minutos): Responde nuestra Encuesta Anónima de Diagnóstico (24 preguntas) para conocer tus prioridades:\n👉 ${survey}\n\n📲 Únete y comparte el Canal de WhatsApp:\n${channel}`
-            },
-            {
-              badge: '2. Portal Web 0 MB + 7 Cursos',
-              title: 'Todos los Cursos, Manuales y Videos (0 MB)',
-              text: `🌐 *Portal de Autosuficiencia — Hallar fortaleza en el Señor (0 MB en tu teléfono)*\n\nAccede en la nube a los 7 cursos oficiales y realiza tu autoevaluación interactiva en Español o Inglés:\n👉 ${portal}\n\n1. Resiliencia emocional\n2. Las finanzas personales\n3. Buscar un mejor empleo\n4. Educación para un mejor empleo\n5. EnglishConnect\n6. Cómo iniciar y hacer crecer mi negocio\n7. Habilidades para la vida`
-            },
-            {
-              badge: '3. Cita Espiritual y 6 Habilidades',
-              title: 'Reflexión — Élder Mark E. Petersen',
-              text: `✨ *Hallar fortaleza en el Señor*\n\n"[Dios] espera que utilicemos nuestra inteligencia e ingenio para mejorar nuestras circunstancias, tanto espiritual como temporalmente. Él desea que tengamos éxito en la vida y desea ayudarnos."\n— Élder Mark E. Petersen\n\nDesarrolla las 6 habilidades esenciales (comunicación, relaciones saludables, resolver problemas, tomar decisiones, administrar el tiempo y formación financiera) aquí:\n🌐 ${portal}`
-            },
-            {
-              badge: '4. Ayuda Relacionada',
-              title: 'Empleo, Preparación y Recuperación',
-              text: `🤝 *Programas Oficiales de Ayuda Relacionada*\n\nEncuentra enlaces directos en nuestro portal (${portal}) a:\n• Servicios de empleo\n• Preparación y almacenamiento de alimentos (mochila de 72 horas)\n• Programa para recuperarse de las adicciones\n\n📝 Encuesta anónima de diagnóstico: ${survey}`
-            }
-          ],
+          getSingleMessage: (portal, survey, channel) => `🌱 ¡Bienvenidos al Canal de Autosuficiencia! | Self-Reliance\n\nLa autosuficiencia es la capacidad y el empeño de proveer lo espiritual y temporal para nosotros y nuestra familia, combinando el poder de Dios con nuestros esfuerzos.\n\n1️⃣ Responde la encuesta anónima (2 min):\nAyúdanos a conocer tus intereses y horarios para organizar los próximos grupos y recursos:\n📋 ${survey}\n\n2️⃣ Entra a nuestro Portal Web (0 MB en tu teléfono):\nAccede gratis y en línea (Español / English) a los manuales, videos y relatos oficiales de los 7 cursos:\n• Resiliencia emocional\n• Finanzas personales\n• Buscar un mejor empleo\n• Educación para un mejor empleo\n• EnglishConnect\n• Cómo iniciar y hacer crecer mi negocio\n• Habilidades para la vida\n(Además de Servicios de empleo, Preparación y Recuperación de adicciones).\n\n🌐 Abrir Portal: ${portal}\n📲 Canal de WhatsApp: ${channel}`,
           qrPill: 'Tablero de anuncios / Bulletin Board',
           qrHeading: 'Cartel Imprimible con Códigos QR — Autosuficiencia',
           qrDesc: '1. Evaluar → 2. Aprender → 3. Practicar → 4. Servir • Acceso en la nube (0 MB)',
           qrPrintBtn: 'Imprimir Cartel / Print Poster',
-          qrItems: [
+          getQrItems: (cfg) => [
             {
               step: 'Paso 1 • Evaluar (24 preguntas)',
               title: 'Encuesta Anónima de Diagnóstico',
               desc: 'Responde en 2 minutos para ayudarnos a organizar los recursos del barrio.',
-              url: CONFIG.googleFormUrl,
-              display: 'forms.gle/Vg8NKX7GGccs2pC46'
+              url: cfg.googleFormUrl,
+              display: cfg.googleFormUrl.replace(/^https?:\/\//, '')
             },
             {
               step: 'Paso 2 • Aprender (0 MB)',
               title: 'Portal Web de Autosuficiencia',
-              desc: 'Autoevaluación en vivo, 7 cursos, manuales y videos en Español e Inglés.',
-              url: CONFIG.portalUrl,
-              display: 'autosuficiencia-portal.github.io'
+              desc: 'Autoevaluación en vivo, grupos, 7 cursos, manuales y videos en Español e Inglés.',
+              url: cfg.portalUrl,
+              display: cfg.portalUrl.replace(/^https?:\/\//, '')
             },
             {
               step: 'Paso 3 • Conectar',
               title: 'Canal Oficial de WhatsApp',
               desc: 'Recibe enlaces e inspiración semanal sin llenar la memoria de tu teléfono.',
-              url: CONFIG.whatsappChannelUrl,
-              display: 'whatsapp.com/channel/0029VbAn87EHltYBQm7Xpl0Z'
+              url: cfg.whatsappChannelUrl,
+              display: cfg.whatsappChannelUrl.replace(/^https?:\/\//, '')
             }
           ]
         },
@@ -1638,7 +1865,7 @@
         tabs: {
           inicio: 'Home & Courses',
           diagnostico: '24-Question Diagnostic',
-          biblioteca: 'Library, Family & Help',
+          biblioteca: 'Library & Help',
           lideres: 'Leaders & Specialists'
         },
         shareBtn: 'Share portal',
@@ -1651,7 +1878,7 @@
           lead: 'Self-reliance is a journey of faith. As we combine God’s power with our efforts, we meet both the practical and spiritual needs of life.',
           defTitle: 'What is self-reliance?',
           defBody: 'Self-reliance is the ability, commitment, and effort to provide the spiritual and temporal necessities of life for self and family.',
-          surveyLabel: 'Anonymous Diagnostic (24 Questions)',
+          surveyLabel: 'Anonymous Survey (24 Questions)',
           whatsappLabel: 'WhatsApp Channel',
           hubLabel: 'Official Hub',
           hubUrl: 'https://www.churchofjesuschrist.org/life/self-reliance?lang=eng',
@@ -1701,7 +1928,7 @@
             catLabel: 'Emotional / Life',
             desc: 'Develop inner spiritual and emotional strength to face life’s trials and challenges by relying on the Savior.',
             url: 'https://www.churchofjesuschrist.org/life/self-reliance/emotional-resilience?lang=eng',
-            accent: 'teal'
+            accent: 'sage'
           },
           {
             id: 'finanzas',
@@ -1741,7 +1968,7 @@
             catLabel: 'Languages',
             desc: 'A program designed to learn and practice English in an environment of fellowship and faith.',
             url: 'https://www.englishconnect.org/',
-            accent: 'teal'
+            accent: 'sage'
           },
           {
             id: 'negocio',
@@ -1766,14 +1993,19 @@
         ],
         groupsSection: {
           pill: 'Open enrollment',
+          liveBadge: '● Live synced',
           heading: 'Upcoming Groups & Workshops',
           desc: 'Small facilitated groups and practical workshops currently available in our unit.',
-          interestBtn: 'I am interested in this group'
+          inPersonBadge: 'In-Person',
+          virtualBadge: 'Virtual',
+          facilitatorLabel: 'Facilitator:',
+          signupBtn: 'Sign Up / Inquire',
+          emptyMsg: 'No active groups posted yet. Complete the anonymous survey to request a group.'
         },
         diagnostic: {
           bannerPill: '100% Anonymous & Confidential',
           bannerTitle: 'Official Ward Survey (24 Questions)',
-          bannerDesc: 'Submit your anonymous responses on Google Forms to help leaders and specialists understand ward needs, and use the private interactive self-assessment below (saved only in your browser) to generate your custom plan.',
+          bannerDesc: 'Submit your anonymous responses on Google Forms to help leaders understand ward needs, and use the private interactive self-assessment below (saved only in your browser) to generate your custom plan.',
           openSurveyBtn: 'Open Official Survey',
           copySurveyBtn: 'Copy Survey Link',
           copySurveyToast: 'Survey link copied to clipboard.',
@@ -1956,7 +2188,7 @@
               desc: 'Practical principles and steps to begin strengthening your spiritual and temporal self-reliance.',
               btn: 'Explore practical guide',
               url: 'https://www.churchofjesuschrist.org/life/self-reliance/how-to-increase-my-self-reliance?lang=eng',
-              accent: 'teal'
+              accent: 'sage'
             },
             {
               title: 'Participant Stories & Courses',
@@ -2026,21 +2258,67 @@
               url: 'https://addictionrecovery.churchofjesuschrist.org/?lang=eng'
             }
           ],
-          localTitle: 'Local Ward / Stake Support Directory'
+          localTitle: 'Local Ward / Stake Information',
+          specialistLabel: 'Self-Reliance Specialist:'
         },
         leaders: {
           lockBadge: 'Restricted Access',
           lockTitle: 'Leaders & Specialists Dashboard',
-          lockDesc: 'Enter the leadership PIN to unlock the Ward Survey Analytics Engine, facilitator guides, WhatsApp Channel templates, and printable QR poster.',
+          lockDesc: 'Enter the leadership PIN to configure groups and schedules without touching code, analyze ward surveys, copy the WhatsApp Channel post, and print the QR poster.',
           lockSubmit: 'Unlock Dashboard',
-          lockError: 'Incorrect PIN. Check CONFIG.leaderPin in index.html.',
+          lockError: 'Incorrect PIN. Please verify the configured code.',
           lockSuccess: 'Leaders & Specialists dashboard unlocked.',
           lockPanelBtn: 'Lock Panel',
-          pill: 'Unlocked • Calling tools & resources',
+          pill: 'Unlocked • No-Code Administration',
           heading: 'Self-Reliance Leaders & Specialists',
-          desc: 'Analyze anonymous ward survey data, access official facilitator guides, copy WhatsApp Channel templates, and print the QR bulletin board poster.',
+          desc: 'Manage Upcoming Groups & Workshops, analyze anonymous survey responses, copy the WhatsApp Channel post, and print the QR bulletin board poster.',
           channelBtn: 'Open WhatsApp Channel',
           openBtn: 'Open official resource',
+          configurator: {
+            pill: 'No-Code Visual Admin',
+            heading: 'Visual Configurator for Groups, Schedules & Portal',
+            descHtml: 'Add or edit groups and schedules displayed on the Home tab. To publish changes for everyone, use live Google Sheets CSV sync or download the updated <strong>index.html</strong> file with one click.',
+            downloadBtn: 'Download Updated index.html',
+            downloadToast: 'Updated index.html downloaded! Upload it to GitHub Pages to publish for everyone.',
+            resetBtn: 'Reset to defaults',
+            resetToast: 'Configuration reset to default values.',
+            groupsTitle: '1. Manage Upcoming Groups & Workshops',
+            groupsCount: (active, total) => `${active} active of ${total} group(s)`,
+            addModeTitle: '+ Add new group or workshop',
+            editModeTitle: '✎ Editing group or workshop',
+            cancelEdit: 'Cancel edit',
+            lblCourse: 'Official course',
+            lblFormat: 'Format',
+            lblFacilitator: 'Facilitator(s)',
+            lblTitleEs: 'Group Title (Spanish)',
+            lblTitleEn: 'Group Title (English)',
+            lblSchedEs: 'Day & Schedule (Spanish)',
+            lblSchedEn: 'Day & Schedule (English)',
+            lblLocEs: 'Location or link (Spanish)',
+            lblLocEn: 'Location or link (English)',
+            lblSignup: 'Sign-up link (Optional)',
+            lblActive: 'Visible on Home tab (Active)',
+            saveGroupBtn: 'Save Group / Workshop',
+            groupSavedToast: 'Group saved and updated on the Home tab.',
+            groupDeletedToast: 'Group deleted.',
+            statusActive: 'Active',
+            statusPaused: 'Paused',
+            btnEdit: 'Edit',
+            btnToggle: 'Toggle Active',
+            btnDelete: 'Delete',
+            generalTitle: '2. General Portal Settings & Live Sync',
+            lblUnitEs: 'Unit Name (Spanish)',
+            lblUnitEn: 'Unit Name (English)',
+            lblPin: 'Leaders & Specialists PIN',
+            lblForm: 'Google Forms Survey URL',
+            lblWa: 'WhatsApp Channel URL',
+            lblSpec: 'Specialist Contact (Optional)',
+            lblLocalEs: 'Local Support Note (Spanish)',
+            lblLocalEn: 'Local Support Note (English)',
+            lblSheet: 'Live Google Sheets CSV Sync for Groups (Optional — updates all phones without re-uploading to GitHub)',
+            saveGeneralBtn: 'Save General Settings',
+            generalSavedToast: 'General settings saved.'
+          },
           cards: [
             {
               title: 'Leader & Specialist Resources',
@@ -2052,7 +2330,7 @@
               title: 'Welfare & Self-Reliance Leader Resources',
               desc: 'Welfare and self-reliance principles and tools for ward councils and stake presidencies.',
               url: 'https://www.churchofjesuschrist.org/callings/welfare-self-reliance?lang=eng',
-              accent: 'teal'
+              accent: 'sage'
             },
             {
               title: 'Facilitator Resources',
@@ -2092,58 +2370,37 @@
             kpiIndiv: 'Prefer self-paced study',
             loadedToast: (n) => `Successfully analyzed ${n} survey response(s).`
           },
-          waPill: 'Sharing without filling phone storage',
-          waHeading: '4 Copy-Ready WhatsApp Channel Post Templates',
-          waDesc: 'Copy each post with one click; all include live links to your Survey, Web Portal, and WhatsApp Channel.',
-          waCopyBtn: 'Copy message for WhatsApp',
+          waPill: 'Single post without cluttering phones',
+          waHeading: 'All-in-One WhatsApp Channel Announcement',
+          waDesc: 'One clear, mobile-friendly message summarizing the survey, all 7 courses, and the 0 MB portal.',
+          waCopyBtn: 'Copy Message for WhatsApp',
           waCopyToast: 'Message copied for your WhatsApp Channel.',
-          getTemplates: (portal, survey, channel) => [
-            {
-              badge: '1. Welcome + 24-Question Survey',
-              title: 'Welcome & Anonymous Diagnostic Survey',
-              text: `Welcome to the Self-Reliance Channel! | ¡Bienvenidos al Canal de Autosuficiencia!\n\nOfficial model: 1. Evaluate → 2. Learn → 3. Practice → 4. Serve.\n\n📝 Step 1 (2 minutes): Complete our Anonymous Diagnostic Survey (24 questions) to help us understand priorities:\n👉 ${survey}\n\n📲 Join and share our WhatsApp Channel:\n${channel}`
-            },
-            {
-              badge: '2. 0 MB Web Portal + 7 Courses',
-              title: 'All Courses, Manuals & Videos (0 MB)',
-              text: `🌐 *Self-Reliance Portal — Find Strength in the Lord (0 MB on your phone)*\n\nAccess all 7 official courses in the cloud and take your private self-assessment in English or Spanish:\n👉 ${portal}\n\n1. Emotional Resilience\n2. Personal Finances\n3. Find a Better Job\n4. Education for Better Work\n5. EnglishConnect\n6. Starting and Growing My Business\n7. Life Skills`
-            },
-            {
-              badge: '3. Spiritual Quote & 6 Skills',
-              title: 'Reflection — Elder Mark E. Petersen',
-              text: `✨ *Find Strength in the Lord*\n\n"[God] expects us to use our intelligence and ingenuity to improve our circumstances both spiritually and temporally. He wants to be successful in life and desires to help us."\n— Elder Mark E. Petersen\n\nDevelop the 6 essential life skills (effective communication, healthy relationships, problem solving, decision making, time management, and financial literacy) here:\n🌐 ${portal}`
-            },
-            {
-              badge: '4. Related Help',
-              title: 'Employment, Preparedness & Recovery',
-              text: `🤝 *Official Related Help Programs*\n\nFind direct links on our portal (${portal}) to:\n• Employment Services\n• Preparedness & Home Food Storage (72-hour kits)\n• Addiction Recovery Program\n\n📝 Anonymous diagnostic survey: ${survey}`
-            }
-          ],
+          getSingleMessage: (portal, survey, channel) => `🌱 Welcome to the Self-Reliance Channel! | ¡Bienvenidos al Canal de Autosuficiencia!\n\nSelf-reliance is the ability and effort to provide the spiritual and temporal necessities of life for self and family, combining God's power with our efforts.\n\n1️⃣ Take the anonymous survey (2 min):\nHelp us understand your interests and schedule so we can organize upcoming groups and resources:\n📋 ${survey}\n\n2️⃣ Open our Web Portal (0 MB on your phone):\nAccess free online manuals, videos, and stories (English / Español) across all 7 courses:\n• Emotional Resilience\n• Personal Finances\n• Find a Better Job\n• Education for Better Work\n• EnglishConnect\n• Starting and Growing My Business\n• Life Skills\n(Plus Employment Services, Preparedness, and Addiction Recovery).\n\n🌐 Open Portal: ${portal}\n📲 WhatsApp Channel: ${channel}`,
           qrPill: 'Tablero de anuncios / Bulletin Board',
           qrHeading: 'Printable Bulletin Board QR Poster — Self-Reliance',
           qrDesc: '1. Evaluate → 2. Learn → 3. Practice → 4. Serve • Cloud Access (0 MB)',
           qrPrintBtn: 'Imprimir Cartel / Print Poster',
-          qrItems: [
+          getQrItems: (cfg) => [
             {
               step: 'Step 1 • Evaluate (24 questions)',
               title: 'Anonymous Diagnostic Survey',
               desc: 'Complete in 2 minutes to help us organize ward resources and groups.',
-              url: CONFIG.googleFormUrl,
-              display: 'forms.gle/Vg8NKX7GGccs2pC46'
+              url: cfg.googleFormUrl,
+              display: cfg.googleFormUrl.replace(/^https?:\/\//, '')
             },
             {
               step: 'Step 2 • Learn (0 MB)',
               title: 'Self-Reliance Web Portal',
-              desc: 'Live self-assessment, 7 official courses, manuals, and videos in Spanish & English.',
-              url: CONFIG.portalUrl,
-              display: 'autosuficiencia-portal.github.io'
+              desc: 'Live self-assessment, groups, 7 official courses, manuals, and videos in Spanish & English.',
+              url: cfg.portalUrl,
+              display: cfg.portalUrl.replace(/^https?:\/\//, '')
             },
             {
               step: 'Step 3 • Connect',
               title: 'Official WhatsApp Channel',
               desc: 'Receive weekly links and inspiration without using up phone storage.',
-              url: CONFIG.whatsappChannelUrl,
-              display: 'whatsapp.com/channel/0029VbAn87EHltYBQm7Xpl0Z'
+              url: cfg.whatsappChannelUrl,
+              display: cfg.whatsappChannelUrl.replace(/^https?:\/\//, '')
             }
           ]
         },
@@ -2159,26 +2416,36 @@
     // =========================================================================
     // 3. APPLICATION STATE & STORAGE KEYS
     // =========================================================================
+    const STORAGE_KEY_CONFIG = 'sr_portal_admin_config_v1';
     const STORAGE_KEY_ANSWERS = 'sr_24q_answers_v1';
     const STORAGE_KEY_LANG = 'sr_portal_lang_v1';
     const STORAGE_KEY_FONT = 'sr_portal_font_px_v1';
     const SESSION_KEY_UNLOCKED = 'sr_leaders_unlocked_v1';
 
+    let activeConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+    let isLiveGroupsSynced = false;
     let currentLang = 'es';
     let currentFontSizePx = 16;
     let selectedCategory = 'all';
     let diagnosticAnswers = {};
     let diagnosticSummaryPlainText = '';
 
-    // Analytics parsed rows state
     let parsedSurveyRecords = [];
     let executiveSummaryPlainText = '';
 
     // =========================================================================
-    // 4. INITIALIZATION
+    // 4. INITIALIZATION & LIVE GOOGLE SHEETS GROUP SYNC
     // =========================================================================
     document.addEventListener('DOMContentLoaded', () => {
       try {
+        const savedCfg = localStorage.getItem(STORAGE_KEY_CONFIG);
+        if (savedCfg) {
+          const parsedCfg = JSON.parse(savedCfg);
+          if (parsedCfg && typeof parsedCfg === 'object') {
+            activeConfig = Object.assign({}, activeConfig, parsedCfg);
+          }
+        }
+
         const params = new URLSearchParams(window.location.search);
         const paramLang = params.get('lang');
         const savedLang = localStorage.getItem(STORAGE_KEY_LANG);
@@ -2197,13 +2464,71 @@
           const parsed = JSON.parse(savedAnswers);
           if (parsed && typeof parsed === 'object') diagnosticAnswers = parsed;
         }
-      } catch (e) {
-        // Fallback cleanly if storage is restricted
-      }
+      } catch (e) {}
 
       renderAll();
       syncLockState();
+
+      // Optional live sync for upcoming groups from Google Sheets CSV
+      if (activeConfig.groupsSheetCsvUrl && activeConfig.groupsSheetCsvUrl.trim() !== '') {
+        syncLiveGroupsFromSheet(activeConfig.groupsSheetCsvUrl.trim());
+      }
     });
+
+    async function syncLiveGroupsFromSheet(csvUrl) {
+      try {
+        const res = await fetch(csvUrl);
+        if (!res.ok) return;
+        const text = await res.text();
+        const rows = parseCsvRows(text);
+        if (rows.length < 2) return;
+
+        const headers = rows[0].map(h => h.toLowerCase().trim());
+        const getIdx = (name) => headers.indexOf(name.toLowerCase());
+
+        const idxCourse = getIdx('courseid');
+        const idxTitleEs = getIdx('titlees');
+        const idxTitleEn = getIdx('titleen');
+        const idxSchedEs = getIdx('schedulees');
+        const idxSchedEn = getIdx('scheduleen');
+        const idxFormat = getIdx('format');
+        const idxLocEs = getIdx('locationes');
+        const idxLocEn = getIdx('locationen');
+        const idxFac = getIdx('facilitator');
+        const idxSignup = getIdx('signupurl');
+        const idxActive = getIdx('active');
+
+        const synced = rows.slice(1).map((r, idx) => {
+          const rawFmt = (idxFormat !== -1 ? r[idxFormat] : 'in-person').toLowerCase();
+          const fmt = rawFmt.includes('virt') ? 'virtual' : 'in-person';
+          const rawAct = (idxActive !== -1 ? r[idxActive] : 'true').toLowerCase();
+          const act = !(rawAct === 'false' || rawAct === 'no' || rawAct === '0');
+          return {
+            id: `sheet-grp-${idx + 1}`,
+            courseId: idxCourse !== -1 ? (r[idxCourse] || 'finanzas') : 'finanzas',
+            titleEs: idxTitleEs !== -1 ? (r[idxTitleEs] || '') : (r[0] || ''),
+            titleEn: idxTitleEn !== -1 ? (r[idxTitleEn] || '') : (r[1] || r[0] || ''),
+            scheduleEs: idxSchedEs !== -1 ? (r[idxSchedEs] || '') : '',
+            scheduleEn: idxSchedEn !== -1 ? (r[idxSchedEn] || '') : '',
+            format: fmt,
+            locationEs: idxLocEs !== -1 ? (r[idxLocEs] || '') : '',
+            locationEn: idxLocEn !== -1 ? (r[idxLocEn] || '') : '',
+            facilitator: idxFac !== -1 ? (r[idxFac] || '') : '',
+            signupUrl: idxSignup !== -1 ? (r[idxSignup] || '') : '',
+            active: act
+          };
+        }).filter(g => g.titleEs || g.titleEn);
+
+        if (synced.length > 0) {
+          activeConfig.upcomingGroups = synced;
+          isLiveGroupsSynced = true;
+          renderUpcomingGroups();
+          renderAdminGroupsList();
+        }
+      } catch (e) {
+        // Silently retain DEFAULT_CONFIG groups if offline or blocked
+      }
+    }
 
     // =========================================================================
     // 5. LANGUAGE, FONT SIZE, INSTALL TIP & TAB NAVIGATION
@@ -2262,7 +2587,6 @@
       const t = DATA[currentLang];
       document.documentElement.lang = t.htmlLang;
 
-      // Toggle Pill State
       const esBtn = document.getElementById('btn-lang-es');
       const enBtn = document.getElementById('btn-lang-en');
       if (currentLang === 'es') {
@@ -2303,14 +2627,15 @@
       }).join('');
 
       setText('hero-church-name', t.hero.churchName);
+      setText('hero-unit-badge', currentLang === 'es' ? activeConfig.unitNameEs : activeConfig.unitNameEn);
       setText('hero-title', t.hero.title);
       setText('hero-lead', t.hero.lead);
       setText('hero-def-title', t.hero.defTitle);
       setText('hero-def-body', t.hero.defBody);
       setText('hero-survey-label', t.hero.surveyLabel);
-      document.getElementById('hero-survey-btn').href = CONFIG.googleFormUrl;
+      document.getElementById('hero-survey-btn').href = activeConfig.googleFormUrl;
       setText('hero-whatsapp-label', t.hero.whatsappLabel);
-      document.getElementById('hero-whatsapp-btn').href = CONFIG.whatsappChannelUrl;
+      document.getElementById('hero-whatsapp-btn').href = activeConfig.whatsappChannelUrl;
       setText('hero-hub-label', t.hero.hubLabel);
       document.getElementById('hero-hub-btn').href = t.hero.hubUrl;
 
@@ -2322,20 +2647,28 @@
       document.getElementById('hero-benefits-container').innerHTML = t.hero.benefits.map(b => `
         <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-4 text-center">
           <div class="w-8 h-8 mx-auto mb-2 rounded-xl bg-amber-400/20 text-amber-300 flex items-center justify-center font-bold">✓</div>
-          <p class="font-display font-bold text-xs sm:text-sm text-white">${b}</p>
+          <p class="font-bold text-xs sm:text-sm text-white">${b}</p>
         </div>
       `).join('');
+
+      // Upcoming Groups
+      setText('groups-pill', t.groupsSection.pill);
+      setText('groups-live-sync-badge', t.groupsSection.liveBadge);
+      document.getElementById('groups-live-sync-badge').classList.toggle('hidden', !isLiveGroupsSynced);
+      setText('groups-heading', t.groupsSection.heading);
+      setText('groups-desc', t.groupsSection.desc);
+      renderUpcomingGroups();
 
       // 6 Essential Life Skills
       setText('skills-pill', t.skills.pill);
       setText('skills-heading', t.skills.heading);
       setText('skills-desc', t.skills.desc);
       document.getElementById('skills-grid').innerHTML = t.skills.items.map((item, idx) => `
-        <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50/80 hover:bg-white hover:border-[#0f766e] transition-all">
+        <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50/80 hover:bg-white hover:border-[#2e6f5e] transition-all">
           <div class="flex items-start gap-3">
-            <span class="w-7 h-7 rounded-lg bg-[#0f766e] text-white font-display font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+            <span class="w-7 h-7 rounded-lg bg-[#2e6f5e] text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
             <div class="space-y-1">
-              <h3 class="font-display font-bold text-sm sm:text-base text-[#1e3a5f]">${item.title}</h3>
+              <h3 class="font-bold text-sm sm:text-base text-[#1e3a5f]">${item.title}</h3>
               <p class="text-xs text-slate-600 leading-relaxed">${item.detail}</p>
             </div>
           </div>
@@ -2352,19 +2685,13 @@
       renderCategoryPills();
       renderCoursesGrid();
 
-      // Upcoming Groups
-      setText('groups-pill', t.groupsSection.pill);
-      setText('groups-heading', t.groupsSection.heading);
-      setText('groups-desc', t.groupsSection.desc);
-      renderUpcomingGroups();
-
       // Tab 2: Diagnostic
       setText('diag-banner-pill', t.diagnostic.bannerPill);
       setText('diag-banner-title', t.diagnostic.bannerTitle);
       setText('diag-banner-desc', t.diagnostic.bannerDesc);
       setText('diag-open-survey-label', t.diagnostic.openSurveyBtn);
       setText('diag-copy-survey-label', t.diagnostic.copySurveyBtn);
-      document.getElementById('diag-google-form-btn').href = CONFIG.googleFormUrl;
+      document.getElementById('diag-google-form-btn').href = activeConfig.googleFormUrl;
 
       setText('self-assess-title', t.diagnostic.assessTitle);
       setText('local-saved-badge', t.diagnostic.savedBadge);
@@ -2381,7 +2708,7 @@
       renderDiagnosticBlocks();
       updateLiveDashboard();
 
-      // Tab 3: Library, Family & Help
+      // Tab 3: Library & Help
       setText('lib-pill', t.library.pill);
       setText('lib-heading', t.library.heading);
       setText('lib-desc', t.library.desc);
@@ -2413,8 +2740,45 @@
       setText('lead-heading', t.leaders.heading);
       setText('lead-desc', t.leaders.desc);
       setText('lead-channel-btn', t.leaders.channelBtn);
-      document.getElementById('leaders-channel-link').href = CONFIG.whatsappChannelUrl;
+      document.getElementById('leaders-channel-link').href = activeConfig.whatsappChannelUrl;
 
+      // Configurator Labels
+      const c = t.leaders.configurator;
+      setText('cfg-pill', c.pill);
+      setText('cfg-heading', c.heading);
+      document.getElementById('cfg-desc').innerHTML = c.descHtml;
+      setText('cfg-download-btn', c.downloadBtn);
+      setText('cfg-reset-btn', c.resetBtn);
+      setText('cfg-groups-title', c.groupsTitle);
+      setText('lbl-grp-course', c.lblCourse);
+      setText('lbl-grp-format', c.lblFormat);
+      setText('lbl-grp-facilitator', c.lblFacilitator);
+      setText('lbl-grp-title-es', c.lblTitleEs);
+      setText('lbl-grp-title-en', c.lblTitleEn);
+      setText('lbl-grp-schedule-es', c.lblSchedEs);
+      setText('lbl-grp-schedule-en', c.lblSchedEn);
+      setText('lbl-grp-location-es', c.lblLocEs);
+      setText('lbl-grp-location-en', c.lblLocEn);
+      setText('lbl-grp-signup', c.lblSignup);
+      setText('lbl-grp-active', c.lblActive);
+      setText('grp-save-btn', c.saveGroupBtn);
+      setText('grp-cancel-edit-btn', c.cancelEdit);
+
+      setText('cfg-general-title', c.generalTitle);
+      setText('lbl-cfg-unit-es', c.lblUnitEs);
+      setText('lbl-cfg-unit-en', c.lblUnitEn);
+      setText('lbl-cfg-pin', c.lblPin);
+      setText('lbl-cfg-form', c.lblForm);
+      setText('lbl-cfg-wa', c.lblWa);
+      setText('lbl-cfg-spec', c.lblSpec);
+      setText('lbl-cfg-local-es', c.lblLocalEs);
+      setText('lbl-cfg-local-en', c.lblLocalEn);
+      setText('lbl-cfg-sheet', c.lblSheet);
+      setText('cfg-save-general-btn', c.saveGeneralBtn);
+
+      populateConfiguratorFields();
+
+      // Analytics Labels
       setText('ana-pill', t.leaders.analytics.pill);
       setText('ana-heading', t.leaders.analytics.heading);
       document.getElementById('ana-desc').innerHTML = t.leaders.analytics.descHtml;
@@ -2434,9 +2798,16 @@
       setText('lbl-filter-block', t.leaders.analytics.lblBlock);
       setText('lbl-filter-followup', t.leaders.analytics.lblFollowup);
 
+      // WhatsApp Single Message & QR Poster
       setText('wa-tpl-pill', t.leaders.waPill);
       setText('wa-tpl-heading', t.leaders.waHeading);
       setText('wa-tpl-desc', t.leaders.waDesc);
+      setText('wa-copy-single-btn', t.leaders.waCopyBtn);
+      setText('wa-single-message-box', t.leaders.getSingleMessage(
+        activeConfig.portalUrl,
+        activeConfig.googleFormUrl,
+        activeConfig.whatsappChannelUrl
+      ));
 
       setText('qr-pill', t.leaders.qrPill);
       setText('qr-heading', t.leaders.qrHeading);
@@ -2461,7 +2832,7 @@
     }
 
     // =========================================================================
-    // 7. TAB 1: COURSES & UPCOMING GROUPS
+    // 7. TAB 1: COURSES & DYNAMIC UPCOMING GROUPS
     // =========================================================================
     function renderCategoryPills() {
       const t = DATA[currentLang];
@@ -2517,7 +2888,7 @@
 
       empty.classList.add('hidden');
       const badgeColors = {
-        teal: 'bg-teal-50 text-[#0f766e]',
+        sage: 'bg-[#2e6f5e]/10 text-[#2e6f5e]',
         amber: 'bg-amber-50 text-[#b45309]',
         navy: 'bg-slate-100 text-[#1e3a5f]'
       };
@@ -2528,7 +2899,7 @@
             <span class="inline-block px-3 py-1 rounded-full text-xs font-bold ${badgeColors[c.accent] || badgeColors.navy}">
               ${t.coursesSection.coursePrefix} ${c.num} • ${c.catLabel}
             </span>
-            <h3 class="font-display text-xl font-bold text-[#1e3a5f] leading-snug">${c.title}</h3>
+            <h3 class="text-xl font-bold text-[#1e3a5f] leading-snug">${c.title}</h3>
             <p class="text-sm text-slate-600 leading-relaxed">${c.desc}</p>
           </div>
           <div class="pt-3 border-t border-slate-100">
@@ -2536,14 +2907,10 @@
               href="${c.url}"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-full py-3 px-4 rounded-xl bg-[#1e3a5f] hover:bg-[#0f766e] text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
+              class="w-full py-3 px-4 rounded-xl bg-[#1e3a5f] hover:bg-[#2e6f5e] text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-sm"
             >
               <span>${t.coursesSection.openBtn}</span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
+              <span>↗</span>
             </a>
           </div>
         </article>
@@ -2553,26 +2920,44 @@
     function renderUpcomingGroups() {
       const t = DATA[currentLang];
       const grid = document.getElementById('upcoming-groups-grid');
-      grid.innerHTML = CONFIG.upcomingGroups.map(g => {
-        const title = currentLang === 'es' ? g.courseEs : g.courseEn;
-        const sched = currentLang === 'es' ? g.scheduleEs : g.scheduleEn;
-        const fmt = currentLang === 'es' ? g.formatEs : g.formatEn;
-        const note = currentLang === 'es' ? g.noteEs : g.noteEn;
+      const activeGroups = (activeConfig.upcomingGroups || []).filter(g => g.active !== false);
+
+      if (activeGroups.length === 0) {
+        grid.innerHTML = `
+          <div class="md:col-span-3 rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-600">
+            ${t.groupsSection.emptyMsg}
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = activeGroups.map(g => {
+        const title = currentLang === 'es' ? (g.titleEs || g.titleEn) : (g.titleEn || g.titleEs);
+        const sched = currentLang === 'es' ? (g.scheduleEs || g.scheduleEn) : (g.scheduleEn || g.scheduleEs);
+        const loc = currentLang === 'es' ? (g.locationEs || g.locationEn) : (g.locationEn || g.locationEs);
+        const isVirtual = g.format === 'virtual';
+        const fmtBadge = isVirtual ? t.groupsSection.virtualBadge : t.groupsSection.inPersonBadge;
+        const fmtStyle = isVirtual ? 'bg-amber-50 text-[#b45309]' : 'bg-[#2e6f5e]/10 text-[#2e6f5e]';
+        const actionUrl = (g.signupUrl && g.signupUrl.trim() !== '') ? g.signupUrl.trim() : activeConfig.googleFormUrl;
+
         return `
-          <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 flex flex-col justify-between gap-4">
-            <div class="space-y-2">
-              <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-teal-50 text-[#0f766e]">${fmt}</span>
-              <h3 class="font-display font-bold text-base text-[#1e3a5f]">${title}</h3>
-              <p class="text-xs font-semibold text-[#b45309]">${sched}</p>
-              <p class="text-xs text-slate-600">${g.facilitator} • ${note}</p>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50/80 hover:bg-white hover:shadow-md transition-all p-5 flex flex-col justify-between gap-4">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold ${fmtStyle}">${fmtBadge}</span>
+                <span class="text-xs font-bold text-[#b45309]">${sched}</span>
+              </div>
+              <h3 class="font-bold text-base sm:text-lg text-[#1e3a5f] leading-snug">${title}</h3>
+              <p class="text-xs text-slate-700 font-medium">📍 ${loc}</p>
+              <p class="text-xs text-slate-600">👤 ${t.groupsSection.facilitatorLabel} <strong>${g.facilitator || '—'}</strong></p>
             </div>
             <a
-              href="${CONFIG.googleFormUrl}"
+              href="${actionUrl}"
               target="_blank"
               rel="noopener noreferrer"
-              class="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-[#1e3a5f] text-[#1e3a5f] hover:text-white border border-slate-300 font-bold text-xs text-center transition-colors"
+              class="w-full py-2.5 px-4 rounded-xl bg-[#1e3a5f] hover:bg-[#2e6f5e] text-white font-bold text-xs text-center transition-colors shadow-sm"
             >
-              ${t.groupsSection.interestBtn} →
+              ${t.groupsSection.signupBtn} ↗
             </a>
           </div>
         `;
@@ -2597,7 +2982,7 @@
             const isSelected = currentVal === opt.value;
             let btnStyle = 'bg-white border-slate-200 text-slate-700 hover:border-slate-300';
             if (isSelected) {
-              if (opt.value === 'yes') btnStyle = 'bg-[#0f766e] border-[#0f766e] text-white shadow-sm';
+              if (opt.value === 'yes') btnStyle = 'bg-[#2e6f5e] border-[#2e6f5e] text-white shadow-sm';
               else if (opt.value === 'progress') btnStyle = 'bg-[#b45309] border-[#b45309] text-white shadow-sm';
               else if (opt.value === 'no') btnStyle = 'bg-[#1e3a5f] border-[#1e3a5f] text-white shadow-sm';
             }
@@ -2627,8 +3012,8 @@
 
         return `
           <div class="rounded-2xl border border-slate-200 p-4 sm:p-5 space-y-3 bg-white">
-            <h4 class="font-display font-bold text-base sm:text-lg text-[#1e3a5f] flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-[#0f766e]"></span>
+            <h4 class="font-bold text-base sm:text-lg text-[#1e3a5f] flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#2e6f5e]"></span>
               ${block.title}
             </h4>
             <div class="space-y-2.5">${questionsHtml}</div>
@@ -2712,11 +3097,11 @@
         return `
           <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-4 space-y-2.5">
             <div class="flex items-start justify-between gap-2">
-              <p class="font-display font-bold text-xs sm:text-sm text-white leading-snug">${block.shortName}</p>
+              <p class="font-bold text-xs sm:text-sm text-white leading-snug">${block.shortName}</p>
               <span class="text-xs font-extrabold text-amber-300 shrink-0">${pct}%</span>
             </div>
             <div class="w-full h-2.5 rounded-full bg-white/15 overflow-hidden">
-              <div class="h-full rounded-full bg-gradient-to-r from-amber-400 to-[#0f766e] transition-all duration-300" style="width: ${pct}%"></div>
+              <div class="h-full rounded-full bg-gradient-to-r from-amber-400 to-[#2e6f5e] transition-all duration-300" style="width: ${pct}%"></div>
             </div>
             <p class="text-[11px] text-slate-300">${answeredInBlock} / ${qCount} ${t.diagnostic.answeredSuffix}</p>
           </div>
@@ -2744,14 +3129,14 @@
           return `
             <div class="bg-white text-slate-800 rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-md">
               <div class="space-y-1">
-                <h5 class="font-display font-bold text-base text-[#1e3a5f]">${rec.title}</h5>
+                <h5 class="font-bold text-base text-[#1e3a5f]">${rec.title}</h5>
                 <p class="text-xs text-slate-600 leading-relaxed">${rec.desc}</p>
               </div>
               <a
                 href="${rec.url}"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="no-print inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#0f766e] hover:bg-[#115e59] text-white font-semibold text-xs transition-all"
+                class="no-print inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#2e6f5e] hover:bg-[#215245] text-white font-semibold text-xs transition-all"
               >
                 <span>${t.diagnostic.openResourceLabel}</span>
                 <span>↗</span>
@@ -2765,7 +3150,7 @@
     }
 
     function copySurveyUrl() {
-      copyToClipboard(CONFIG.googleFormUrl, DATA[currentLang].diagnostic.copySurveyToast);
+      copyToClipboard(activeConfig.googleFormUrl, DATA[currentLang].diagnostic.copySurveyToast);
     }
 
     function copyDiagnosticSummary() {
@@ -2786,14 +3171,14 @@
       const t = DATA[currentLang];
       const btnStyles = {
         navy: 'bg-[#1e3a5f] hover:bg-[#132844] text-white',
-        teal: 'bg-[#0f766e] hover:bg-[#115e59] text-white',
+        sage: 'bg-[#2e6f5e] hover:bg-[#215245] text-white',
         amber: 'bg-[#b45309] hover:bg-amber-700 text-white'
       };
 
       document.getElementById('library-grid').innerHTML = t.library.cards.map(card => `
         <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 hover:shadow-md transition-all flex flex-col justify-between gap-5">
           <div class="space-y-2.5">
-            <h3 class="font-display text-xl font-bold text-[#1e3a5f]">${card.title}</h3>
+            <h3 class="text-xl font-bold text-[#1e3a5f]">${card.title}</h3>
             <p class="text-sm text-slate-600 leading-relaxed">${card.desc}</p>
           </div>
           <a
@@ -2808,19 +3193,18 @@
         </div>
       `).join('');
 
-      // 3 Family Home Evening Guides
       document.getElementById('fhe-grid').innerHTML = t.library.fheGuides.map(g => `
         <div class="rounded-2xl border border-slate-200 bg-slate-50/80 p-5 flex flex-col justify-between gap-4">
           <div class="space-y-2">
             <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-[#b45309]">${g.badge}</span>
-            <h3 class="font-display font-bold text-base text-[#1e3a5f]">${g.title}</h3>
+            <h3 class="font-bold text-base text-[#1e3a5f]">${g.title}</h3>
             <p class="text-xs text-slate-600 leading-relaxed">${g.steps}</p>
           </div>
           <a
             href="${g.url}"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#1e3a5f] hover:bg-[#0f766e] text-white font-semibold text-xs transition-colors"
+            class="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-[#1e3a5f] hover:bg-[#2e6f5e] text-white font-semibold text-xs transition-colors"
           >
             <span>${g.linkLabel}</span>
             <span>↗</span>
@@ -2828,36 +3212,38 @@
         </div>
       `).join('');
 
-      // Related Help
       document.getElementById('related-grid').innerHTML = t.library.related.map(item => `
         <a
           href="${item.url}"
           target="_blank"
           rel="noopener noreferrer"
-          class="group p-5 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-[#0f766e] hover:shadow-md transition-all flex flex-col justify-between gap-4"
+          class="group p-5 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-[#2e6f5e] hover:shadow-md transition-all flex flex-col justify-between gap-4"
         >
           <div class="space-y-2">
-            <h3 class="font-display font-bold text-base text-[#1e3a5f] group-hover:text-[#0f766e]">${item.title}</h3>
+            <h3 class="font-bold text-base text-[#1e3a5f] group-hover:text-[#2e6f5e]">${item.title}</h3>
             <p class="text-xs text-slate-600 leading-relaxed">${item.desc}</p>
           </div>
-          <span class="inline-flex items-center gap-1 text-xs font-bold text-[#0f766e]">${t.library.relBtn} →</span>
+          <span class="inline-flex items-center gap-1 text-xs font-bold text-[#2e6f5e]">${t.library.relBtn} →</span>
         </a>
       `).join('');
 
-      // Local Support Card
-      const ls = CONFIG.localSupport;
+      const unitLabel = currentLang === 'es' ? activeConfig.unitNameEs : activeConfig.unitNameEn;
+      const localNote = currentLang === 'es' ? activeConfig.localSupportEs : activeConfig.localSupportEn;
+      const specHtml = activeConfig.specialistContact
+        ? `<p class="text-xs font-bold text-[#2e6f5e]">${t.library.specialistLabel} <span class="text-[#1e3a5f]">${activeConfig.specialistContact}</span></p>`
+        : '';
+
       document.getElementById('local-support-card').innerHTML = `
-        <h3 class="font-display font-bold text-base text-[#1e3a5f]">${t.library.localTitle}</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-700">
-          <div class="bg-white p-3.5 rounded-xl border border-slate-200">${currentLang === 'es' ? ls.specialistEs : ls.specialistEn}</div>
-          <div class="bg-white p-3.5 rounded-xl border border-slate-200">${currentLang === 'es' ? ls.employmentEs : ls.employmentEn}</div>
-          <div class="bg-white p-3.5 rounded-xl border border-slate-200">${currentLang === 'es' ? ls.recoveryEs : ls.recoveryEn}</div>
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h3 class="font-bold text-base text-[#1e3a5f]">${t.library.localTitle} — ${unitLabel}</h3>
+          ${specHtml}
         </div>
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${localNote}</p>
       `;
     }
 
     // =========================================================================
-    // 10. TAB 4: PIN LOCK + WARD SURVEY ANALYTICS + TEMPLATES + QR POSTER
+    // 10. TAB 4: PIN LOCK + NO-CODE VISUAL CONFIGURATOR + ANALYTICS + QR
     // =========================================================================
     function syncLockState() {
       let unlocked = false;
@@ -2880,7 +3266,7 @@
       event.preventDefault();
       const input = document.getElementById('leader-pin-input');
       const entered = (input.value || '').trim();
-      if (entered === String(CONFIG.leaderPin)) {
+      if (entered === String(activeConfig.leaderPin)) {
         try {
           sessionStorage.setItem(SESSION_KEY_UNLOCKED, 'true');
         } catch (e) {}
@@ -2899,18 +3285,285 @@
       syncLockState();
     }
 
+    function populateConfiguratorFields() {
+      // Populate course dropdown
+      const select = document.getElementById('grp-course-select');
+      if (select) {
+        const curVal = select.value;
+        select.innerHTML = DATA.es.courses.map((cEs, i) => {
+          const cEn = DATA.en.courses[i];
+          return `<option value="${cEs.id}">${cEs.title} / ${cEn.title}</option>`;
+        }).join('');
+        if (curVal) select.value = curVal;
+      }
+
+      // Populate General Settings inputs
+      setVal('cfg-unit-es', activeConfig.unitNameEs);
+      setVal('cfg-unit-en', activeConfig.unitNameEn);
+      setVal('cfg-pin', activeConfig.leaderPin);
+      setVal('cfg-form-url', activeConfig.googleFormUrl);
+      setVal('cfg-wa-url', activeConfig.whatsappChannelUrl);
+      setVal('cfg-specialist', activeConfig.specialistContact || '');
+      setVal('cfg-local-es', activeConfig.localSupportEs);
+      setVal('cfg-local-en', activeConfig.localSupportEn);
+      setVal('cfg-groups-sheet', activeConfig.groupsSheetCsvUrl || '');
+
+      renderAdminGroupsList();
+    }
+
+    function setVal(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.value = val ?? '';
+    }
+
+    function autoFillCourseTitles() {
+      const courseId = document.getElementById('grp-course-select').value;
+      const cEs = DATA.es.courses.find(c => c.id === courseId);
+      const cEn = DATA.en.courses.find(c => c.id === courseId);
+      if (cEs) setVal('grp-title-es', cEs.title);
+      if (cEn) setVal('grp-title-en', cEn.title);
+    }
+
+    function renderAdminGroupsList() {
+      const c = DATA[currentLang].leaders.configurator;
+      const groups = activeConfig.upcomingGroups || [];
+      const activeCount = groups.filter(g => g.active !== false).length;
+      setText('cfg-groups-count', c.groupsCount(activeCount, groups.length));
+
+      const editId = document.getElementById('grp-edit-id')?.value || '';
+      setText('grp-form-mode-title', editId ? c.editModeTitle : c.addModeTitle);
+
+      const listEl = document.getElementById('admin-groups-list');
+      if (!listEl) return;
+
+      listEl.innerHTML = groups.map(g => {
+        const title = currentLang === 'es' ? (g.titleEs || g.titleEn) : (g.titleEn || g.titleEs);
+        const sched = currentLang === 'es' ? (g.scheduleEs || g.scheduleEn) : (g.scheduleEn || g.scheduleEs);
+        const isActive = g.active !== false;
+        const badgeCls = isActive ? 'bg-[#2e6f5e]/10 text-[#2e6f5e]' : 'bg-slate-200 text-slate-600';
+        const badgeTxt = isActive ? c.statusActive : c.statusPaused;
+
+        return `
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${badgeCls}">${badgeTxt}</span>
+                <span class="font-bold text-sm text-[#1e3a5f]">${title}</span>
+              </div>
+              <p class="text-xs text-slate-600">${sched} • ${g.facilitator || '—'}</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 shrink-0">
+              <button type="button" onclick="editGroupItem('${g.id}')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#1e3a5f] font-bold text-xs">
+                ${c.btnEdit}
+              </button>
+              <button type="button" onclick="toggleGroupActive('${g.id}')" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-[#b45309] font-bold text-xs">
+                ${c.btnToggle}
+              </button>
+              <button type="button" onclick="deleteGroupItem('${g.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 font-bold text-xs">
+                ${c.btnDelete}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function saveGroupFromForm(event) {
+      event.preventDefault();
+      const editId = document.getElementById('grp-edit-id').value;
+      const newObj = {
+        id: editId || `grp-${Date.now()}`,
+        courseId: document.getElementById('grp-course-select').value,
+        titleEs: document.getElementById('grp-title-es').value.trim(),
+        titleEn: document.getElementById('grp-title-en').value.trim(),
+        scheduleEs: document.getElementById('grp-schedule-es').value.trim(),
+        scheduleEn: document.getElementById('grp-schedule-en').value.trim(),
+        format: document.getElementById('grp-format-select').value,
+        locationEs: document.getElementById('grp-location-es').value.trim(),
+        locationEn: document.getElementById('grp-location-en').value.trim(),
+        facilitator: document.getElementById('grp-facilitator-input').value.trim(),
+        signupUrl: document.getElementById('grp-signup-url').value.trim(),
+        active: document.getElementById('grp-active-check').checked
+      };
+
+      if (!Array.isArray(activeConfig.upcomingGroups)) activeConfig.upcomingGroups = [];
+      if (editId) {
+        const idx = activeConfig.upcomingGroups.findIndex(g => g.id === editId);
+        if (idx !== -1) activeConfig.upcomingGroups[idx] = newObj;
+      } else {
+        activeConfig.upcomingGroups.push(newObj);
+      }
+
+      persistActiveConfig();
+      cancelGroupEdit();
+      renderUpcomingGroups();
+      renderAdminGroupsList();
+      showToast(DATA[currentLang].leaders.configurator.groupSavedToast, 'success');
+    }
+
+    function editGroupItem(id) {
+      const grp = (activeConfig.upcomingGroups || []).find(g => g.id === id);
+      if (!grp) return;
+      setVal('grp-edit-id', grp.id);
+      setVal('grp-course-select', grp.courseId || 'finanzas');
+      setVal('grp-format-select', grp.format || 'in-person');
+      setVal('grp-facilitator-input', grp.facilitator || '');
+      setVal('grp-title-es', grp.titleEs || '');
+      setVal('grp-title-en', grp.titleEn || '');
+      setVal('grp-schedule-es', grp.scheduleEs || '');
+      setVal('grp-schedule-en', grp.scheduleEn || '');
+      setVal('grp-location-es', grp.locationEs || '');
+      setVal('grp-location-en', grp.locationEn || '');
+      setVal('grp-signup-url', grp.signupUrl || '');
+      document.getElementById('grp-active-check').checked = grp.active !== false;
+
+      document.getElementById('grp-cancel-edit-btn').classList.remove('hidden');
+      setText('grp-form-mode-title', DATA[currentLang].leaders.configurator.editModeTitle);
+      document.getElementById('group-editor-form').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function cancelGroupEdit() {
+      document.getElementById('group-editor-form').reset();
+      setVal('grp-edit-id', '');
+      document.getElementById('grp-active-check').checked = true;
+      document.getElementById('grp-cancel-edit-btn').classList.add('hidden');
+      setText('grp-form-mode-title', DATA[currentLang].leaders.configurator.addModeTitle);
+    }
+
+    function toggleGroupActive(id) {
+      const grp = (activeConfig.upcomingGroups || []).find(g => g.id === id);
+      if (!grp) return;
+      grp.active = grp.active === false;
+      persistActiveConfig();
+      renderUpcomingGroups();
+      renderAdminGroupsList();
+    }
+
+    function deleteGroupItem(id) {
+      activeConfig.upcomingGroups = (activeConfig.upcomingGroups || []).filter(g => g.id !== id);
+      persistActiveConfig();
+      renderUpcomingGroups();
+      renderAdminGroupsList();
+      showToast(DATA[currentLang].leaders.configurator.groupDeletedToast, 'info');
+    }
+
+    function saveGeneralSettings(event) {
+      event.preventDefault();
+      activeConfig.unitNameEs = document.getElementById('cfg-unit-es').value.trim();
+      activeConfig.unitNameEn = document.getElementById('cfg-unit-en').value.trim();
+      activeConfig.leaderPin = document.getElementById('cfg-pin').value.trim() || '2026';
+      activeConfig.googleFormUrl = document.getElementById('cfg-form-url').value.trim();
+      activeConfig.whatsappChannelUrl = document.getElementById('cfg-wa-url').value.trim();
+      activeConfig.specialistContact = document.getElementById('cfg-specialist').value.trim();
+      activeConfig.localSupportEs = document.getElementById('cfg-local-es').value.trim();
+      activeConfig.localSupportEn = document.getElementById('cfg-local-en').value.trim();
+      activeConfig.groupsSheetCsvUrl = document.getElementById('cfg-groups-sheet').value.trim();
+
+      persistActiveConfig();
+      renderAll();
+      if (activeConfig.groupsSheetCsvUrl) {
+        syncLiveGroupsFromSheet(activeConfig.groupsSheetCsvUrl);
+      }
+      showToast(DATA[currentLang].leaders.configurator.generalSavedToast, 'success');
+    }
+
+    function persistActiveConfig() {
+      try {
+        localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(activeConfig));
+      } catch (e) {}
+    }
+
+    function resetConfigToDefaults() {
+      activeConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+      isLiveGroupsSynced = false;
+      try {
+        localStorage.removeItem(STORAGE_KEY_CONFIG);
+      } catch (e) {}
+      cancelGroupEdit();
+      renderAll();
+      showToast(DATA[currentLang].leaders.configurator.resetToast, 'info');
+    }
+
+    // 1-Click Clean HTML Export with updated DEFAULT_CONFIG serialized
+    function downloadUpdatedHtml() {
+      const clone = document.documentElement.cloneNode(true);
+      clone.setAttribute('lang', 'es');
+      clone.removeAttribute('style');
+
+      // Reset dynamic containers in the clone so exported HTML is 100% clean
+      const idsToEmpty = [
+        'toast-container',
+        'hero-model-steps',
+        'hero-benefits-container',
+        'upcoming-groups-grid',
+        'skills-grid',
+        'course-category-pills',
+        'courses-grid',
+        'diagnostic-blocks-container',
+        'block-progress-grid',
+        'roadmap-cards-grid',
+        'library-grid',
+        'fhe-grid',
+        'related-grid',
+        'local-support-card',
+        'admin-groups-list',
+        'ana-kpi-grid',
+        'ana-urgent-list',
+        'ana-blocks-charts',
+        'ana-filtered-table-wrap',
+        'leaders-resources-section',
+        'qr-cards-grid'
+      ];
+      idsToEmpty.forEach(id => {
+        const el = clone.querySelector(`#${id}`);
+        if (el) el.innerHTML = '';
+      });
+
+      // Ensure Leaders tab starts locked in exported file
+      const lockedEl = clone.querySelector('#leaders-locked-view');
+      const unlockedEl = clone.querySelector('#leaders-unlocked-view');
+      if (lockedEl) lockedEl.classList.remove('hidden');
+      if (unlockedEl) unlockedEl.classList.add('hidden');
+
+      const anaResEl = clone.querySelector('#analytics-results-container');
+      if (anaResEl) anaResEl.classList.add('hidden');
+
+      // Serialize updated DEFAULT_CONFIG between CONFIG_START and CONFIG_END
+      const scriptEl = clone.querySelector('#app-script');
+      if (scriptEl) {
+        const updatedBlock = `/* === CONFIG_START === */\nconst DEFAULT_CONFIG = ${JSON.stringify(activeConfig, null, 2)};\n/* === CONFIG_END === */`;
+        scriptEl.textContent = scriptEl.textContent.replace(
+          /\/\* === CONFIG_START === \*\/[\s\S]*?\/\* === CONFIG_END === \*\//,
+          updatedBlock
+        );
+      }
+
+      const finalHtml = '<!DOCTYPE html>\n' + clone.outerHTML;
+      const blob = new Blob([finalHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast(DATA[currentLang].leaders.configurator.downloadToast, 'success');
+    }
+
     function renderLeadersTab() {
       const t = DATA[currentLang];
       const btnStyles = {
         navy: 'bg-[#1e3a5f] hover:bg-[#132844] text-white',
-        teal: 'bg-[#0f766e] hover:bg-[#115e59] text-white',
+        sage: 'bg-[#2e6f5e] hover:bg-[#215245] text-white',
         amber: 'bg-[#b45309] hover:bg-amber-700 text-white'
       };
 
       document.getElementById('leaders-resources-section').innerHTML = t.leaders.cards.map(card => `
         <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col justify-between gap-4">
           <div class="space-y-2">
-            <h3 class="font-display text-lg font-bold text-[#1e3a5f]">${card.title}</h3>
+            <h3 class="text-lg font-bold text-[#1e3a5f]">${card.title}</h3>
             <p class="text-sm text-slate-600 leading-relaxed">${card.desc}</p>
           </div>
           <a
@@ -2925,36 +3578,13 @@
         </div>
       `).join('');
 
-      const templates = t.leaders.getTemplates(
-        CONFIG.portalUrl,
-        CONFIG.googleFormUrl,
-        CONFIG.whatsappChannelUrl
-      );
-
-      document.getElementById('whatsapp-templates-grid').innerHTML = templates.map((tpl, idx) => `
-        <div class="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 flex flex-col justify-between gap-4">
-          <div class="space-y-2.5">
-            <span class="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold bg-teal-100 text-[#0f766e]">${tpl.badge}</span>
-            <h4 class="font-display font-bold text-base text-[#1e3a5f]">${tpl.title}</h4>
-            <pre class="whitespace-pre-wrap font-sans text-xs text-slate-700 bg-white p-3.5 rounded-xl border border-slate-200 max-h-48 overflow-y-auto leading-relaxed">${tpl.text}</pre>
-          </div>
-          <button
-            type="button"
-            onclick="copyWaTemplate(${idx})"
-            class="w-full py-2.5 px-4 rounded-xl bg-[#0f766e] hover:bg-[#115e59] text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 shadow-sm"
-          >
-            <span>${t.leaders.waCopyBtn}</span>
-          </button>
-        </div>
-      `).join('');
-
-      document.getElementById('qr-cards-grid').innerHTML = t.leaders.qrItems.map(item => {
+      document.getElementById('qr-cards-grid').innerHTML = t.leaders.getQrItems(activeConfig).map(item => {
         const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&color=1e3a5f&data=${encodeURIComponent(item.url)}`;
         return `
           <div class="rounded-2xl border-2 border-slate-200 bg-slate-50/60 p-5 flex flex-col items-center text-center justify-between gap-4">
             <div class="space-y-1">
               <span class="inline-block px-3 py-1 rounded-full text-[11px] font-bold bg-[#1e3a5f] text-white">${item.step}</span>
-              <h4 class="font-display font-bold text-lg text-[#1e3a5f] pt-1">${item.title}</h4>
+              <h4 class="font-bold text-lg text-[#1e3a5f] pt-1">${item.title}</h4>
               <p class="text-xs text-slate-600">${item.desc}</p>
             </div>
             <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
@@ -2965,7 +3595,7 @@
                 onerror="this.onerror=null; this.src='https://placehold.co/220x220/f8fafc/1e3a5f?text=QR+Code';"
               />
             </div>
-            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-[#0f766e] hover:underline break-all">
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-[#2e6f5e] hover:underline break-all">
               ${item.display}
             </a>
           </div>
@@ -2973,16 +3603,14 @@
       }).join('');
     }
 
-    function copyWaTemplate(idx) {
+    function copySingleWaMessage() {
       const t = DATA[currentLang];
-      const templates = t.leaders.getTemplates(
-        CONFIG.portalUrl,
-        CONFIG.googleFormUrl,
-        CONFIG.whatsappChannelUrl
+      const msg = t.leaders.getSingleMessage(
+        activeConfig.portalUrl,
+        activeConfig.googleFormUrl,
+        activeConfig.whatsappChannelUrl
       );
-      if (templates[idx]) {
-        copyToClipboard(templates[idx].text, t.leaders.waCopyToast);
-      }
+      copyToClipboard(msg, t.leaders.waCopyToast);
     }
 
     function printQrPoster() {
@@ -3022,7 +3650,6 @@
       }
     }
 
-    // Robust RFC-4180 CSV parser handling quoted fields and newlines
     function parseCsvRows(csvText) {
       const rows = [];
       let row = [];
@@ -3089,8 +3716,6 @@
 
       const headers = rows[0];
       const dataRows = rows.slice(1);
-
-      // Map columns to the 24 questions (5, 4, 3, 5, 3, 4)
       const blockSizes = [5, 4, 3, 5, 3, 4];
       const questionColIndices = [];
       let modalityColIdx = -1;
@@ -3119,7 +3744,6 @@
           answers24.push(norm);
         }
 
-        // Fallback detection for modality & contact if headers differed
         let modalityRaw = modalityColIdx !== -1 ? (r[modalityColIdx] || '') : (r[25] || '');
         let contactRaw = contactColIdx !== -1 ? (r[contactColIdx] || '') : (r[26] || '');
 
@@ -3129,7 +3753,6 @@
         else if (mLow.includes('individual') || mLow.includes('self-paced')) modalityType = 'individual';
         else if (mLow.includes('especialista') || mLow.includes('specialist')) modalityType = 'specialist';
 
-        // Compute per-block counts
         let cursor = 0;
         const blocks = blockSizes.map(size => {
           const slice = answers24.slice(cursor, cursor + size);
@@ -3192,23 +3815,21 @@
       const groupCount = parsedSurveyRecords.filter(r => r.modalityType === 'group').length;
       const indivCount = parsedSurveyRecords.filter(r => r.modalityType === 'individual').length;
 
-      // KPI Cards
       document.getElementById('ana-kpi-grid').innerHTML = `
         <div class="rounded-2xl bg-slate-50 border border-slate-200 p-4 text-center">
-          <p class="font-display font-extrabold text-3xl text-[#1e3a5f]">${total}</p>
+          <p class="font-extrabold text-3xl text-[#1e3a5f]">${total}</p>
           <p class="text-xs font-semibold text-slate-600 mt-1">${t.leaders.analytics.kpiTotal}</p>
         </div>
-        <div class="rounded-2xl bg-teal-50/70 border border-teal-200 p-4 text-center">
-          <p class="font-display font-extrabold text-3xl text-[#0f766e]">${Math.round((groupCount / total) * 100)}% <span class="text-base font-bold">(${groupCount})</span></p>
+        <div class="rounded-2xl bg-[#2e6f5e]/10 border border-[#2e6f5e]/25 p-4 text-center">
+          <p class="font-extrabold text-3xl text-[#2e6f5e]">${Math.round((groupCount / total) * 100)}% <span class="text-base font-bold">(${groupCount})</span></p>
           <p class="text-xs font-semibold text-slate-700 mt-1">${t.leaders.analytics.kpiGroup}</p>
         </div>
         <div class="rounded-2xl bg-amber-50/70 border border-amber-200 p-4 text-center">
-          <p class="font-display font-extrabold text-3xl text-[#b45309]">${Math.round((indivCount / total) * 100)}% <span class="text-base font-bold">(${indivCount})</span></p>
+          <p class="font-extrabold text-3xl text-[#b45309]">${Math.round((indivCount / total) * 100)}% <span class="text-base font-bold">(${indivCount})</span></p>
           <p class="text-xs font-semibold text-slate-700 mt-1">${t.leaders.analytics.kpiIndiv}</p>
         </div>
       `;
 
-      // Aggregate per block
       const blockStats = t.diagnostic.blocks.map((b, bIdx) => {
         let yes = 0, progress = 0, no = 0;
         parsedSurveyRecords.forEach(rec => {
@@ -3230,17 +3851,15 @@
         };
       });
 
-      // Top 3 Urgent Ward Needs
       const top3 = [...blockStats].sort((a, b) => b.needScore - a.needScore).slice(0, 3);
       document.getElementById('ana-urgent-list').innerHTML = top3.map((item, rank) => `
         <div class="bg-white rounded-xl p-3.5 border border-amber-200 shadow-sm">
           <span class="text-[11px] font-extrabold uppercase text-[#b45309]">#${rank + 1} Prioridad</span>
-          <p class="font-display font-bold text-sm text-[#1e3a5f] mt-0.5">${item.name}</p>
+          <p class="font-bold text-sm text-[#1e3a5f] mt-0.5">${item.name}</p>
           <p class="text-xs text-slate-600 mt-1">${item.pctNo}% No • ${item.pctProg}% ${t.leaders.analytics.legendProg}</p>
         </div>
       `).join('');
 
-      // Stacked Bar Charts per Block
       document.getElementById('ana-blocks-charts').innerHTML = blockStats.map(st => `
         <div class="rounded-2xl border border-slate-200 p-4 space-y-2">
           <div class="flex items-center justify-between gap-2 text-xs font-bold text-[#1e3a5f]">
@@ -3248,9 +3867,9 @@
             <span>${st.pctYes}% ${t.leaders.analytics.legendYes}</span>
           </div>
           <div class="w-full h-4 rounded-full bg-slate-100 overflow-hidden flex">
-            <div style="width: ${st.pctYes}%" class="bg-[#0f766e] h-full" title="${st.pctYes}% Yes"></div>
-            <div style="width: ${st.pctProg}%" class="bg-[#d97706] h-full" title="${st.pctProg}% In progress"></div>
-            <div style="width: ${st.pctNo}%" class="bg-[#dc2626] h-full" title="${st.pctNo}% No"></div>
+            <div style="width: ${st.pctYes}%" class="bg-[#2e6f5e] h-full"></div>
+            <div style="width: ${st.pctProg}%" class="bg-[#b45309] h-full"></div>
+            <div style="width: ${st.pctNo}%" class="bg-[#dc2626] h-full"></div>
           </div>
           <div class="flex justify-between text-[11px] text-slate-500">
             <span>${t.leaders.analytics.legendYes}: ${st.pctYes}%</span>
@@ -3260,11 +3879,10 @@
         </div>
       `).join('');
 
-      // Build Executive Summary for Bishopric / Ward Council
       const execLines = [
         currentLang === 'es'
-          ? `📊 *RESUMEN EJECUTIVO DE AUTOSUFICIENCIA DEL BARRIO (${total} respuestas)*`
-          : `📊 *WARD SELF-RELIANCE EXECUTIVE SUMMARY (${total} responses)*`,
+          ? `📊 *RESUMEN EJECUTIVO DE AUTOSUFICIENCIA (${total} respuestas)*`
+          : `📊 *SELF-RELIANCE EXECUTIVE SUMMARY (${total} responses)*`,
         `• ${t.leaders.analytics.kpiGroup}: ${Math.round((groupCount / total) * 100)}% (${groupCount})`,
         `• ${t.leaders.analytics.kpiIndiv}: ${Math.round((indivCount / total) * 100)}% (${indivCount})`,
         '',
@@ -3303,7 +3921,7 @@
 
       wrap.innerHTML = `
         <table class="min-w-full text-left text-xs">
-          <thead class="bg-slate-100 text-[#1e3a5f] font-display font-bold border-b border-slate-200">
+          <thead class="bg-slate-100 text-[#1e3a5f] font-bold border-b border-slate-200">
             <tr>
               <th class="py-2.5 px-3">#</th>
               <th class="py-2.5 px-3">Áreas con "No"</th>
@@ -3322,7 +3940,7 @@
                   <td class="py-2.5 px-3 font-bold text-slate-700">${rec.id}</td>
                   <td class="py-2.5 px-3 text-slate-700">${weakNames}</td>
                   <td class="py-2.5 px-3 text-slate-600">${rec.modalityRaw}</td>
-                  <td class="py-2.5 px-3 font-semibold ${rec.contact ? 'text-[#0f766e]' : 'text-slate-400'}">
+                  <td class="py-2.5 px-3 font-semibold ${rec.contact ? 'text-[#2e6f5e]' : 'text-slate-400'}">
                     ${rec.contact || 'Anónimo'}
                   </td>
                 </tr>
@@ -3343,7 +3961,7 @@
     // =========================================================================
     function sharePortal() {
       const t = DATA[currentLang];
-      const url = CONFIG.portalUrl;
+      const url = activeConfig.portalUrl;
       if (navigator.share) {
         navigator.share({ title: document.title, url }).catch(() => copyToClipboard(url, t.shareToast));
       } else {
@@ -3373,7 +3991,7 @@
     function showToast(msg, type = 'success') {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
-      const borderClass = type === 'warning' ? 'border-amber-400' : 'border-teal-400';
+      const borderClass = type === 'warning' ? 'border-amber-400' : 'border-[#2e6f5e]';
       toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-xl text-xs sm:text-sm font-medium bg-[#1e3a5f] text-white border-l-4 ${borderClass} flex items-center justify-between gap-3 transition-all duration-300`;
       toast.innerHTML = `
         <span>${msg}</span>
